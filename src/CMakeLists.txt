@@ -1,5 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 6460 2010-05-31 11:42:38Z FloSoft $
+### $Id: CMakeLists.txt 6942 2010-12-24 07:50:41Z FloSoft $
 ################################################################################
 
 IF ( NOT "${COMPILEFOR}" STREQUAL "windows" )
@@ -22,7 +22,10 @@ SET(SOURCES_LOBBY LobbyMessage.cpp          LobbyMessage.h
 
 ################################################################################
 
-INCLUDE_DIRECTORIES("../../" "../../libutil/src/" "../../mygettext/src/")
+INCLUDE_DIRECTORIES("../../"
+                    "${PROJECT_SOURCE_DIR}/libutil/src/"
+                    "${PROJECT_SOURCE_DIR}/mygettext/src/"
+                   )
 
 ################################################################################
 
@@ -30,7 +33,7 @@ IF (LOBBY_C)
 
     ADD_LIBRARY(lobby_c STATIC ${SOURCES_LOBBY} LobbyClient.cpp LobbyClient.h)
     TARGET_LINK_LIBRARIES(lobby_c s25util mygettext)
-    
+
 ENDIF (LOBBY_C)
 
 ################################################################################
