@@ -1,13 +1,5 @@
 ################################################################################
-### $Id: CMakeLists.txt 6942 2010-12-24 07:50:41Z FloSoft $
-################################################################################
-
-IF ( NOT "${COMPILEFOR}" STREQUAL "windows" )
-	IF ("${CROSSCOMPILE}" STREQUAL "1" OR "${COMPILEARCH}" STREQUAL "x86_64" )
-		ADD_DEFINITIONS(-fPIC)
-	ENDIF ("${CROSSCOMPILE}" STREQUAL "1" OR "${COMPILEARCH}" STREQUAL "x86_64" )
-ENDIF ( NOT "${COMPILEFOR}" STREQUAL "windows" )
-
+### $Id: CMakeLists.txt 7178 2011-04-17 15:53:20Z FloSoft $
 ################################################################################
 
 SET(SOURCES_LOBBY LobbyMessage.cpp          LobbyMessage.h
