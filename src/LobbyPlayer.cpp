@@ -1,6 +1,6 @@
-// $Id: LobbyPlayer.cpp 6957 2011-01-02 11:23:10Z FloSoft $
+// $Id: LobbyPlayer.cpp 7292 2011-07-12 12:48:19Z FloSoft $
 //
-// Copyright (c) 2005-2009 Settlers Freaks (sf-team at siedler25.org)
+// Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
 // This file is part of Return To The Roots.
 //

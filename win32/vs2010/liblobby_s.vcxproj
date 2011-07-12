@@ -54,10 +54,17 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..;$(ProjectDir)..\..\..\libutil\src;$(ProjectDir)..\..\..\mygettext\src</AdditionalIncludeDirectories>
     </ClCompile>
     <Lib>
       <AdditionalDependencies>libmysql.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
+    <PostBuildEvent>
+      <Command>"$(OutDir)prebuild-mutex.exe" "postbuild" "$(SolutionName)" "$(ProjectDir)..\..\.." "$(OutDir)"</Command>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>"$(OutDir)prebuild-mutex.exe" "prebuild" "$(SolutionName)" "$(ProjectDir)..\..\.." "$(OutDir)"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -101,6 +108,16 @@
     <ClInclude Include="..\..\src\LobbyServerList.h" />
     <ClInclude Include="..\..\src\main.h" />
     <ClInclude Include="..\..\src\MySQL.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\libutil\win32\vs2010\libutil.vcxproj">
+      <Project>{74ce1cab-7950-436f-8d27-48f9fb7e9f22}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\mygettext\win32\vs2010\mygettext.vcxproj">
+      <Project>{94be9c74-5e13-404e-858b-2cba20d8f5c9}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
