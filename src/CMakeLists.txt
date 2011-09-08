@@ -1,15 +1,15 @@
 ################################################################################
-### $Id: CMakeLists.txt 7178 2011-04-17 15:53:20Z FloSoft $
+### $Id: CMakeLists.txt 7521 2011-09-08 20:45:55Z FloSoft $
 ################################################################################
 
 SET(SOURCES_LOBBY LobbyMessage.cpp          LobbyMessage.h
-                  LobbyMessages.cpp         LobbyMessages.h
+                  LobbyMessages.h
                   LobbyMessageInterface.cpp LobbyMessageInterface.h
                   LobbyInterface.cpp        LobbyInterface.h
                   LobbyPlayerInfo.cpp       LobbyPlayerInfo.h
-                  LobbyPlayerList.cpp       LobbyPlayerList.h
+                  LobbyPlayerList.h
                   LobbyServerInfo.cpp       LobbyServerInfo.h
-                  LobbyServerList.cpp       LobbyServerList.h
+                  LobbyServerList.h
    )
 
 ################################################################################
