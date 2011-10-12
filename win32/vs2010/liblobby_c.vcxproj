@@ -17,7 +17,6 @@
     <ClInclude Include="..\..\src\LobbyMessage.h" />
     <ClInclude Include="..\..\src\LobbyMessageInterface.h" />
     <ClInclude Include="..\..\src\LobbyMessages.h" />
-    <ClInclude Include="..\..\src\LobbyPlayer.h" />
     <ClInclude Include="..\..\src\LobbyPlayerInfo.h" />
     <ClInclude Include="..\..\src\LobbyPlayerList.h" />
     <ClInclude Include="..\..\src\LobbyProtocol.h" />
@@ -30,7 +29,6 @@
     <ClCompile Include="..\..\src\LobbyInterface.cpp" />
     <ClCompile Include="..\..\src\LobbyMessage.cpp" />
     <ClCompile Include="..\..\src\LobbyMessageInterface.cpp" />
-    <ClCompile Include="..\..\src\LobbyPlayer.cpp" />
     <ClCompile Include="..\..\src\LobbyPlayerInfo.cpp" />
     <ClCompile Include="..\..\src\LobbyServerInfo.cpp" />
   </ItemGroup>
