@@ -169,23 +169,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\LobbyMessages.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\LobbyPlayerInfo.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\LobbyPlayerList.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\LobbyServerInfo.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\LobbyServerList.cpp"
 				>
 			</File>
 		</Filter>
