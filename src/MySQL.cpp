@@ -1,4 +1,4 @@
-// $Id: MySQL.cpp 7292 2011-07-12 12:48:19Z FloSoft $
+// $Id: MySQL.cpp 7717 2011-12-31 15:28:41Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -126,7 +126,7 @@ bool MySQL::LoginUser(const std::string &user, const std::string &pass, std::str
 	char query[1024];
 	//snprintf(query, 1024, "SELECT * FROM `lobby_users` WHERE `user` = '%s' AND `pass` = DES_ENCRYPT('%s', '%s') AND `email` IS NOT NULL LIMIT 1;", user2, pass2, user2);
 	//snprintf(query, 1024, "SELECT `username`,`useremail` FROM `tb_user` WHERE `username` = '%s' AND `userpassword` = MD5('%s') AND `userbanned` = 0 AND `useremail` IS NOT NULL LIMIT 1;", user2, pass2);
-	snprintf(query, 1024, "SELECT `user`,`mail` FROM `users` WHERE `user` = '%s' AND `pass` = MD5('%s') AND `mail` IS NOT NULL LIMIT 1;", user2, pass2);
+	snprintf(query, 1024, "SELECT `user`,`mail` FROM `users` WHERE `user` = '%s' AND `pass` = MD5('%s') AND `mail` IS NOT NULL AND login_allowed = 1 LIMIT 1;", user2, pass2);
 
 	// LOG.lprintf("%s\n", query);
 
