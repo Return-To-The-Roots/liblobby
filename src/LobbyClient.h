@@ -1,4 +1,4 @@
-// $Id: LobbyClient.h 7521 2011-09-08 20:45:55Z FloSoft $
+// $Id: LobbyClient.h 8155 2012-09-05 23:43:30Z marcus $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -91,6 +91,7 @@ public:
 	const LobbyPlayerList *GetRankingList(void) { return &rankinglist; }
 	/// liefert Informationen über einen Server
 	const LobbyServerInfo *GetServerInfo(void) { return &serverinfo; };
+	const std::string GetUser(void) { return userdata.user; };
 
 	/// sind wir eingeloggt?
 	bool LoggedIn() { return (state == CS_LOBBY); }
