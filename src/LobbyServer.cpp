@@ -1,4 +1,4 @@
-// $Id: LobbyServer.cpp 7292 2011-07-12 12:48:19Z FloSoft $
+// $Id: LobbyServer.cpp 8244 2012-09-14 07:21:44Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -701,6 +701,9 @@ void LobbyServer::SendPlayerList(unsigned int id)
 	for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
 	{
 		LobbyPlayer &p = it->second;
+
+		if(p.getName() == "LobbyBot")
+			continue;
 
 		if(p.isOccupied() && !p.isHost() && !p.isClient() )
 		{
