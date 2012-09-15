@@ -1,4 +1,4 @@
-// $Id: LobbyServer.cpp 8244 2012-09-14 07:21:44Z FloSoft $
+// $Id: LobbyServer.cpp 8256 2012-09-15 11:51:30Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -458,16 +458,30 @@ void LobbyServer::OnNMSLobbyPong(unsigned int id)
  *
  *  @author FloSoft
  */
-void LobbyServer::OnNMSLobbyChat(unsigned int id, const std::string &unused, const std::string &text)
+void LobbyServer::OnNMSLobbyChat(unsigned int id, const std::string &to, const std::string &text)
 {
+	if(text.size() <= 0)
+		return;
+
 	LobbyPlayer &player = players[id];
 
-	if(text.size() > 0)
+	if(to.size() > 0)
 	{
-		LobbyMessage *m = new LobbyMessage_Chat(player.getName(), text);
-		SendToAll(m);
-		delete m;
+		for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
+		{
+			LobbyPlayer &p = it->second;
+			if(p.isOccupied() && p.getName() == to)
+			{
+				p.Send(new LobbyMessage_Chat(player.getName(), text));
+				return;
+			}
+		}
 	}
+
+	// did not found player or none selected
+	LobbyMessage *m = new LobbyMessage_Chat(player.getName(), text);
+	SendToAll(m);
+	delete m;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
