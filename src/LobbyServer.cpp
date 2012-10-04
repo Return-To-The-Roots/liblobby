@@ -1,4 +1,4 @@
-// $Id: LobbyServer.cpp 8384 2012-10-04 16:12:47Z marcus $
+// $Id: LobbyServer.cpp 8385 2012-10-04 16:16:11Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -465,7 +465,7 @@ void LobbyServer::OnNMSLobbyChat(unsigned int id, const std::string &to, const s
 
 	LobbyPlayer &player = players[id];
 
-	if (p.getName() == "LobbyBot")
+	if (player.getName() == "LobbyBot")
 	{
 		if (!text.compare(0, 6, "!kick ")
 		{
