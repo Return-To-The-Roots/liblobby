@@ -1,4 +1,4 @@
-// $Id: MySQL.cpp 8382 2012-10-04 15:28:25Z FloSoft $
+// $Id: MySQL.cpp 8383 2012-10-04 16:10:06Z marcus $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -126,7 +126,6 @@ bool MySQL::LoginUser(const std::string &user, const std::string &pass, std::str
 	char query[1024];
 	//snprintf(query, 1024, "SELECT * FROM `lobby_users` WHERE `user` = '%s' AND `pass` = DES_ENCRYPT('%s', '%s') AND `email` IS NOT NULL LIMIT 1;", user2, pass2, user2);
 	//snprintf(query, 1024, "SELECT `username`,`useremail` FROM `tb_user` WHERE `username` = '%s' AND `userpassword` = MD5('%s') AND `userbanned` = 0 AND `useremail` IS NOT NULL LIMIT 1;", user2, pass2);
-	//snprintf(query, 1024, "SELECT `user`,`mail` FROM `users` WHERE `user` = '%s' AND `pass` = MD5('%s') AND `mail` IS NOT NULL AND login_allowed = 1 LIMIT 1;", user2, pass2);
 	snprintf(query, 1024, "SELECT `user`,`mail` FROM `users` WHERE `user` = '%s' AND `pass` = MD5('%s') AND `mail` IS NOT NULL AND login_allowed = 1 AND banned = 0 LIMIT 1;", user2, pass2);
 
 	// LOG.lprintf("%s\n", query);
@@ -506,3 +505,15 @@ bool MySQL::UpdateServerPing(unsigned int id, unsigned int ping)
 	//LOG.lprintf("Server %s aktualisiert: Neuer Ping: %d->%d\n", Info.getName().c_str(), Info.getPing(), ping);
 	return true;
 }
+
+bool MySQL::SetBan(unsigned int id, bool banned)
+{
+	char query[1024];
+	snprintf(query, 1024, "UPDATE `user` SET `banned` = '%d' WHERE `id` = '%d';", banned ? 1 : 0, id);
+
+	if(!DoQuery(query))
+		return false;
+
+	return(true);
+}
+

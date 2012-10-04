@@ -1,4 +1,4 @@
-// $Id: LobbyServer.cpp 8381 2012-10-04 15:24:53Z FloSoft $
+// $Id: LobbyServer.cpp 8383 2012-10-04 16:10:06Z marcus $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -464,6 +464,64 @@ void LobbyServer::OnNMSLobbyChat(unsigned int id, const std::string &to, const s
 		return;
 
 	LobbyPlayer &player = players[id];
+
+	if (p.getName() == "LobbyBot")
+	{
+		if (!text.compare(0, 6, "!kick ")
+		{
+			text.erase(0, 6);
+
+			for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
+			{
+				LobbyPlayer &p = it->second;
+
+				if(p.isOccupied() && p.getName() == to)
+				{
+					if (text.size() > 0)
+						p.Send(new LobbyMessage_Chat(player.getName(), text.substr(6)));
+					break;
+				}
+			}
+
+			return;
+		} else if (!text.compare("!ban"))
+		{
+			int id = atoi(to);
+
+			if (id != 0)
+			{
+				MYSQL.SetBan(id, 1);
+				player.Send(new LobbyMessage_Chat(player.getName(), "Banned."));
+			}
+
+			return;
+		} else if (!text.compare("!unban"))
+		{
+			int id = atoi(to);
+
+			if (id != 0)
+			{
+				MYSQL.SetBan(id, 0);
+				player.Send(new LobbyMessage_Chat(player.getName(), "Unbanned."));
+			}
+
+			return;
+		} else if (!text.compare("!getip"))
+		{
+			for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
+			{
+				LobbyPlayer &p = it->second;
+
+				if(p.isOccupied() && (p.getName() == to))
+				{
+					player.Send(new LobbyMessage_Chat(player.getName(), player.getPeerIP()));
+					break;
+				}
+			}
+
+			return;
+		}
+	}
 
 	if(to.size() > 0)
 	{
