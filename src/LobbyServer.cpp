@@ -1,4 +1,4 @@
-// $Id: LobbyServer.cpp 8383 2012-10-04 16:10:06Z marcus $
+// $Id: LobbyServer.cpp 8384 2012-10-04 16:12:47Z marcus $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -479,6 +479,7 @@ void LobbyServer::OnNMSLobbyChat(unsigned int id, const std::string &to, const s
 				{
 					if (text.size() > 0)
 						p.Send(new LobbyMessage_Chat(player.getName(), text.substr(6)));
+					Disconnect(p);
 					break;
 				}
 			}
