@@ -1,4 +1,4 @@
-// $Id: LobbyServer.cpp 8386 2012-10-04 16:18:45Z FloSoft $
+// $Id: LobbyServer.cpp 8387 2012-10-04 16:19:07Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -475,7 +475,7 @@ void LobbyServer::OnNMSLobbyChat(unsigned int id, const std::string &to, const s
 
 				if(p.isOccupied() && p.getName() == to)
 				{
-					if (text.size() > 0)
+					if (text.size() > 6)
 						p.Send(new LobbyMessage_Chat(player.getName(), text.substr(6)));
 					Disconnect(p);
 					break;
