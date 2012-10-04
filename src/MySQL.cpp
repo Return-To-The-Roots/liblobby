@@ -1,4 +1,4 @@
-// $Id: MySQL.cpp 8383 2012-10-04 16:10:06Z marcus $
+// $Id: MySQL.cpp 8391 2012-10-04 20:13:51Z marcus $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -21,6 +21,7 @@
 // Header
 #include "main.h"
 #include "MySQL.h"
+#include <stdio.h>
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -506,10 +507,13 @@ bool MySQL::UpdateServerPing(unsigned int id, unsigned int ping)
 	return true;
 }
 
-bool MySQL::SetBan(unsigned int id, bool banned)
+bool MySQL::SetBan(const std::string &user, bool banned)
 {
+	char user2[256];
+	mysql_real_escape_string(m_pMySQL, user2, user.c_str(), (unsigned long) user.length());
+
 	char query[1024];
-	snprintf(query, 1024, "UPDATE `user` SET `banned` = '%d' WHERE `id` = '%d';", banned ? 1 : 0, id);
+	snprintf(query, 1024, "UPDATE `user` SET `banned` = '%d' WHERE `user` = '%s';", banned ? 1 : 0, user2);
 
 	if(!DoQuery(query))
 		return false;

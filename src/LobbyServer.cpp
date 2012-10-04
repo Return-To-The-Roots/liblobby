@@ -1,4 +1,4 @@
-// $Id: LobbyServer.cpp 8388 2012-10-04 16:19:54Z FloSoft $
+// $Id: LobbyServer.cpp 8391 2012-10-04 20:13:51Z marcus $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -24,6 +24,8 @@
 
 #include "MySQL.h"
 #include "LobbyProtocol.h"
+
+#include <sstream>
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
@@ -358,7 +360,7 @@ void LobbyServer::OnNMSLobbyLogin(unsigned int id, const unsigned int revision, 
 
 				player.Send(new LobbyMessage_Login_Done(email));
 
-				player.occupy(user, version);
+				player.occupy(user, email, version);
 
 				std::stringstream text;
 				text << user << " hat die Lobby betreten";
@@ -467,7 +469,7 @@ void LobbyServer::OnNMSLobbyChat(unsigned int id, const std::string &to, const s
 
 	if (player.getName() == "LobbyBot")
 	{
-		if (!text.compare(0, 6, "!kick ") )
+		if (!text.compare("!kick") || !text.compare(0, 6, "!kick "))
 		{
 			for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
 			{
@@ -475,9 +477,13 @@ void LobbyServer::OnNMSLobbyChat(unsigned int id, const std::string &to, const s
 
 				if(p.isOccupied() && p.getName() == to)
 				{
-					if (text.size() > 6)
+					if (text.length() > 6)
+					{
 						p.Send(new LobbyMessage_Chat(player.getName(), text.substr(6)));
+					}
+
 					Disconnect(p);
+
 					break;
 				}
 			}
@@ -485,27 +491,27 @@ void LobbyServer::OnNMSLobbyChat(unsigned int id, const std::string &to, const s
 			return;
 		} else if (!text.compare("!ban"))
 		{
-			int id = atoi(to.c_str());
+			MYSQLCLIENT.SetBan(to, 1);
 
-			if (id != 0)
-			{
-				MYSQLCLIENT.SetBan(id, 1);
-				player.Send(new LobbyMessage_Chat(player.getName(), "Banned."));
-			}
+			std::stringstream out;
+			out << "!ban ";
+			out << to;
+
+			player.Send(new LobbyMessage_Chat(player.getName(), out.str()));
 
 			return;
 		} else if (!text.compare("!unban"))
 		{
-			int id = atoi(to.c_str());
+			MYSQLCLIENT.SetBan(to, 0);
 
-			if (id != 0)
-			{
-				MYSQLCLIENT.SetBan(id, 0);
-				player.Send(new LobbyMessage_Chat(player.getName(), "Unbanned."));
-			}
+			std::stringstream out;
+			out << "!unban ";
+			out << to;
+
+			player.Send(new LobbyMessage_Chat(player.getName(), out.str()));
 
 			return;
-		} else if (!text.compare("!getip"))
+		} else if (!text.compare("!getinfo"))
 		{
 			for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
 			{
@@ -513,11 +519,23 @@ void LobbyServer::OnNMSLobbyChat(unsigned int id, const std::string &to, const s
 
 				if(p.isOccupied() && (p.getName() == to))
 				{
-					player.Send(new LobbyMessage_Chat(player.getName(), p.getPeerIP()));
+					std::stringstream out;
+
+					out << "!getinfo ";
+					out << p.getPeerIP();
+					out << " ";
+					out << p.getEmail();
+					out << " ";
+					out << p.getName();
+
+					player.Send(new LobbyMessage_Chat(player.getName(), out.str()));
 					break;
 				}
 			}
 
+			return;
+		} else if (!text.compare(0, 1, "!"))
+		{
 			return;
 		}
 	}

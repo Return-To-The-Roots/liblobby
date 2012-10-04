@@ -1,4 +1,4 @@
-// $Id: LobbyPlayer.cpp 7292 2011-07-12 12:48:19Z FloSoft $
+// $Id: LobbyPlayer.cpp 8391 2012-10-04 20:13:51Z marcus $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -208,13 +208,14 @@ void LobbyPlayer::Run(LobbyMessageInterface *callback)
 	}
 }
 
-void LobbyPlayer::occupy(const std::string &user, const std::string &version)
+void LobbyPlayer::occupy(const std::string &user, const std::string &email, const std::string &version)
 {
 	loggedin = true;
 	playerstate = PS_OCCUPIED;
 	lastping = TIME.CurrentTick();
 
 	setName(user);
+	setEmail(email);
 	setVersion(version);
 
 	std::stringstream text;

@@ -1,4 +1,4 @@
-// $Id: LobbyPlayerInfo.h 7521 2011-09-08 20:45:55Z FloSoft $
+// $Id: LobbyPlayerInfo.h 8391 2012-10-04 20:13:51Z marcus $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -51,6 +51,7 @@ public:
 
 	unsigned int getId(void) const { return playerid; }
 	std::string getName(void) const { return name; }
+	std::string getEmail(void) const { return email; }
 	std::string getVersion(void) const { return version; }
 	int getPunkte(void) const { return punkte; }
 	unsigned int getGewonnen(void) const { return gewonnen; }
@@ -58,6 +59,7 @@ public:
 
 	void setId(const unsigned int playerid) { this->playerid = playerid; }
 	void setName(const std::string name) { this->name = name; }
+	void setEmail(const std::string email) { this->email = email; }
 	void setVersion(const std::string version) { this->version = version; }
 	void setPunkte(const unsigned int punkte) { this->punkte = punkte; }
 	void setGewonnen(const unsigned int gewonnen) { this->gewonnen = gewonnen; }
@@ -66,6 +68,7 @@ public:
 protected:
 	unsigned int playerid;
 	std::string name;
+	std::string email;
 	std::string version;
 	int punkte;
 	unsigned int gewonnen;
