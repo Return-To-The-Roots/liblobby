@@ -1,4 +1,4 @@
-// $Id: LobbyServer.cpp 8380 2012-10-04 15:20:24Z FloSoft $
+// $Id: LobbyServer.cpp 8381 2012-10-04 15:24:53Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -312,7 +312,7 @@ void LobbyServer::OnNMSLobbyLogin(unsigned int id, const unsigned int revision, 
 	if(revision != LOBBYPROTOCOL_VERSION)
 	{
 		// zu alt
-		LOG.lprintf("User %s invalid (protocoll version wrong)\n", user.c_str());
+		LOG.lprintf("User %s@%s invalid (protocoll version wrong)\n", user.c_str(), player.getPeerIP().c_str());
 
 		// do we've got a revision? or is it so damn old that it does not send a revision?
 		if( (revision & 0xFF0000FF) == 0xFF0000FF)
@@ -341,7 +341,7 @@ void LobbyServer::OnNMSLobbyLogin(unsigned int id, const unsigned int revision, 
 				
 				if(p.isLoggedIn() && p.getName() == user)
 				{
-					LOG.lprintf("User %s already logged on (slot %d == %d)!\n", user.c_str(), id, p.getId());
+					LOG.lprintf("User %s@%s already logged on (slot %d == %d)!\n", user.c_str(), player.getPeerIP().c_str(), id, p.getId());
 
 					player.Send(new LobbyMessage_Login_Error("Bereits eingeloggt! Bei Verbindungsabbruch einen Moment warten."));
 
@@ -354,7 +354,7 @@ void LobbyServer::OnNMSLobbyLogin(unsigned int id, const unsigned int revision, 
 
 			if(!found)
 			{
-				LOG.lprintf("User %s logged on\n", user.c_str());
+				LOG.lprintf("User %s@%s logged on\n", user.c_str(), player.getPeerIP().c_str());
 
 				player.Send(new LobbyMessage_Login_Done(email));
 

@@ -1,4 +1,4 @@
-// $Id: LobbyPlayer.h 7292 2011-07-12 12:48:19Z FloSoft $
+// $Id: LobbyPlayer.h 8381 2012-10-04 15:24:53Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -45,6 +45,7 @@ public:
 	void attach(const Socket &socket, const unsigned int &playerid);
 	void detach(void);
 	void occupy(const std::string &user, const std::string &version);
+	std::string getPeerIP() { return socket.GetPeerIP(); }
 
 	void addToSet(SocketSet &set) { set.Add(socket); }
 	bool inSet(SocketSet &set) { return set.InSet(socket); }
