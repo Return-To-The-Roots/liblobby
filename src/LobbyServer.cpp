@@ -1,4 +1,4 @@
-// $Id: LobbyServer.cpp 8256 2012-09-15 11:51:30Z FloSoft $
+// $Id: LobbyServer.cpp 8380 2012-10-04 15:20:24Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -175,7 +175,7 @@ bool LobbyServer::Await()
 			while(players.find(playerid) != players.end())
 				++playerid;
 
-			LOG.lprintf("New client connected\n");
+			LOG.lprintf("New client connected from %s\n", tmp.GetPeerIP().c_str());
 
 			LobbyPlayer p;
 
