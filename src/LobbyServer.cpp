@@ -1,4 +1,4 @@
-// $Id: LobbyServer.cpp 8385 2012-10-04 16:16:11Z FloSoft $
+// $Id: LobbyServer.cpp 8386 2012-10-04 16:18:45Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -467,10 +467,8 @@ void LobbyServer::OnNMSLobbyChat(unsigned int id, const std::string &to, const s
 
 	if (player.getName() == "LobbyBot")
 	{
-		if (!text.compare(0, 6, "!kick ")
+		if (!text.compare(0, 6, "!kick ") )
 		{
-			text.erase(0, 6);
-
 			for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
 			{
 				LobbyPlayer &p = it->second;
@@ -487,22 +485,22 @@ void LobbyServer::OnNMSLobbyChat(unsigned int id, const std::string &to, const s
 			return;
 		} else if (!text.compare("!ban"))
 		{
-			int id = atoi(to);
+			int id = atoi(to.c_str());
 
 			if (id != 0)
 			{
-				MYSQL.SetBan(id, 1);
+				MYSQLCLIENT.SetBan(id, 1);
 				player.Send(new LobbyMessage_Chat(player.getName(), "Banned."));
 			}
 
 			return;
 		} else if (!text.compare("!unban"))
 		{
-			int id = atoi(to);
+			int id = atoi(to.c_str());
 
 			if (id != 0)
 			{
-				MYSQL.SetBan(id, 0);
+				MYSQLCLIENT.SetBan(id, 0);
 				player.Send(new LobbyMessage_Chat(player.getName(), "Unbanned."));
 			}
 
