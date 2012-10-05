@@ -1,4 +1,4 @@
-// $Id: LobbyServer.cpp 8391 2012-10-04 20:13:51Z marcus $
+// $Id: LobbyServer.cpp 8402 2012-10-05 17:07:44Z marcus $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -536,8 +536,26 @@ void LobbyServer::OnNMSLobbyChat(unsigned int id, const std::string &to, const s
 			return;
 		} else if (!text.compare(0, 1, "!"))
 		{
+			// hide anything that might be a command from everybody else
 			return;
 		}
+	}
+
+	// send to lobbybot only, throw away otherwise
+	if (!text.compare(0, 1, "!"))
+	{
+		for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
+		{
+			LobbyPlayer &p = it->second;
+
+			if(p.isOccupied() && p.getName() == "LobbyBot")
+			{
+				p.Send(new LobbyMessage_Chat(player.getName(), text));
+				return;
+			}
+		}
+
+		return;
 	}
 
 	if(to.size() > 0)
@@ -551,9 +569,12 @@ void LobbyServer::OnNMSLobbyChat(unsigned int id, const std::string &to, const s
 				return;
 			}
 		}
+
+		// throw away _private_ messages if recipient cannot be found rather than showing them to everyone
+		return;
 	}
 
-	// did not found player or none selected
+	// no player selected
 	LobbyMessage *m = new LobbyMessage_Chat(player.getName(), text);
 	SendToAll(m);
 	delete m;
