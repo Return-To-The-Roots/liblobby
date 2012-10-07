@@ -1,4 +1,4 @@
-// $Id: MySQL.cpp 8391 2012-10-04 20:13:51Z marcus $
+// $Id: MySQL.cpp 8406 2012-10-07 10:25:17Z marcus $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -513,7 +513,7 @@ bool MySQL::SetBan(const std::string &user, bool banned)
 	mysql_real_escape_string(m_pMySQL, user2, user.c_str(), (unsigned long) user.length());
 
 	char query[1024];
-	snprintf(query, 1024, "UPDATE `user` SET `banned` = '%d' WHERE `user` = '%s';", banned ? 1 : 0, user2);
+	snprintf(query, 1024, "UPDATE `users` SET `banned` = '%d' WHERE `user` = '%s';", banned ? 1 : 0, user2);
 
 	if(!DoQuery(query))
 		return false;
