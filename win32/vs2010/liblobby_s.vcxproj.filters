@@ -20,25 +20,16 @@
     <ClCompile Include="..\..\src\LobbyMessageInterface.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\LobbyMessages.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\LobbyPlayer.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\LobbyPlayerInfo.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\LobbyPlayerList.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\LobbyServer.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\LobbyServerInfo.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\LobbyServerList.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\MySQL.cpp">

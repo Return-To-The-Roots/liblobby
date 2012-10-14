@@ -1,4 +1,4 @@
-// $Id: LobbyServer.cpp 8402 2012-10-05 17:07:44Z marcus $
+// $Id: LobbyServer.cpp 8443 2012-10-14 15:12:12Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -333,7 +333,7 @@ void LobbyServer::OnNMSLobbyLogin(unsigned int id, const unsigned int revision, 
 	else
 	{
 		// prüfen
-		if(MYSQLCLIENT.LoginUser(user, pass, email))
+		if(MYSQLCLIENT.LoginUser(user, pass, email, player.getPeerIP()))
 		{
 			bool found = false;
 

@@ -84,13 +84,10 @@
     <ClCompile Include="..\..\src\LobbyInterface.cpp" />
     <ClCompile Include="..\..\src\LobbyMessage.cpp" />
     <ClCompile Include="..\..\src\LobbyMessageInterface.cpp" />
-    <ClCompile Include="..\..\src\LobbyMessages.cpp" />
     <ClCompile Include="..\..\src\LobbyPlayer.cpp" />
     <ClCompile Include="..\..\src\LobbyPlayerInfo.cpp" />
-    <ClCompile Include="..\..\src\LobbyPlayerList.cpp" />
     <ClCompile Include="..\..\src\LobbyServer.cpp" />
     <ClCompile Include="..\..\src\LobbyServerInfo.cpp" />
-    <ClCompile Include="..\..\src\LobbyServerList.cpp" />
     <ClCompile Include="..\..\src\MySQL.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -111,12 +108,10 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\libutil\win32\vs2010\libutil.vcxproj">
-      <Project>{74ce1cab-7950-436f-8d27-48f9fb7e9f22}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Project>{c757122f-b02f-43d6-8607-b6a683566a2c}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\mygettext\win32\vs2010\mygettext.vcxproj">
-      <Project>{94be9c74-5e13-404e-858b-2cba20d8f5c9}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Project>{82550e90-5270-4bb7-b598-a3e65f654289}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

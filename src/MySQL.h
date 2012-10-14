@@ -1,4 +1,4 @@
-// $Id: MySQL.h 8391 2012-10-04 20:13:51Z marcus $
+// $Id: MySQL.h 8443 2012-10-14 15:12:12Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -38,7 +38,7 @@ public:
   bool Connect(std::string host = "", std::string user = "", std::string pass = "", std::string db = "");
   void Disconnect(void);
 
-  bool LoginUser(const std::string &user, const std::string &pass, std::string &email);
+  bool LoginUser(const std::string &user, const std::string &pass, std::string &email, const std::string& ip);
   bool RegisterUser(const std::string &user, const std::string &pass, const std::string &email);
   bool GetServerList(LobbyServerList *List);
   bool GetServerInfo(unsigned int id, LobbyServerInfo *Info);
