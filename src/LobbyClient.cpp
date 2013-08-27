@@ -1,4 +1,4 @@
-// $Id: LobbyClient.cpp 7521 2011-09-08 20:45:55Z FloSoft $
+// $Id: LobbyClient.cpp 8903 2013-08-27 18:25:24Z jh $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -21,8 +21,8 @@
 // Header
 #include "main.h"
 #include "LobbyClient.h"
-
 #include "LobbyMessages.h"
+#include <build_version.h>
 
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines

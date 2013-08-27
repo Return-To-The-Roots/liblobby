@@ -1,4 +1,4 @@
-// $Id: main.h 7521 2011-09-08 20:45:55Z FloSoft $
+// $Id: main.h 8903 2013-08-27 18:25:24Z jh $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -75,9 +75,5 @@
 #include "libutil.h"
 #include "mygettext.h"
 #include "liblobby.h"
-
-const char *GetWindowTitle();
-const char *GetWindowVersion();
-const char *GetWindowRevision();
 
 #endif // MAIN_H_INCLUDED
