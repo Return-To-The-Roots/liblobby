@@ -1,4 +1,4 @@
-// $Id: LobbyPlayer.cpp 8391 2012-10-04 20:13:51Z marcus $
+// $Id: LobbyPlayer.cpp 9254 2014-03-19 20:31:47Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -20,6 +20,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Header
 #include "main.h"
+#include <build_version.h>
 #include "LobbyPlayer.h"
 
 #include "MySQL.h"
