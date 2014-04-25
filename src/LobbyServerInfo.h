@@ -1,4 +1,4 @@
-// $Id: LobbyServerInfo.h 7521 2011-09-08 20:45:55Z FloSoft $
+// $Id: LobbyServerInfo.h 9359 2014-04-25 15:37:22Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -25,66 +25,66 @@ class Serializer;
 
 class LobbyServerInfo
 {
-public:
-	/// Konstruktor von @p LobbyServerInfo.
-	LobbyServerInfo(void);
-	/// Deserialisierungs-Konstruktor von @p LobbyServerInfo.
-	LobbyServerInfo(const unsigned playerid, Serializer * ser);
-	/// leert die Informationen.
-	void clear(void);
-	/// serialisiert die Daten.
-	void serialize(Serializer * ser) const;
+    public:
+        /// Konstruktor von @p LobbyServerInfo.
+        LobbyServerInfo(void);
+        /// Deserialisierungs-Konstruktor von @p LobbyServerInfo.
+        LobbyServerInfo(const unsigned playerid, Serializer* ser);
+        /// leert die Informationen.
+        void clear(void);
+        /// serialisiert die Daten.
+        void serialize(Serializer* ser) const;
 
-	/// Zuweisungsoperator
-	LobbyServerInfo& operator= (const LobbyServerInfo &info)
-	{
-		serverid = info.serverid;
-		name = info.name;
-		host = info.host;
-		port = info.port;
-		version = info.version;
-		ping = info.ping;
-		map = info.map;
-		curplayers = info.curplayers;
-		maxplayers = info.maxplayers;
-		has_password = info.has_password;
+        /// Zuweisungsoperator
+        LobbyServerInfo& operator= (const LobbyServerInfo& info)
+        {
+            serverid = info.serverid;
+            name = info.name;
+            host = info.host;
+            port = info.port;
+            version = info.version;
+            ping = info.ping;
+            map = info.map;
+            curplayers = info.curplayers;
+            maxplayers = info.maxplayers;
+            has_password = info.has_password;
 
-		return *this;
-	}
+            return *this;
+        }
 
-	unsigned int getId(void) const { return serverid; }
-	std::string getName(void) const { return name; }
-	std::string getHost(void) const { return host; }
-	unsigned short getPort(void) const { return port; }
-	std::string getVersion(void) const { return version; }
-	unsigned int getPing(void) const { return ping; }
-	std::string getMap(void) const { return map; }
-	unsigned int getCurPlayers(void) const { return curplayers; }
-	unsigned int getMaxPlayers(void) const { return maxplayers; }
-	bool hasPassword(void) const { return has_password; }
+        unsigned int getId(void) const { return serverid; }
+        std::string getName(void) const { return name; }
+        std::string getHost(void) const { return host; }
+        unsigned short getPort(void) const { return port; }
+        std::string getVersion(void) const { return version; }
+        unsigned int getPing(void) const { return ping; }
+        std::string getMap(void) const { return map; }
+        unsigned int getCurPlayers(void) const { return curplayers; }
+        unsigned int getMaxPlayers(void) const { return maxplayers; }
+        bool hasPassword(void) const { return has_password; }
 
-	void setId(const unsigned int serverid) { this->serverid = serverid; }
-	void setName(const std::string name) { this->name = name; }
-	void setHost(const std::string host) { this->host = host; }
-	void setPort(const unsigned short port) { this->port = port; }
-	void setVersion(const std::string version) { this->version = version; }
-	void setPing(const unsigned short ping) { this->ping = ping; }
-	void setMap(const std::string map) { this->map = map; }
-	void setCurPlayers(const unsigned int curplayers) { this->curplayers = curplayers; }
-	void setMaxPlayers(const unsigned int maxplayers) { this->maxplayers = maxplayers; }
-	void setPassword(bool has_password) { this->has_password = has_password; }
+        void setId(const unsigned int serverid) { this->serverid = serverid; }
+        void setName(const std::string name) { this->name = name; }
+        void setHost(const std::string host) { this->host = host; }
+        void setPort(const unsigned short port) { this->port = port; }
+        void setVersion(const std::string version) { this->version = version; }
+        void setPing(const unsigned short ping) { this->ping = ping; }
+        void setMap(const std::string map) { this->map = map; }
+        void setCurPlayers(const unsigned int curplayers) { this->curplayers = curplayers; }
+        void setMaxPlayers(const unsigned int maxplayers) { this->maxplayers = maxplayers; }
+        void setPassword(bool has_password) { this->has_password = has_password; }
 
-private:
-	unsigned int serverid;
-	std::string name;
-	std::string host;
-	unsigned short port;
-	std::string version;
-	unsigned int ping;
-	std::string map;
-	unsigned int curplayers;
-	unsigned int maxplayers;
-	bool has_password;
+    private:
+        unsigned int serverid;
+        std::string name;
+        std::string host;
+        unsigned short port;
+        std::string version;
+        unsigned int ping;
+        std::string map;
+        unsigned int curplayers;
+        unsigned int maxplayers;
+        bool has_password;
 };
 
 #endif // LOBBYSERVERINFO_H_INCLUDED

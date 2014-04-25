@@ -1,4 +1,4 @@
-// $Id: LobbyServerInfo.cpp 7521 2011-09-08 20:45:55Z FloSoft $
+// $Id: LobbyServerInfo.cpp 9359 2014-04-25 15:37:22Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -25,9 +25,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
 #if defined _WIN32 && defined _DEBUG && defined _MSC_VER
-  #define new new(_NORMAL_BLOCK, THIS_FILE, __LINE__)
-  #undef THIS_FILE
-  static char THIS_FILE[] = __FILE__;
+#define new new(_NORMAL_BLOCK, THIS_FILE, __LINE__)
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -38,21 +38,21 @@
  */
 LobbyServerInfo::LobbyServerInfo(void)
 {
-	clear();
+    clear();
 }
 
 /// Deserialisierungs-Konstruktor von @p LobbyServerInfo.
-LobbyServerInfo::LobbyServerInfo(const unsigned playerid, Serializer * ser) :
-	serverid(ser->PopUnsignedInt()),
-	name(ser->PopString()),
-	host(ser->PopString()),
-	port(ser->PopUnsignedShort()),
-	version(ser->PopString()),
-	ping(ser->PopUnsignedInt()),
-	map(ser->PopString()),
-	curplayers(ser->PopUnsignedInt()),
-	maxplayers(ser->PopUnsignedInt()),
-	has_password(ser->PopBool())
+LobbyServerInfo::LobbyServerInfo(const unsigned playerid, Serializer* ser) :
+    serverid(ser->PopUnsignedInt()),
+    name(ser->PopString()),
+    host(ser->PopString()),
+    port(ser->PopUnsignedShort()),
+    version(ser->PopString()),
+    ping(ser->PopUnsignedInt()),
+    map(ser->PopString()),
+    curplayers(ser->PopUnsignedInt()),
+    maxplayers(ser->PopUnsignedInt()),
+    has_password(ser->PopBool())
 {
 
 }
@@ -65,15 +65,15 @@ LobbyServerInfo::LobbyServerInfo(const unsigned playerid, Serializer * ser) :
  */
 void LobbyServerInfo::clear(void)
 {
-	serverid = 0;
-	name = "";
-	host = "";
-	version = "";
-	ping = 0;
-	map = "";
-	curplayers = 0;
-	maxplayers = 0;
-	has_password = false;
+    serverid = 0;
+    name = "";
+    host = "";
+    version = "";
+    ping = 0;
+    map = "";
+    curplayers = 0;
+    maxplayers = 0;
+    has_password = false;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -86,16 +86,16 @@ void LobbyServerInfo::clear(void)
  *
  *  @author FloSoft
  */
-void LobbyServerInfo::serialize(Serializer * ser) const
+void LobbyServerInfo::serialize(Serializer* ser) const
 {
-	ser->PushUnsignedInt(serverid);
-	ser->PushString(name);
-	ser->PushString(host);
-	ser->PushUnsignedShort(port);
-	ser->PushString(version);
-	ser->PushUnsignedInt(ping);
-	ser->PushString(map);
-	ser->PushUnsignedInt(curplayers);
-	ser->PushUnsignedInt(maxplayers);
-	ser->PushBool(has_password);
+    ser->PushUnsignedInt(serverid);
+    ser->PushString(name);
+    ser->PushString(host);
+    ser->PushUnsignedShort(port);
+    ser->PushString(version);
+    ser->PushUnsignedInt(ping);
+    ser->PushString(map);
+    ser->PushUnsignedInt(curplayers);
+    ser->PushUnsignedInt(maxplayers);
+    ser->PushBool(has_password);
 }

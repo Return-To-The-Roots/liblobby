@@ -1,4 +1,4 @@
-// $Id: LobbyMessageInterface.h 7521 2011-09-08 20:45:55Z FloSoft $
+// $Id: LobbyMessageInterface.h 9359 2014-04-25 15:37:22Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -30,58 +30,58 @@ class LobbyPlayerInfo;
 
 class LobbyMessageInterface : public MessageInterface
 {
-public:
-	/// Lobby-Login-Nachricht.
-	virtual void OnNMSLobbyLogin(unsigned int id, const unsigned int revision, const std::string &user, const std::string &pass, const std::string &version);
-	/// Lobby-Login-Error-Nachricht.
-	virtual void OnNMSLobbyLoginError(unsigned int id, const std::string &error);
-	/// Lobby-Logged-In-Nachricht.
-	virtual void OnNMSLobbyLoginDone(unsigned int id, const std::string &email);
+    public:
+        /// Lobby-Login-Nachricht.
+        virtual void OnNMSLobbyLogin(unsigned int id, const unsigned int revision, const std::string& user, const std::string& pass, const std::string& version);
+        /// Lobby-Login-Error-Nachricht.
+        virtual void OnNMSLobbyLoginError(unsigned int id, const std::string& error);
+        /// Lobby-Logged-In-Nachricht.
+        virtual void OnNMSLobbyLoginDone(unsigned int id, const std::string& email);
 
-	/// Lobby-Register-Nachricht.
-	virtual void OnNMSLobbyRegister(unsigned int id, const unsigned int revision, const std::string &user, const std::string &pass, const std::string &email);
-	/// Lobby-Register-Error-Nachricht.
-	virtual void OnNMSLobbyRegisterError(unsigned int id, const std::string &error);
-	/// Lobby-Register-Done-Nachricht.
-	virtual void OnNMSLobbyRegisterDone(unsigned int id);
+        /// Lobby-Register-Nachricht.
+        virtual void OnNMSLobbyRegister(unsigned int id, const unsigned int revision, const std::string& user, const std::string& pass, const std::string& email);
+        /// Lobby-Register-Error-Nachricht.
+        virtual void OnNMSLobbyRegisterError(unsigned int id, const std::string& error);
+        /// Lobby-Register-Done-Nachricht.
+        virtual void OnNMSLobbyRegisterDone(unsigned int id);
 
-	/// Lobby-Player-ID-Nachricht.
-	virtual void OnNMSLobbyID(unsigned int id, const unsigned int &playerid);
-	/// Chat-Nachricht.
-	virtual void OnNMSLobbyChat(unsigned int id, const std::string &player, const std::string &text);
+        /// Lobby-Player-ID-Nachricht.
+        virtual void OnNMSLobbyID(unsigned int id, const unsigned int& playerid);
+        /// Chat-Nachricht.
+        virtual void OnNMSLobbyChat(unsigned int id, const std::string& player, const std::string& text);
 
-	/// Ping-Nachricht.
-	virtual void OnNMSLobbyPing(unsigned int id);
-	/// Pong-Nachricht.
-	virtual void OnNMSLobbyPong(unsigned int id);
+        /// Ping-Nachricht.
+        virtual void OnNMSLobbyPing(unsigned int id);
+        /// Pong-Nachricht.
+        virtual void OnNMSLobbyPong(unsigned int id);
 
-	/// ServerList-Nachricht.
-	virtual void OnNMSLobbyServerList(unsigned int id);
-	virtual void OnNMSLobbyServerList(unsigned int id, const LobbyServerList &list);
-	/// PlayerList-Nachricht.
-	virtual void OnNMSLobbyPlayerList(unsigned int id);
-	virtual void OnNMSLobbyPlayerList(unsigned int id, const LobbyPlayerList &list);
-	/// RankingList-Nachricht.
-	virtual void OnNMSLobbyRankingList(unsigned int id);
-	virtual void OnNMSLobbyRankingList(unsigned int id, const LobbyPlayerList &list);
-	/// ServerInfo-Nachricht.
-	virtual void OnNMSLobbyServerInfo(unsigned int id, const unsigned int &server);
-	virtual void OnNMSLobbyServerInfo(unsigned int id, const LobbyServerInfo &info);
+        /// ServerList-Nachricht.
+        virtual void OnNMSLobbyServerList(unsigned int id);
+        virtual void OnNMSLobbyServerList(unsigned int id, const LobbyServerList& list);
+        /// PlayerList-Nachricht.
+        virtual void OnNMSLobbyPlayerList(unsigned int id);
+        virtual void OnNMSLobbyPlayerList(unsigned int id, const LobbyPlayerList& list);
+        /// RankingList-Nachricht.
+        virtual void OnNMSLobbyRankingList(unsigned int id);
+        virtual void OnNMSLobbyRankingList(unsigned int id, const LobbyPlayerList& list);
+        /// ServerInfo-Nachricht.
+        virtual void OnNMSLobbyServerInfo(unsigned int id, const unsigned int& server);
+        virtual void OnNMSLobbyServerInfo(unsigned int id, const LobbyServerInfo& info);
 
-	/// Lobby-Server-Add-Done-Nachricht.
-	virtual void OnNMSLobbyServerAdd(unsigned int id, const LobbyServerInfo &info);
-	/// Lobby-Server-Add-Failed-Nachricht.
-	virtual void OnNMSLobbyServerAddFailed(unsigned int id, const std::string &error);
-	/// Lobby-Server-Update-Player-Nachricht.
-	virtual void OnNMSLobbyServerUpdatePlayer(unsigned int id, const unsigned int curplayer, const unsigned int maxplayer);
-	/// Lobby-Server-Update-Map-Nachricht.
-	virtual void OnNMSLobbyServerUpdateMap(unsigned int id, const std::string &map);
-	/// Lobby-Server-Delete-Nachricht.
-	virtual void OnNMSLobbyServerDelete(unsigned int id);
-	/// Lobby-Server-Join-Nachricht.
-	virtual void OnNMSLobbyServerJoin(unsigned int id);
-	/// Lobby-Ranking-Info-Nachricht.
-	virtual void OnNMSLobbyRankingInfo(unsigned int id, const LobbyPlayerInfo &player);
+        /// Lobby-Server-Add-Done-Nachricht.
+        virtual void OnNMSLobbyServerAdd(unsigned int id, const LobbyServerInfo& info);
+        /// Lobby-Server-Add-Failed-Nachricht.
+        virtual void OnNMSLobbyServerAddFailed(unsigned int id, const std::string& error);
+        /// Lobby-Server-Update-Player-Nachricht.
+        virtual void OnNMSLobbyServerUpdatePlayer(unsigned int id, const unsigned int curplayer, const unsigned int maxplayer);
+        /// Lobby-Server-Update-Map-Nachricht.
+        virtual void OnNMSLobbyServerUpdateMap(unsigned int id, const std::string& map);
+        /// Lobby-Server-Delete-Nachricht.
+        virtual void OnNMSLobbyServerDelete(unsigned int id);
+        /// Lobby-Server-Join-Nachricht.
+        virtual void OnNMSLobbyServerJoin(unsigned int id);
+        /// Lobby-Ranking-Info-Nachricht.
+        virtual void OnNMSLobbyRankingInfo(unsigned int id, const LobbyPlayerInfo& player);
 };
 
 #endif //!LOBBYMESSAGEINTERFACE_H_INCLUDED

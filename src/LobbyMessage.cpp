@@ -1,4 +1,4 @@
-// $Id: LobbyMessage.cpp 7521 2011-09-08 20:45:55Z FloSoft $
+// $Id: LobbyMessage.cpp 9359 2014-04-25 15:37:22Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -27,9 +27,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
 #if defined _WIN32 && defined _DEBUG && defined _MSC_VER
-	#define new new(_NORMAL_BLOCK, THIS_FILE, __LINE__)
-	#undef THIS_FILE
-	static char THIS_FILE[] = __FILE__;
+#define new new(_NORMAL_BLOCK, THIS_FILE, __LINE__)
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
 #endif
 
 
@@ -39,43 +39,43 @@
  *
  *  @author FloSoft
  */
-Message *LobbyMessage::create_lobby(unsigned short id)
+Message* LobbyMessage::create_lobby(unsigned short id)
 {
-	Message *msg = NULL;
+    Message* msg = NULL;
 
-	switch(id)
-	{
-	default:
-		return create_base(id);
+    switch(id)
+    {
+        default:
+            return create_base(id);
 
-	case NMS_LOBBY_LOGIN:					{ msg = new LobbyMessage_Login(); } break;
-	case NMS_LOBBY_LOGIN_DONE:				{ msg = new LobbyMessage_Login_Done(); } break;
-	case NMS_LOBBY_LOGIN_ERROR:				{ msg = new LobbyMessage_Login_Error(); } break;
+        case NMS_LOBBY_LOGIN:                   { msg = new LobbyMessage_Login(); } break;
+        case NMS_LOBBY_LOGIN_DONE:              { msg = new LobbyMessage_Login_Done(); } break;
+        case NMS_LOBBY_LOGIN_ERROR:             { msg = new LobbyMessage_Login_Error(); } break;
 
-	case NMS_LOBBY_REGISTER:				{ msg = new LobbyMessage_Register(); } break;
-	case NMS_LOBBY_REGISTER_DONE:			{ msg = new LobbyMessage_Register_Done(); } break;
-	case NMS_LOBBY_REGISTER_ERROR:			{ msg = new LobbyMessage_Register_Error(); } break;
+        case NMS_LOBBY_REGISTER:                { msg = new LobbyMessage_Register(); } break;
+        case NMS_LOBBY_REGISTER_DONE:           { msg = new LobbyMessage_Register_Done(); } break;
+        case NMS_LOBBY_REGISTER_ERROR:          { msg = new LobbyMessage_Register_Error(); } break;
 
-	case NMS_LOBBY_SERVERLIST:				{ msg = new LobbyMessage_ServerList(); } break;
-	case NMS_LOBBY_SERVERINFO:				{ msg = new LobbyMessage_ServerInfo(); } break;
-	case NMS_LOBBY_RANKINGLIST:				{ msg = new LobbyMessage_RankingList(); } break;
-	case NMS_LOBBY_PLAYERLIST:				{ msg = new LobbyMessage_PlayerList(); } break;
+        case NMS_LOBBY_SERVERLIST:              { msg = new LobbyMessage_ServerList(); } break;
+        case NMS_LOBBY_SERVERINFO:              { msg = new LobbyMessage_ServerInfo(); } break;
+        case NMS_LOBBY_RANKINGLIST:             { msg = new LobbyMessage_RankingList(); } break;
+        case NMS_LOBBY_PLAYERLIST:              { msg = new LobbyMessage_PlayerList(); } break;
 
-	case NMS_LOBBY_ID:						{ msg = new LobbyMessage_Id(); } break;
-	case NMS_LOBBY_CHAT:					{ msg = new LobbyMessage_Chat(); } break;
+        case NMS_LOBBY_ID:                      { msg = new LobbyMessage_Id(); } break;
+        case NMS_LOBBY_CHAT:                    { msg = new LobbyMessage_Chat(); } break;
 
-	case NMS_LOBBY_PING:					{ msg = new LobbyMessage_Ping(); } break;
-	case NMS_LOBBY_PONG:					{ msg = new LobbyMessage_Pong(); } break;
+        case NMS_LOBBY_PING:                    { msg = new LobbyMessage_Ping(); } break;
+        case NMS_LOBBY_PONG:                    { msg = new LobbyMessage_Pong(); } break;
 
-	case NMS_LOBBY_SERVER_ADD:				{ msg = new LobbyMessage_Server_Add(); } break;
-	case NMS_LOBBY_SERVER_ADD_FAILED:		{ msg = new LobbyMessage_Server_Add_Failed(); } break;
-	case NMS_LOBBY_SERVER_DELETE:			{ msg = new LobbyMessage_Server_Delete(); } break;
-	case NMS_LOBBY_SERVER_UPDATE_PLAYER:	{ msg = new LobbyMessage_Server_Update_Player(); } break;
-	case NMS_LOBBY_SERVER_UPDATE_MAP:		{ msg = new LobbyMessage_Server_Update_Map(); } break;
-	case NMS_LOBBY_SERVER_JOIN:				{ msg = new LobbyMessage_Server_Join(); } break;
+        case NMS_LOBBY_SERVER_ADD:              { msg = new LobbyMessage_Server_Add(); } break;
+        case NMS_LOBBY_SERVER_ADD_FAILED:       { msg = new LobbyMessage_Server_Add_Failed(); } break;
+        case NMS_LOBBY_SERVER_DELETE:           { msg = new LobbyMessage_Server_Delete(); } break;
+        case NMS_LOBBY_SERVER_UPDATE_PLAYER:    { msg = new LobbyMessage_Server_Update_Player(); } break;
+        case NMS_LOBBY_SERVER_UPDATE_MAP:       { msg = new LobbyMessage_Server_Update_Map(); } break;
+        case NMS_LOBBY_SERVER_JOIN:             { msg = new LobbyMessage_Server_Join(); } break;
 
-	case NMS_LOBBY_RANKING_INFO:			{ msg = new LobbyMessage_Lobby_Ranking_Info(); } break;
-	}
+        case NMS_LOBBY_RANKING_INFO:            { msg = new LobbyMessage_Lobby_Ranking_Info(); } break;
+    }
 
-	return msg;
+    return msg;
 }

@@ -1,4 +1,4 @@
-// $Id: LobbyPlayerInfo.h 8391 2012-10-04 20:13:51Z marcus $
+// $Id: LobbyPlayerInfo.h 9359 2014-04-25 15:37:22Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -25,54 +25,54 @@ class Serializer;
 
 class LobbyPlayerInfo
 {
-public:
-	/// Konstruktor von @p LobbyPlayerInfo.
-	LobbyPlayerInfo(void);
-	/// Deserialisierungs-Konstruktor von @p LobbyPlayerInfo.
-	LobbyPlayerInfo(const unsigned playerid, Serializer * ser);
-	/// leert die Informationen.
-	void clear(void);
-	/// serialisiert die Daten.
-	void serialize(Serializer *ser) const;
-	void deserialize(Serializer *ser);
+    public:
+        /// Konstruktor von @p LobbyPlayerInfo.
+        LobbyPlayerInfo(void);
+        /// Deserialisierungs-Konstruktor von @p LobbyPlayerInfo.
+        LobbyPlayerInfo(const unsigned playerid, Serializer* ser);
+        /// leert die Informationen.
+        void clear(void);
+        /// serialisiert die Daten.
+        void serialize(Serializer* ser) const;
+        void deserialize(Serializer* ser);
 
-	/// Zuweisungsoperator
-	LobbyPlayerInfo& operator= (const LobbyPlayerInfo &info)
-	{
-		playerid = info.playerid;
-		name = info.name;
-		version = info.version;
-		punkte = info.punkte;
-		gewonnen = info.gewonnen;
-		verloren = info.verloren;
+        /// Zuweisungsoperator
+        LobbyPlayerInfo& operator= (const LobbyPlayerInfo& info)
+        {
+            playerid = info.playerid;
+            name = info.name;
+            version = info.version;
+            punkte = info.punkte;
+            gewonnen = info.gewonnen;
+            verloren = info.verloren;
 
-		return *this;
-	}
+            return *this;
+        }
 
-	unsigned int getId(void) const { return playerid; }
-	std::string getName(void) const { return name; }
-	std::string getEmail(void) const { return email; }
-	std::string getVersion(void) const { return version; }
-	int getPunkte(void) const { return punkte; }
-	unsigned int getGewonnen(void) const { return gewonnen; }
-	unsigned int getVerloren(void) const { return verloren; }
+        unsigned int getId(void) const { return playerid; }
+        std::string getName(void) const { return name; }
+        std::string getEmail(void) const { return email; }
+        std::string getVersion(void) const { return version; }
+        int getPunkte(void) const { return punkte; }
+        unsigned int getGewonnen(void) const { return gewonnen; }
+        unsigned int getVerloren(void) const { return verloren; }
 
-	void setId(const unsigned int playerid) { this->playerid = playerid; }
-	void setName(const std::string name) { this->name = name; }
-	void setEmail(const std::string email) { this->email = email; }
-	void setVersion(const std::string version) { this->version = version; }
-	void setPunkte(const unsigned int punkte) { this->punkte = punkte; }
-	void setGewonnen(const unsigned int gewonnen) { this->gewonnen = gewonnen; }
-	void setVerloren(const unsigned int verloren) { this->verloren = verloren; }
+        void setId(const unsigned int playerid) { this->playerid = playerid; }
+        void setName(const std::string name) { this->name = name; }
+        void setEmail(const std::string email) { this->email = email; }
+        void setVersion(const std::string version) { this->version = version; }
+        void setPunkte(const unsigned int punkte) { this->punkte = punkte; }
+        void setGewonnen(const unsigned int gewonnen) { this->gewonnen = gewonnen; }
+        void setVerloren(const unsigned int verloren) { this->verloren = verloren; }
 
-protected:
-	unsigned int playerid;
-	std::string name;
-	std::string email;
-	std::string version;
-	int punkte;
-	unsigned int gewonnen;
-	unsigned int verloren;
+    protected:
+        unsigned int playerid;
+        std::string name;
+        std::string email;
+        std::string version;
+        int punkte;
+        unsigned int gewonnen;
+        unsigned int verloren;
 };
 
 #endif // LOBBYPLAYERINFO_H_INCLUDED

@@ -1,4 +1,4 @@
-// $Id: LobbyPlayer.cpp 9254 2014-03-19 20:31:47Z FloSoft $
+// $Id: LobbyPlayer.cpp 9359 2014-04-25 15:37:22Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -29,9 +29,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
 #if defined _WIN32 && defined _DEBUG && defined _MSC_VER
-	#define new new(_NORMAL_BLOCK, THIS_FILE, __LINE__)
-	#undef THIS_FILE
-	static char THIS_FILE[] = __FILE__;
+#define new new(_NORMAL_BLOCK, THIS_FILE, __LINE__)
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -42,7 +42,7 @@
  */
 LobbyPlayer::LobbyPlayer(void) : send_queue(&LobbyMessage::create_lobby), recv_queue(&LobbyMessage::create_lobby)
 {
-	clear();
+    clear();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -63,23 +63,23 @@ LobbyPlayer::~LobbyPlayer(void)
  */
 void LobbyPlayer::clear(void)
 {
-	playerstate = PS_FREE;
+    playerstate = PS_FREE;
 
-	send_queue.clear();
-	recv_queue.clear();
+    send_queue.clear();
+    recv_queue.clear();
 
-	pinging = false;
-	loggedin = false;
-	
-	lastping = 0;
-	connectiontime = 0;
-	ping = 0;
+    pinging = false;
+    loggedin = false;
 
-	client = false;
-	host = false;
-	serverid = 0;
+    lastping = 0;
+    connectiontime = 0;
+    ping = 0;
 
-	LobbyPlayerInfo::clear();
+    client = false;
+    host = false;
+    serverid = 0;
+
+    LobbyPlayerInfo::clear();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -90,9 +90,9 @@ void LobbyPlayer::clear(void)
  */
 void LobbyPlayer::sendPing(void)
 {
-	lastping = TIME.CurrentTick();
+    lastping = TIME.CurrentTick();
 
-	Send(new LobbyMessage_Ping(1));
+    Send(new LobbyMessage_Ping(1));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -103,13 +103,13 @@ void LobbyPlayer::sendPing(void)
  */
 bool LobbyPlayer::checkPing(void)
 {
-	// Ping erzeugen
-	if( (playerstate == PS_OCCUPIED) && (pinging == false) && ( (TIME.CurrentTick() - lastping) > 1000) )
-	{
-		sendPing();
-		return true;
-	}
-	return false;
+    // Ping erzeugen
+    if( (playerstate == PS_OCCUPIED) && (pinging == false) && ( (TIME.CurrentTick() - lastping) > 1000) )
+    {
+        sendPing();
+        return true;
+    }
+    return false;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -120,171 +120,171 @@ bool LobbyPlayer::checkPing(void)
  */
 bool LobbyPlayer::checkTimeout(void)
 {
-	// Bei sehr hohen Pings und längeren Reservierungen trennen wir uns von 
-	// den Spielern ( ping timeout )
-	if( (playerstate == PS_OCCUPIED) && (pinging == false) && ( (TIME.CurrentTick() - lastping) > 5000) )
-	{
-		LOG.lprintf("Kicking authenticated player %s (Ping timeout)\n", getName().c_str());
-		return true;
-	}
+    // Bei sehr hohen Pings und längeren Reservierungen trennen wir uns von
+    // den Spielern ( ping timeout )
+    if( (playerstate == PS_OCCUPIED) && (pinging == false) && ( (TIME.CurrentTick() - lastping) > 5000) )
+    {
+        LOG.lprintf("Kicking authenticated player %s (Ping timeout)\n", getName().c_str());
+        return true;
+    }
 
-	if( (playerstate == PS_RESERVED) && ( (TIME.CurrentTick() - connectiontime) > 10000) )
-	{
-		LOG.lprintf("Removing unauthenticated client (Ping timeout)\n");
-		return true;
-	}
+    if( (playerstate == PS_RESERVED) && ( (TIME.CurrentTick() - connectiontime) > 10000) )
+    {
+        LOG.lprintf("Removing unauthenticated client (Ping timeout)\n");
+        return true;
+    }
 
-	return false;
+    return false;
 }
 
-void LobbyPlayer::attach(const Socket &socket, const unsigned int &playerid)
+void LobbyPlayer::attach(const Socket& socket, const unsigned int& playerid)
 {
-	detach();
-	
-	this->socket = socket;
-	this->playerid = playerid;
+    detach();
 
-	playerstate = PS_RESERVED;
+    this->socket = socket;
+    this->playerid = playerid;
 
-	connectiontime = TIME.CurrentTick();
+    playerstate = PS_RESERVED;
+
+    connectiontime = TIME.CurrentTick();
 }
 
 void LobbyPlayer::detach(void)
 {
-	NoHost();
+    NoHost();
 
-	if(!isFree())
-		LOG.lprintf("Removing player %s\n", getName().c_str());
+    if(!isFree())
+        LOG.lprintf("Removing player %s\n", getName().c_str());
 
-	Send(NULL, true);
-	socket.Close();
+    Send(NULL, true);
+    socket.Close();
 
-	clear();
+    clear();
 }
 
 bool LobbyPlayer::Receive(void)
 {
-	if(!recv_queue.recv( &socket ))
-	{
-		LOG.lprintf("SERVER: Receiving message for player %d failed\n", playerid);
-		return false;
-	}
-	return true;
+    if(!recv_queue.recv( &socket ))
+    {
+        LOG.lprintf("SERVER: Receiving message for player %d failed\n", playerid);
+        return false;
+    }
+    return true;
 }
 
-bool LobbyPlayer::Send(LobbyMessage *m, bool flush)
+bool LobbyPlayer::Send(LobbyMessage* m, bool flush)
 {
-	if(m)
-	{
-		// Nachricht einhängen.
-		send_queue.push(m);
+    if(m)
+    {
+        // Nachricht einhängen.
+        send_queue.push(m);
 
-		// und nur wenn wir nicht flushen beenden.
-		if(!flush)
-			return true;
-	}
+        // und nur wenn wir nicht flushen beenden.
+        if(!flush)
+            return true;
+    }
 
-	// Alle Nachrichten abschicken.
-	if(flush)
-	{
-		send_queue.flush(&socket);
-		return true;
-	}
+    // Alle Nachrichten abschicken.
+    if(flush)
+    {
+        send_queue.flush(&socket);
+        return true;
+    }
 
-	if( !send_queue.send( &socket, 10, 512 ) )
-	{
-		LOG.lprintf("SERVER: Sending message for player %d failed\n", playerid);
-		return false;
-	}
-	return true;
+    if( !send_queue.send( &socket, 10, 512 ) )
+    {
+        LOG.lprintf("SERVER: Sending message for player %d failed\n", playerid);
+        return false;
+    }
+    return true;
 }
 
-void LobbyPlayer::Run(LobbyMessageInterface *callback)
+void LobbyPlayer::Run(LobbyMessageInterface* callback)
 {
-	// recv-queue abarbeiten
-	while(recv_queue.count() > 0)
-	{
-		recv_queue.front()->run(callback, playerid);
-		recv_queue.pop();
-	}
+    // recv-queue abarbeiten
+    while(recv_queue.count() > 0)
+    {
+        recv_queue.front()->run(callback, playerid);
+        recv_queue.pop();
+    }
 }
 
-void LobbyPlayer::occupy(const std::string &user, const std::string &email, const std::string &version)
+void LobbyPlayer::occupy(const std::string& user, const std::string& email, const std::string& version)
 {
-	loggedin = true;
-	playerstate = PS_OCCUPIED;
-	lastping = TIME.CurrentTick();
+    loggedin = true;
+    playerstate = PS_OCCUPIED;
+    lastping = TIME.CurrentTick();
 
-	setName(user);
-	setEmail(email);
-	setVersion(version);
+    setName(user);
+    setEmail(email);
+    setVersion(version);
 
-	std::stringstream text;
+    std::stringstream text;
 
-	text.str("");
-	text << GetWindowTitle();
-	Send(new LobbyMessage_Chat("Hinweis", text.str()));
+    text.str("");
+    text << GetWindowTitle();
+    Send(new LobbyMessage_Chat("Hinweis", text.str()));
 
-	text.str("");
-	text << "Serverversion: " << GetWindowVersion() << "-r" << GetWindowRevision();
-	Send(new LobbyMessage_Chat("Hinweis", text.str()));
+    text.str("");
+    text << "Serverversion: " << GetWindowVersion() << "-r" << GetWindowRevision();
+    Send(new LobbyMessage_Chat("Hinweis", text.str()));
 }
 
 void LobbyPlayer::gotPing(void)
 {
-	pinging = false;
+    pinging = false;
 
-	ping = (unsigned short)(TIME.CurrentTick() - lastping);
+    ping = (unsigned short)(TIME.CurrentTick() - lastping);
 
-	lastping = TIME.CurrentTick();
+    lastping = TIME.CurrentTick();
 
-	if(host && serverid != 0)
-		MYSQLCLIENT.UpdateServerPing(serverid, ping);
+    if(host && serverid != 0)
+        MYSQLCLIENT.UpdateServerPing(serverid, ping);
 }
 
 bool LobbyPlayer::Host(LobbyServerInfo info)
 {
-	info.setHost(socket.GetPeerIP());
+    info.setHost(socket.GetPeerIP());
 
-	if(MYSQLCLIENT.AddServer(&info))
-	{
-		LOG.lprintf("Player %s creates game '%s'\n", getName().c_str(), info.getName().c_str());
+    if(MYSQLCLIENT.AddServer(&info))
+    {
+        LOG.lprintf("Player %s creates game '%s'\n", getName().c_str(), info.getName().c_str());
 
-		Send(new LobbyMessage_Server_Add(info));
+        Send(new LobbyMessage_Server_Add(info));
 
-		host = true;
-		serverid = info.getId();
+        host = true;
+        serverid = info.getId();
 
-		return true;
-	}
+        return true;
+    }
 
-	LOG.lprintf("Can't create game\n");
+    LOG.lprintf("Can't create game\n");
 
-	Send(new LobbyMessage_Server_Add_Failed("Datenbankfehler beim Erstellen.\nName ungültig oder schon belegt."));
+    Send(new LobbyMessage_Server_Add_Failed("Datenbankfehler beim Erstellen.\nName ungültig oder schon belegt."));
 
-	return false;
+    return false;
 }
 
 void LobbyPlayer::NoHost(void)
 {
-	if(host == true && serverid != 0)
-		MYSQLCLIENT.DeleteServer(serverid);
+    if(host == true && serverid != 0)
+        MYSQLCLIENT.DeleteServer(serverid);
 
-	client = false;
-	host = false;
-	serverid = 0;
+    client = false;
+    host = false;
+    serverid = 0;
 }
 
 bool LobbyPlayer::updateHost(const unsigned int curplayer, const unsigned int maxplayer)
 {
-	if(host = true && serverid != 0)
-		return MYSQLCLIENT.UpdateServerPC(serverid, curplayer, maxplayer);
-	return false;
+    if(host = true && serverid != 0)
+        return MYSQLCLIENT.UpdateServerPC(serverid, curplayer, maxplayer);
+    return false;
 }
 
-bool LobbyPlayer::updateHost(const std::string &map)
+bool LobbyPlayer::updateHost(const std::string& map)
 {
-	if(host = true && serverid != 0)
-		return MYSQLCLIENT.UpdateServer(serverid, map);
-	return false;
+    if(host = true && serverid != 0)
+        return MYSQLCLIENT.UpdateServer(serverid, map);
+    return false;
 }

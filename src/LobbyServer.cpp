@@ -1,4 +1,4 @@
-// $Id: LobbyServer.cpp 8443 2012-10-14 15:12:12Z FloSoft $
+// $Id: LobbyServer.cpp 9359 2014-04-25 15:37:22Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -42,7 +42,7 @@ static char THIS_FILE[] = __FILE__;
  *  @author FloSoft
  */
 LobbyServer::LobbyServer(void)
-: stop(false)
+    : stop(false)
 {
 }
 
@@ -54,9 +54,9 @@ LobbyServer::LobbyServer(void)
  */
 LobbyServer::~LobbyServer(void)
 {
-	MYSQLCLIENT.Disconnect();
+    MYSQLCLIENT.Disconnect();
 
-	server.Close();
+    server.Close();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -70,24 +70,24 @@ LobbyServer::~LobbyServer(void)
  *  @param[in] mysql_db   MySQL-Datenbank
  *
  *  @return @p 0 für OK, größer @p 0 für Fehler
- * 
+ *
  *  @author FloSoft
  */
 int LobbyServer::Start(unsigned short port, std::string mysql_host, std::string mysql_user, std::string mysql_pass, std::string mysql_db)
 {
-	bool use_ipv6 = false;
+    bool use_ipv6 = false;
 
 #ifdef USE_IPV6
-	use_ipv6 = true;
+    use_ipv6 = true;
 #endif
 
-	if(!server.Listen(port, use_ipv6))
-		return error("Fehler beim Starten des Server: %s\n", strerror(errno));
+    if(!server.Listen(port, use_ipv6))
+        return error("Fehler beim Starten des Server: %s\n", strerror(errno));
 
-	if(!MYSQLCLIENT.Connect(mysql_host, mysql_user, mysql_pass, mysql_db))
-		return error("Fehler beim Verbinden mit dem MySQL-Server\n");
+    if(!MYSQLCLIENT.Connect(mysql_host, mysql_user, mysql_pass, mysql_db))
+        return error("Fehler beim Verbinden mit dem MySQL-Server\n");
 
-	return 0;
+    return 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -98,29 +98,29 @@ int LobbyServer::Start(unsigned short port, std::string mysql_host, std::string 
  */
 int LobbyServer::Run(void)
 {
-	// Clients testen (auf timeout usw)
-	if(!Test())
-		return 2;
+    // Clients testen (auf timeout usw)
+    if(!Test())
+        return 2;
 
-	// neue Clients verbinden
-	if(!Await())
-		return 3;
+    // neue Clients verbinden
+    if(!Await())
+        return 3;
 
-	// Daten weiterleiten
-	if(!Forward())
-		return 4;
+    // Daten weiterleiten
+    if(!Forward())
+        return 4;
 
-	// ggf. stoppen
-	if(stop == true)
-		return 100;
+    // ggf. stoppen
+    if(stop == true)
+        return 100;
 
 #ifdef _WIN32
-	Sleep(20);
+    Sleep(20);
 #else
-	usleep(20);
+    usleep(20);
 #endif
 
-	return 0;
+    return 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -131,26 +131,26 @@ int LobbyServer::Run(void)
  */
 bool LobbyServer::Test()
 {
-	while(players_kill.size() > 0)
-	{
-		LobbyPlayerMapIterator it = players.find(players_kill.back());
-		if(it != players.end())
-			players.erase(it);
-		players_kill.pop_back();
-	}
+    while(players_kill.size() > 0)
+    {
+        LobbyPlayerMapIterator it = players.find(players_kill.back());
+        if(it != players.end())
+            players.erase(it);
+        players_kill.pop_back();
+    }
 
-	for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
-	{
-		LobbyPlayer &p = it->second;
+    for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
+    {
+        LobbyPlayer& p = it->second;
 
-		// ggf. Ping senden
-		p.checkPing();
-		
-		// auf Timeout prüfen
-		if(p.checkTimeout())
-			Disconnect(p);
-	}
-	return true;
+        // ggf. Ping senden
+        p.checkPing();
+
+        // auf Timeout prüfen
+        if(p.checkTimeout())
+            Disconnect(p);
+    }
+    return true;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -161,36 +161,36 @@ bool LobbyServer::Test()
  */
 bool LobbyServer::Await()
 {
-	SocketSet set;
-	int playerid = 0xFFFFFFFF;
+    SocketSet set;
+    int playerid = 0xFFFFFFFF;
 
-	set.Add(server);
-	if( set.Select(0, 0) > 0)
-	{
-		if(set.InSet(server))
-		{
-			Socket tmp;
-			if(!server.Accept(tmp))
-				return false;
+    set.Add(server);
+    if( set.Select(0, 0) > 0)
+    {
+        if(set.InSet(server))
+        {
+            Socket tmp;
+            if(!server.Accept(tmp))
+                return false;
 
-			playerid = players.size();
-			while(players.find(playerid) != players.end())
-				++playerid;
+            playerid = players.size();
+            while(players.find(playerid) != players.end())
+                ++playerid;
 
-			LOG.lprintf("New client connected from %s\n", tmp.GetPeerIP().c_str());
+            LOG.lprintf("New client connected from %s\n", tmp.GetPeerIP().c_str());
 
-			LobbyPlayer p;
+            LobbyPlayer p;
 
-			p.attach(tmp, playerid);
+            p.attach(tmp, playerid);
 
-			players[playerid] = p;
+            players[playerid] = p;
 
-			LOG.lprintf("Player-ID %d\n", playerid);
+            LOG.lprintf("Player-ID %d\n", playerid);
 
-			p.Send(new LobbyMessage_Id(playerid), true);
-		}
-	}
-	return true;
+            p.Send(new LobbyMessage_Id(playerid), true);
+        }
+    }
+    return true;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -201,85 +201,85 @@ bool LobbyServer::Await()
  */
 bool LobbyServer::Forward()
 {
-	SocketSet set;
+    SocketSet set;
 
-	bool not_empty = false;
-	unsigned int max_not_empty = 0;
+    bool not_empty = false;
+    unsigned int max_not_empty = 0;
 
-	// erstmal auf Daten überprüfen
-	/*do
-	{*/
-		// In einem SocketSet alle Clients hinzufügen und gucken, ob etwas empfangen wurde
-		for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
-		{
-			LobbyPlayer &p = it->second;
+    // erstmal auf Daten überprüfen
+    /*do
+    {*/
+    // In einem SocketSet alle Clients hinzufügen und gucken, ob etwas empfangen wurde
+    for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
+    {
+        LobbyPlayer& p = it->second;
 
-			if(p.isReserved() || p.isOccupied())
-				p.addToSet(set);
-		}
+        if(p.isReserved() || p.isOccupied())
+            p.addToSet(set);
+    }
 
-		//not_empty = false;
+    //not_empty = false;
 
-		if(set.Select(0, 0) > 0)
-		{
-			for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
-			{
-				LobbyPlayer &p = it->second;
+    if(set.Select(0, 0) > 0)
+    {
+        for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
+        {
+            LobbyPlayer& p = it->second;
 
-				if( p.inSet(set) )
-				{
-					// nachricht empfangen
-					if(!p.Receive())
-						Disconnect(p);
-					/*else if(p.isOccupied())
-					{
-						not_empty = true;
-						++max_not_empty;
-					}*/
-				}
-			}
-		}
+            if( p.inSet(set) )
+            {
+                // nachricht empfangen
+                if(!p.Receive())
+                    Disconnect(p);
+                /*else if(p.isOccupied())
+                {
+                    not_empty = true;
+                    ++max_not_empty;
+                }*/
+            }
+        }
+    }
 
-		set.Clear();
-	//} while(not_empty && max_not_empty < 10000);
+    set.Clear();
+    //} while(not_empty && max_not_empty < 10000);
 
-	// In einem SocketSet alle Clients hinzufügen und gucken, ob fehler aufgetreten sind
-	for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
-	{
-		LobbyPlayer &p = it->second;
+    // In einem SocketSet alle Clients hinzufügen und gucken, ob fehler aufgetreten sind
+    for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
+    {
+        LobbyPlayer& p = it->second;
 
-		if(p.isReserved() || p.isOccupied())
-			p.addToSet(set);
-	}
+        if(p.isReserved() || p.isOccupied())
+            p.addToSet(set);
+    }
 
-	if(set.Select(0, 2) > 0)
-	{
-		LOG.lprintf("Error on Sockets\n");
+    if(set.Select(0, 2) > 0)
+    {
+        LOG.lprintf("Error on Sockets\n");
 
-		for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
-		{
-			LobbyPlayer &p = it->second;
+        for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
+        {
+            LobbyPlayer& p = it->second;
 
-			if( p.inSet(set) )
-			{
-				LOG.lprintf("Player %d: Connection lost\n", p.getId() );
-				Disconnect(p);
-			}
-		}
-	}
+            if( p.inSet(set) )
+            {
+                LOG.lprintf("Player %d: Connection lost\n", p.getId() );
+                Disconnect(p);
+            }
+        }
+    }
 
-	// Nachrichten-Queues der Spieler abschicken (max 10 Nachrichten pro Spieler pro Runde)
-	for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
-	{
-		LobbyPlayer &p = it->second;
+    // Nachrichten-Queues der Spieler abschicken (max 10 Nachrichten pro Spieler pro Runde)
+    for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
+    {
+        LobbyPlayer& p = it->second;
 
-		if(!p.Send())
-			Disconnect(p);
-		else
-			p.Run(this);
-	}
+        if(!p.Send())
+            Disconnect(p);
+        else
+            p.Run(this);
+    }
 
-	return true;
+    return true;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -290,9 +290,9 @@ bool LobbyServer::Forward()
  */
 void LobbyServer::OnNMSDead(unsigned int id)
 {
-	LobbyPlayerMapIterator it = players.find(id);
-	if(it != players.end())
-		Disconnect(it->second);
+    LobbyPlayerMapIterator it = players.find(id);
+    if(it != players.end())
+        Disconnect(it->second);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -304,84 +304,84 @@ void LobbyServer::OnNMSDead(unsigned int id)
  *
  *  @author FloSoft
  */
-void LobbyServer::OnNMSLobbyLogin(unsigned int id, const unsigned int revision, const std::string &user, const std::string &pass, const std::string &version)
+void LobbyServer::OnNMSLobbyLogin(unsigned int id, const unsigned int revision, const std::string& user, const std::string& pass, const std::string& version)
 {
-	LobbyPlayer &player = players[id];
+    LobbyPlayer& player = players[id];
 
-	std::string email;
+    std::string email;
 
-	// Protokollversion prüfen
-	if(revision != LOBBYPROTOCOL_VERSION)
-	{
-		// zu alt
-		LOG.lprintf("User %s@%s invalid (protocoll version wrong)\n", user.c_str(), player.getPeerIP().c_str());
+    // Protokollversion prüfen
+    if(revision != LOBBYPROTOCOL_VERSION)
+    {
+        // zu alt
+        LOG.lprintf("User %s@%s invalid (protocoll version wrong)\n", user.c_str(), player.getPeerIP().c_str());
 
-		// do we've got a revision? or is it so damn old that it does not send a revision?
-		if( (revision & 0xFF0000FF) == 0xFF0000FF)
-		{
-			// newer client
-			player.Send(new LobbyMessage_Login_Error("Falsche Protokollversion! Programmversion ist zu alt."));
-		}
-		else
-		{
-			// really old client (<= 0.6)
-			player.Send(new LobbyMessage_Login_Error06("Falsche Protokollversion! Programmversion ist zu alt."));
-		}
+        // do we've got a revision? or is it so damn old that it does not send a revision?
+        if( (revision & 0xFF0000FF) == 0xFF0000FF)
+        {
+            // newer client
+            player.Send(new LobbyMessage_Login_Error("Falsche Protokollversion! Programmversion ist zu alt."));
+        }
+        else
+        {
+            // really old client (<= 0.6)
+            player.Send(new LobbyMessage_Login_Error06("Falsche Protokollversion! Programmversion ist zu alt."));
+        }
 
-		Disconnect(player);
-	}
-	else
-	{
-		// prüfen
-		if(MYSQLCLIENT.LoginUser(user, pass, email, player.getPeerIP()))
-		{
-			bool found = false;
+        Disconnect(player);
+    }
+    else
+    {
+        // prüfen
+        if(MYSQLCLIENT.LoginUser(user, pass, email, player.getPeerIP()))
+        {
+            bool found = false;
 
-			for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
-			{
-				LobbyPlayer &p = it->second;
-				
-				if(p.isLoggedIn() && p.getName() == user)
-				{
-					LOG.lprintf("User %s@%s already logged on (slot %d == %d)!\n", user.c_str(), player.getPeerIP().c_str(), id, p.getId());
+            for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
+            {
+                LobbyPlayer& p = it->second;
 
-					player.Send(new LobbyMessage_Login_Error("Bereits eingeloggt! Bei Verbindungsabbruch einen Moment warten."));
+                if(p.isLoggedIn() && p.getName() == user)
+                {
+                    LOG.lprintf("User %s@%s already logged on (slot %d == %d)!\n", user.c_str(), player.getPeerIP().c_str(), id, p.getId());
 
-					// alten Spieler rauswerfen
-					Disconnect(p);
+                    player.Send(new LobbyMessage_Login_Error("Bereits eingeloggt! Bei Verbindungsabbruch einen Moment warten."));
 
-					found = true;
-				}
-			}
+                    // alten Spieler rauswerfen
+                    Disconnect(p);
 
-			if(!found)
-			{
-				LOG.lprintf("User %s@%s logged on\n", user.c_str(), player.getPeerIP().c_str());
+                    found = true;
+                }
+            }
 
-				player.Send(new LobbyMessage_Login_Done(email));
+            if(!found)
+            {
+                LOG.lprintf("User %s@%s logged on\n", user.c_str(), player.getPeerIP().c_str());
 
-				player.occupy(user, email, version);
+                player.Send(new LobbyMessage_Login_Done(email));
 
-				std::stringstream text;
-				text << user << " hat die Lobby betreten";
+                player.occupy(user, email, version);
 
-				LobbyMessage *m = new LobbyMessage_Chat("SYSTEM", text.str());
-				SendToAll(m);
-				delete m;
+                std::stringstream text;
+                text << user << " hat die Lobby betreten";
 
-				SendServerList(0xFFFFFFFF);
-				SendPlayerList(0xFFFFFFFF);
-			}
-		}
-		else
-		{
-			LOG.lprintf("User %s invalid (password %s wrong?)\n", user.c_str(), "********");
+                LobbyMessage* m = new LobbyMessage_Chat("SYSTEM", text.str());
+                SendToAll(m);
+                delete m;
 
-			player.Send(new LobbyMessage_Login_Error("Benutzer/Passwort-Kombination unbekannt!"));
+                SendServerList(0xFFFFFFFF);
+                SendPlayerList(0xFFFFFFFF);
+            }
+        }
+        else
+        {
+            LOG.lprintf("User %s invalid (password %s wrong?)\n", user.c_str(), "********");
 
-			Disconnect(player);
-		}
-	}
+            player.Send(new LobbyMessage_Login_Error("Benutzer/Passwort-Kombination unbekannt!"));
+
+            Disconnect(player);
+        }
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -393,52 +393,52 @@ void LobbyServer::OnNMSLobbyLogin(unsigned int id, const unsigned int revision, 
  *
  *  @author FloSoft
  */
-void LobbyServer::OnNMSLobbyRegister(unsigned int id, const unsigned int revision, const std::string &user, const std::string &pass, const std::string &email)
+void LobbyServer::OnNMSLobbyRegister(unsigned int id, const unsigned int revision, const std::string& user, const std::string& pass, const std::string& email)
 {
-	LobbyPlayer &player = players[id];
+    LobbyPlayer& player = players[id];
 
-	// Protokollversion prüfen
-	if(revision != LOBBYPROTOCOL_VERSION)
-	{
-		// zu alt
-		LOG.lprintf("User %s invalid (protocoll version wrong)\n", user.c_str());
+    // Protokollversion prüfen
+    if(revision != LOBBYPROTOCOL_VERSION)
+    {
+        // zu alt
+        LOG.lprintf("User %s invalid (protocoll version wrong)\n", user.c_str());
 
-		// do we've got a revision? or is it so damn old that it does not send a revision?
-		if( (revision & 0xFF0000FF) == 0xFF0000FF)
-		{
-			// newer client
-			player.Send(new LobbyMessage_Register_Error("Falsche Protokollversion! Programmversion ist zu alt."));
-		}
-		else
-		{
-			// really old client (<= 0.6)
-			player.Send(new LobbyMessage_Register_Error06("Falsche Protokollversion! Programmversion ist zu alt."));
-		}
+        // do we've got a revision? or is it so damn old that it does not send a revision?
+        if( (revision & 0xFF0000FF) == 0xFF0000FF)
+        {
+            // newer client
+            player.Send(new LobbyMessage_Register_Error("Falsche Protokollversion! Programmversion ist zu alt."));
+        }
+        else
+        {
+            // really old client (<= 0.6)
+            player.Send(new LobbyMessage_Register_Error06("Falsche Protokollversion! Programmversion ist zu alt."));
+        }
 
-		Disconnect(player);
-	}
-	else
-	{
-		/*if(MYSQLCLIENT.RegisterUser(user, pass, email))
-		{
-			LOG.lprintf("User %s registered\n", user.c_str());
+        Disconnect(player);
+    }
+    else
+    {
+        /*if(MYSQLCLIENT.RegisterUser(user, pass, email))
+        {
+            LOG.lprintf("User %s registered\n", user.c_str());
 
-			player.Send(new LobbyMessage_Register_Done(1));
-		}
-		else
-		{
-			LOG.lprintf("User %s failed to register\n", user.c_str());
+            player.Send(new LobbyMessage_Register_Done(1));
+        }
+        else
+        {
+            LOG.lprintf("User %s failed to register\n", user.c_str());
 
-			player.Send(new LobbyMessage_Register_Error("Registrierung fehlgeschlagen: Datenbankfehler oder Benutzer existiert schon"));
+            player.Send(new LobbyMessage_Register_Error("Registrierung fehlgeschlagen: Datenbankfehler oder Benutzer existiert schon"));
 
-			Disconnect(player);
-		}*/
-		LOG.lprintf("User %s tried to register\n", user.c_str());
+            Disconnect(player);
+        }*/
+        LOG.lprintf("User %s tried to register\n", user.c_str());
 
-		player.Send(new LobbyMessage_Register_Error("To register, you have to create a valid board account at\nhttp://forum.siedler25.org\nat the moment.\n"));
+        player.Send(new LobbyMessage_Register_Error("To register, you have to create a valid board account at\nhttp://forum.siedler25.org\nat the moment.\n"));
 
-		Disconnect(player);
-	}
+        Disconnect(player);
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -449,9 +449,9 @@ void LobbyServer::OnNMSLobbyRegister(unsigned int id, const unsigned int revisio
  */
 void LobbyServer::OnNMSLobbyPong(unsigned int id)
 {
-	LobbyPlayer &player = players[id];
+    LobbyPlayer& player = players[id];
 
-	player.gotPing();
+    player.gotPing();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -460,124 +460,128 @@ void LobbyServer::OnNMSLobbyPong(unsigned int id)
  *
  *  @author FloSoft
  */
-void LobbyServer::OnNMSLobbyChat(unsigned int id, const std::string &to, const std::string &text)
+void LobbyServer::OnNMSLobbyChat(unsigned int id, const std::string& to, const std::string& text)
 {
-	if(text.size() <= 0)
-		return;
+    if(text.size() <= 0)
+        return;
 
-	LobbyPlayer &player = players[id];
+    LobbyPlayer& player = players[id];
 
-	if (player.getName() == "LobbyBot")
-	{
-		if (!text.compare("!kick") || !text.compare(0, 6, "!kick "))
-		{
-			for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
-			{
-				LobbyPlayer &p = it->second;
+    if (player.getName() == "LobbyBot")
+    {
+        if (!text.compare("!kick") || !text.compare(0, 6, "!kick "))
+        {
+            for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
+            {
+                LobbyPlayer& p = it->second;
 
-				if(p.isOccupied() && p.getName() == to)
-				{
-					if (text.length() > 6)
-					{
-						p.Send(new LobbyMessage_Chat(player.getName(), text.substr(6)));
-					}
+                if(p.isOccupied() && p.getName() == to)
+                {
+                    if (text.length() > 6)
+                    {
+                        p.Send(new LobbyMessage_Chat(player.getName(), text.substr(6)));
+                    }
 
-					Disconnect(p);
+                    Disconnect(p);
 
-					break;
-				}
-			}
+                    break;
+                }
+            }
 
-			return;
-		} else if (!text.compare("!ban"))
-		{
-			MYSQLCLIENT.SetBan(to, 1);
+            return;
+        }
+        else if (!text.compare("!ban"))
+        {
+            MYSQLCLIENT.SetBan(to, 1);
 
-			std::stringstream out;
-			out << "!ban ";
-			out << to;
+            std::stringstream out;
+            out << "!ban ";
+            out << to;
 
-			player.Send(new LobbyMessage_Chat(player.getName(), out.str()));
+            player.Send(new LobbyMessage_Chat(player.getName(), out.str()));
 
-			return;
-		} else if (!text.compare("!unban"))
-		{
-			MYSQLCLIENT.SetBan(to, 0);
+            return;
+        }
+        else if (!text.compare("!unban"))
+        {
+            MYSQLCLIENT.SetBan(to, 0);
 
-			std::stringstream out;
-			out << "!unban ";
-			out << to;
+            std::stringstream out;
+            out << "!unban ";
+            out << to;
 
-			player.Send(new LobbyMessage_Chat(player.getName(), out.str()));
+            player.Send(new LobbyMessage_Chat(player.getName(), out.str()));
 
-			return;
-		} else if (!text.compare("!getinfo"))
-		{
-			for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
-			{
-				LobbyPlayer &p = it->second;
+            return;
+        }
+        else if (!text.compare("!getinfo"))
+        {
+            for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
+            {
+                LobbyPlayer& p = it->second;
 
-				if(p.isOccupied() && (p.getName() == to))
-				{
-					std::stringstream out;
+                if(p.isOccupied() && (p.getName() == to))
+                {
+                    std::stringstream out;
 
-					out << "!getinfo ";
-					out << p.getPeerIP();
-					out << " ";
-					out << p.getEmail();
-					out << " ";
-					out << p.getName();
+                    out << "!getinfo ";
+                    out << p.getPeerIP();
+                    out << " ";
+                    out << p.getEmail();
+                    out << " ";
+                    out << p.getName();
 
-					player.Send(new LobbyMessage_Chat(player.getName(), out.str()));
-					break;
-				}
-			}
+                    player.Send(new LobbyMessage_Chat(player.getName(), out.str()));
+                    break;
+                }
+            }
 
-			return;
-		} else if (!text.compare(0, 1, "!"))
-		{
-			// hide anything that might be a command from everybody else
-			return;
-		}
-	}
+            return;
+        }
+        else if (!text.compare(0, 1, "!"))
+        {
+            // hide anything that might be a command from everybody else
+            return;
+        }
+    }
 
-	// send to lobbybot only, throw away otherwise
-	if (!text.compare(0, 1, "!"))
-	{
-		for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
-		{
-			LobbyPlayer &p = it->second;
+    // send to lobbybot only, throw away otherwise
+    if (!text.compare(0, 1, "!"))
+    {
+        for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
+        {
+            LobbyPlayer& p = it->second;
 
-			if(p.isOccupied() && p.getName() == "LobbyBot")
-			{
-				p.Send(new LobbyMessage_Chat(player.getName(), text));
-				return;
-			}
-		}
+            if(p.isOccupied() && p.getName() == "LobbyBot")
+            {
+                p.Send(new LobbyMessage_Chat(player.getName(), text));
+                return;
+            }
+        }
 
-		return;
-	}
+        return;
+    }
 
-	if(to.size() > 0)
-	{
-		for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
-		{
-			LobbyPlayer &p = it->second;
-			if(p.isOccupied() && p.getName() == to)
-			{
-				p.Send(new LobbyMessage_Chat(player.getName(), text));
-				return;
-			}
-		}
+    if(to.size() > 0)
+    {
+        for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
+        {
+            LobbyPlayer& p = it->second;
+            if(p.isOccupied() && p.getName() == to)
+            {
+                p.Send(new LobbyMessage_Chat(player.getName(), text));
+                return;
+            }
+        }
 
-		// throw away _private_ messages if recipient cannot be found rather than showing them to everyone
-		return;
-	}
+        // throw away _private_ messages if recipient cannot be found rather than showing them to everyone
+        return;
+    }
 
-	// no player selected
-	LobbyMessage *m = new LobbyMessage_Chat(player.getName(), text);
-	SendToAll(m);
-	delete m;
+    // no player selected
+    LobbyMessage* m = new LobbyMessage_Chat(player.getName(), text);
+    SendToAll(m);
+    delete m;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -588,7 +592,7 @@ void LobbyServer::OnNMSLobbyChat(unsigned int id, const std::string &to, const s
  */
 void LobbyServer::OnNMSLobbyServerList(unsigned int id)
 {
-	SendServerList(id);
+    SendServerList(id);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -599,7 +603,7 @@ void LobbyServer::OnNMSLobbyServerList(unsigned int id)
  */
 void LobbyServer::OnNMSLobbyPlayerList(unsigned int id)
 {
-	SendPlayerList(id);
+    SendPlayerList(id);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -610,7 +614,7 @@ void LobbyServer::OnNMSLobbyPlayerList(unsigned int id)
  */
 void LobbyServer::OnNMSLobbyRankingList(unsigned int id)
 {
-	SendRankingList(id);
+    SendRankingList(id);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -619,13 +623,13 @@ void LobbyServer::OnNMSLobbyRankingList(unsigned int id)
  *
  *  @author FloSoft
  */
-void LobbyServer::OnNMSLobbyServerInfo(unsigned int id, const unsigned int &server)
+void LobbyServer::OnNMSLobbyServerInfo(unsigned int id, const unsigned int& server)
 {
-	LobbyPlayer &player = players[id];
+    LobbyPlayer& player = players[id];
 
-	LobbyServerInfo info;
-	if(MYSQLCLIENT.GetServerInfo(server, &info))
-		player.Send(new LobbyMessage_ServerInfo(info));
+    LobbyServerInfo info;
+    if(MYSQLCLIENT.GetServerInfo(server, &info))
+        player.Send(new LobbyMessage_ServerInfo(info));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -634,12 +638,12 @@ void LobbyServer::OnNMSLobbyServerInfo(unsigned int id, const unsigned int &serv
  *
  *  @author FloSoft
  */
-void LobbyServer::OnNMSLobbyServerAdd(unsigned int id, const LobbyServerInfo &info)
+void LobbyServer::OnNMSLobbyServerAdd(unsigned int id, const LobbyServerInfo& info)
 {
-	LobbyPlayer &player = players[id];
+    LobbyPlayer& player = players[id];
 
-	if(player.Host(info))
-		SendPlayerList(0xFFFFFFFF);
+    if(player.Host(info))
+        SendPlayerList(0xFFFFFFFF);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -650,9 +654,9 @@ void LobbyServer::OnNMSLobbyServerAdd(unsigned int id, const LobbyServerInfo &in
  */
 void LobbyServer::OnNMSLobbyServerUpdatePlayer(unsigned int id, const unsigned int curplayer, const unsigned int maxplayer)
 {
-	LobbyPlayer &player = players[id];
+    LobbyPlayer& player = players[id];
 
-	player.updateHost(curplayer, maxplayer);
+    player.updateHost(curplayer, maxplayer);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -661,24 +665,24 @@ void LobbyServer::OnNMSLobbyServerUpdatePlayer(unsigned int id, const unsigned i
  *
  *  @author FloSoft
  */
-void LobbyServer::OnNMSLobbyServerUpdateMap(unsigned int id, const std::string &map)
+void LobbyServer::OnNMSLobbyServerUpdateMap(unsigned int id, const std::string& map)
 {
-	LobbyPlayer &player = players[id];
+    LobbyPlayer& player = players[id];
 
-	if(player.updateHost(map))
-	{
-		LobbyServerInfo info;
-		MYSQLCLIENT.GetServerInfo(player.getServerId(), &info);
+    if(player.updateHost(map))
+    {
+        LobbyServerInfo info;
+        MYSQLCLIENT.GetServerInfo(player.getServerId(), &info);
 
-		std::stringstream text;
-		text << player.getName() << " hat den Server " << info.getName() << " erstellt";
-		LobbyMessage *m = new LobbyMessage_Chat("SYSTEM", text.str());
-		SendToAll(m);
-		delete m;
+        std::stringstream text;
+        text << player.getName() << " hat den Server " << info.getName() << " erstellt";
+        LobbyMessage* m = new LobbyMessage_Chat("SYSTEM", text.str());
+        SendToAll(m);
+        delete m;
 
-		// Spielerliste aktualisieren
-		SendServerList(0xFFFFFFFF);
-	}
+        // Spielerliste aktualisieren
+        SendServerList(0xFFFFFFFF);
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -689,18 +693,18 @@ void LobbyServer::OnNMSLobbyServerUpdateMap(unsigned int id, const std::string &
  */
 void LobbyServer::OnNMSLobbyServerDelete(unsigned int id)
 {
-	LobbyPlayer &player = players[id];
+    LobbyPlayer& player = players[id];
 
-	player.NoHost();
+    player.NoHost();
 
-	std::stringstream text;
-	text << player.getName() << " ist wieder anwesend";
-	LobbyMessage *m = new LobbyMessage_Chat("SYSTEM", text.str());
-	SendToAll(m);
-	delete m;
+    std::stringstream text;
+    text << player.getName() << " ist wieder anwesend";
+    LobbyMessage* m = new LobbyMessage_Chat("SYSTEM", text.str());
+    SendToAll(m);
+    delete m;
 
-	// Spielerliste aktualisieren
-	SendPlayerList(0xFFFFFFFF);
+    // Spielerliste aktualisieren
+    SendPlayerList(0xFFFFFFFF);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -711,12 +715,12 @@ void LobbyServer::OnNMSLobbyServerDelete(unsigned int id)
  */
 void LobbyServer::OnNMSLobbyServerJoin(unsigned int id)
 {
-	LobbyPlayer &player = players[id];
+    LobbyPlayer& player = players[id];
 
-	player.Client();
+    player.Client();
 
-	// Spielerliste aktualisieren
-	SendPlayerList(0xFFFFFFFF);
+    // Spielerliste aktualisieren
+    SendPlayerList(0xFFFFFFFF);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -727,16 +731,16 @@ void LobbyServer::OnNMSLobbyServerJoin(unsigned int id)
 *
 *  @author FloSoft
 */
-void LobbyServer::SendToAll(const LobbyMessage *msg)
+void LobbyServer::SendToAll(const LobbyMessage* msg)
 {
-	for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
-	{
-		LobbyPlayer &p = it->second;
+    for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
+    {
+        LobbyPlayer& p = it->second;
 
-		// ist der Slot Belegt, dann Nachricht senden
-		if(p.isOccupied())
-			p.Send(dynamic_cast<LobbyMessage*>(msg->duplicate()));
-	}
+        // ist der Slot Belegt, dann Nachricht senden
+        if(p.isOccupied())
+            p.Send(dynamic_cast<LobbyMessage*>(msg->duplicate()));
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -747,27 +751,27 @@ void LobbyServer::SendToAll(const LobbyMessage *msg)
  *
  *  @author FloSoft
  */
-void LobbyServer::Disconnect(LobbyPlayer &p)
+void LobbyServer::Disconnect(LobbyPlayer& p)
 {
-	LobbyPlayerMapIterator it = players.find(p.getId());
-	players_kill.push_back(it->first);
+    LobbyPlayerMapIterator it = players.find(p.getId());
+    players_kill.push_back(it->first);
 
-	if(!p.getName().empty())
-	{
-		std::stringstream text;
-		text << p.getName() << " hat die Lobby verlassen";
-		LobbyMessage *m = new LobbyMessage_Chat("SYSTEM", text.str());
-	
-		SendToAll(m);
-		delete m;
-	}
+    if(!p.getName().empty())
+    {
+        std::stringstream text;
+        text << p.getName() << " hat die Lobby verlassen";
+        LobbyMessage* m = new LobbyMessage_Chat("SYSTEM", text.str());
 
-	// schließen
-	p.NoHost();
-	p.detach();
+        SendToAll(m);
+        delete m;
+    }
 
-	SendServerList(0xFFFFFFFF);
-	SendPlayerList(0xFFFFFFFF);
+    // schließen
+    p.NoHost();
+    p.detach();
+
+    SendServerList(0xFFFFFFFF);
+    SendPlayerList(0xFFFFFFFF);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -780,19 +784,19 @@ void LobbyServer::Disconnect(LobbyPlayer &p)
  */
 void LobbyServer::SendServerList(unsigned int id)
 {
-	LobbyServerList list;
+    LobbyServerList list;
 
-	if(!MYSQLCLIENT.GetServerList(&list))
-		LOG.lprintf("Failed to lookup Serverlist!\n");
+    if(!MYSQLCLIENT.GetServerList(&list))
+        LOG.lprintf("Failed to lookup Serverlist!\n");
 
-	LobbyMessage *m = new LobbyMessage_ServerList(list);
-	if(id == 0xFFFFFFFF)
-	{
-		SendToAll(m);
-		delete m;
-	}
-	else
-		players[id].Send(m);
+    LobbyMessage* m = new LobbyMessage_ServerList(list);
+    if(id == 0xFFFFFFFF)
+    {
+        SendToAll(m);
+        delete m;
+    }
+    else
+        players[id].Send(m);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -805,34 +809,34 @@ void LobbyServer::SendServerList(unsigned int id)
  */
 void LobbyServer::SendPlayerList(unsigned int id)
 {
-	LobbyPlayerList list;
+    LobbyPlayerList list;
 
-	unsigned int count = 0;
-	for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
-	{
-		LobbyPlayer &p = it->second;
+    unsigned int count = 0;
+    for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
+    {
+        LobbyPlayer& p = it->second;
 
-		if(p.getName() == "LobbyBot")
-			continue;
+        if(p.getName() == "LobbyBot")
+            continue;
 
-		if(p.isOccupied() && !p.isHost() && !p.isClient() )
-		{
-			if(p.getPunkte() == 0 && !MYSQLCLIENT.GetRankingInfo(p))
-                		LOG.lprintf("Failed to lookup Ranking of player %s!\n", p.getName().c_str());
+        if(p.isOccupied() && !p.isHost() && !p.isClient() )
+        {
+            if(p.getPunkte() == 0 && !MYSQLCLIENT.GetRankingInfo(p))
+                LOG.lprintf("Failed to lookup Ranking of player %s!\n", p.getName().c_str());
 
-			++count;
-			list.push_back(p);
-		}
-	}
+            ++count;
+            list.push_back(p);
+        }
+    }
 
-	LobbyMessage *m = new LobbyMessage_PlayerList(list);
-	if(id == 0xFFFFFFFF)
-	{
-		SendToAll(m);
-		delete m;
-	}
-	else
-		players[id].Send(m);
+    LobbyMessage* m = new LobbyMessage_PlayerList(list);
+    if(id == 0xFFFFFFFF)
+    {
+        SendToAll(m);
+        delete m;
+    }
+    else
+        players[id].Send(m);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -845,19 +849,19 @@ void LobbyServer::SendPlayerList(unsigned int id)
  */
 void LobbyServer::SendRankingList(unsigned int id)
 {
-	LobbyPlayerList list;
+    LobbyPlayerList list;
 
-	if(!MYSQLCLIENT.GetRankingList(&list))
-		LOG.lprintf("Failed to lookup Ranking!\n");
+    if(!MYSQLCLIENT.GetRankingList(&list))
+        LOG.lprintf("Failed to lookup Ranking!\n");
 
-	LobbyMessage *m = new LobbyMessage_RankingList(list);
-	if(id == 0xFFFFFFFF)
-	{
-		SendToAll(m);
-		delete m;
-	}
-	else
-		players[id].Send(m);
+    LobbyMessage* m = new LobbyMessage_RankingList(list);
+    if(id == 0xFFFFFFFF)
+    {
+        SendToAll(m);
+        delete m;
+    }
+    else
+        players[id].Send(m);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -868,14 +872,14 @@ void LobbyServer::SendRankingList(unsigned int id)
  *
  *  @author FloSoft
  */
-void LobbyServer::OnNMSLobbyRankingInfo(unsigned int id, const LobbyPlayerInfo &player)
+void LobbyServer::OnNMSLobbyRankingInfo(unsigned int id, const LobbyPlayerInfo& player)
 {
-	LobbyPlayerInfo p = player;
+    LobbyPlayerInfo p = player;
 
-	if(!MYSQLCLIENT.GetRankingInfo(p))
-		LOG.lprintf("Failed to lookup Ranking of player %s!\n", p.getName().c_str());
+    if(!MYSQLCLIENT.GetRankingInfo(p))
+        LOG.lprintf("Failed to lookup Ranking of player %s!\n", p.getName().c_str());
 
-	LobbyMessage *m = new LobbyMessage_Lobby_Ranking_Info(p);
-	SendToAll(m);
-	delete m;
+    LobbyMessage* m = new LobbyMessage_Lobby_Ranking_Info(p);
+    SendToAll(m);
+    delete m;
 }

@@ -1,4 +1,4 @@
-// $Id: LobbyPlayerInfo.cpp 7521 2011-09-08 20:45:55Z FloSoft $
+// $Id: LobbyPlayerInfo.cpp 9359 2014-04-25 15:37:22Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -25,9 +25,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
 #if defined _WIN32 && defined _DEBUG && defined _MSC_VER
-	#define new new(_NORMAL_BLOCK, THIS_FILE, __LINE__)
-	#undef THIS_FILE
-	static char THIS_FILE[] = __FILE__;
+#define new new(_NORMAL_BLOCK, THIS_FILE, __LINE__)
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -38,7 +38,7 @@
  */
 LobbyPlayerInfo::LobbyPlayerInfo(void)
 {
-	clear();
+    clear();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -47,9 +47,9 @@ LobbyPlayerInfo::LobbyPlayerInfo(void)
  *
  *  @author FloSoft
  */
-LobbyPlayerInfo::LobbyPlayerInfo(const unsigned playerid, Serializer *ser)
+LobbyPlayerInfo::LobbyPlayerInfo(const unsigned playerid, Serializer* ser)
 {
-	deserialize(ser);
+    deserialize(ser);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -60,12 +60,12 @@ LobbyPlayerInfo::LobbyPlayerInfo(const unsigned playerid, Serializer *ser)
  */
 void LobbyPlayerInfo::clear(void)
 {
-	playerid = 0;
-	name = "";
-	version = "";
-	punkte = 0;
-	gewonnen = 0;
-	verloren = 0;
+    playerid = 0;
+    name = "";
+    version = "";
+    punkte = 0;
+    gewonnen = 0;
+    verloren = 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -76,14 +76,14 @@ void LobbyPlayerInfo::clear(void)
  *
  *  @author FloSoft
  */
-void LobbyPlayerInfo::serialize(Serializer *ser) const
+void LobbyPlayerInfo::serialize(Serializer* ser) const
 {
-	ser->PushUnsignedInt(playerid);
-	ser->PushString(name);
-	ser->PushString(version);
-	ser->PushSignedInt(punkte);
-	ser->PushUnsignedInt(gewonnen);
-	ser->PushUnsignedInt(verloren);
+    ser->PushUnsignedInt(playerid);
+    ser->PushString(name);
+    ser->PushString(version);
+    ser->PushSignedInt(punkte);
+    ser->PushUnsignedInt(gewonnen);
+    ser->PushUnsignedInt(verloren);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -94,12 +94,12 @@ void LobbyPlayerInfo::serialize(Serializer *ser) const
  *
  *  @author FloSoft
  */
-void LobbyPlayerInfo::deserialize(Serializer *ser)
+void LobbyPlayerInfo::deserialize(Serializer* ser)
 {
-	playerid = ser->PopUnsignedInt();
-	name = ser->PopString();
-	version = ser->PopString();
-	punkte = ser->PopSignedInt();
-	gewonnen = ser->PopUnsignedInt();
-	verloren = ser->PopUnsignedInt();
+    playerid = ser->PopUnsignedInt();
+    name = ser->PopString();
+    version = ser->PopString();
+    punkte = ser->PopSignedInt();
+    gewonnen = ser->PopUnsignedInt();
+    verloren = ser->PopUnsignedInt();
 }

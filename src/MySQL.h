@@ -1,4 +1,4 @@
-// $Id: MySQL.h 8443 2012-10-14 15:12:12Z FloSoft $
+// $Id: MySQL.h 9359 2014-04-25 15:37:22Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -31,38 +31,39 @@
 
 class MySQL : public Singleton<MySQL>
 {
-public:
-  MySQL(void);
-  ~MySQL(void);
+    public:
+        MySQL(void);
+        ~MySQL(void);
 
-  bool Connect(std::string host = "", std::string user = "", std::string pass = "", std::string db = "");
-  void Disconnect(void);
+        bool Connect(std::string host = "", std::string user = "", std::string pass = "", std::string db = "");
+        void Disconnect(void);
 
-  bool LoginUser(const std::string &user, const std::string &pass, std::string &email, const std::string& ip);
-  bool RegisterUser(const std::string &user, const std::string &pass, const std::string &email);
-  bool GetServerList(LobbyServerList *List);
-  bool GetServerInfo(unsigned int id, LobbyServerInfo *Info);
-  bool GetRankingList(LobbyPlayerList* List);
-  bool GetRankingInfo(LobbyPlayerInfo& player);
+        bool LoginUser(const std::string& user, const std::string& pass, std::string& email, const std::string& ip);
+        bool RegisterUser(const std::string& user, const std::string& pass, const std::string& email);
+        bool GetServerList(LobbyServerList* List);
+        bool GetServerInfo(unsigned int id, LobbyServerInfo* Info);
+        bool GetRankingList(LobbyPlayerList* List);
+        bool GetRankingInfo(LobbyPlayerInfo& player);
 
-  bool AddServer(LobbyServerInfo *Info);
-  bool DeleteServer(unsigned int id);
-  bool UpdateServer(unsigned int id, const std::string &map);
-  bool UpdateServerPC(unsigned int id, unsigned int curplayer, unsigned int maxplayer);
-  bool UpdateServerPing(unsigned int id, unsigned int ping);
+        bool AddServer(LobbyServerInfo* Info);
+        bool DeleteServer(unsigned int id);
+        bool UpdateServer(unsigned int id, const std::string& map);
+        bool UpdateServerPC(unsigned int id, unsigned int curplayer, unsigned int maxplayer);
+        bool UpdateServerPing(unsigned int id, unsigned int ping);
 
-  bool SetBan(const std::string &user, bool banned);
-private:
-  bool DoQuery(std::string query);
+        bool SetBan(const std::string& user, bool banned);
+    private:
+        bool DoQuery(std::string query);
 
-private:
-  MYSQL *m_pMySQL;
-  struct {
-	  std::string host;
-	  std::string user;
-	  std::string pass;
-	  std::string db;
-  } m_Connection;
+    private:
+        MYSQL* m_pMySQL;
+        struct
+        {
+            std::string host;
+            std::string user;
+            std::string pass;
+            std::string db;
+        } m_Connection;
 };
 
 #define MYSQLCLIENT MySQL::inst()

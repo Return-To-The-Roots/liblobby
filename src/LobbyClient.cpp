@@ -1,4 +1,4 @@
-// $Id: LobbyClient.cpp 8903 2013-08-27 18:25:24Z jh $
+// $Id: LobbyClient.cpp 9359 2014-04-25 15:37:22Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -27,9 +27,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
 #if defined _WIN32 && defined _DEBUG && defined _MSC_VER
-	#define new new(_NORMAL_BLOCK, THIS_FILE, __LINE__)
-	#undef THIS_FILE
-	static char THIS_FILE[] = __FILE__;
+#define new new(_NORMAL_BLOCK, THIS_FILE, __LINE__)
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -39,9 +39,9 @@
  *  @author FloSoft
  */
 LobbyClient::LobbyClient(void)
-	: refreshserverlist(false), refreshserverinfo(false), refreshrankinglist(false), refreshplayerlist(false),
-	parent(NULL), recv_queue(&LobbyMessage::create_lobby), send_queue(&LobbyMessage::create_lobby), 
-	state(CS_STOPPED), todo(TD_NOTHING)
+    : refreshserverlist(false), refreshserverinfo(false), refreshrankinglist(false), refreshplayerlist(false),
+      parent(NULL), recv_queue(&LobbyMessage::create_lobby), send_queue(&LobbyMessage::create_lobby),
+      state(CS_STOPPED), todo(TD_NOTHING)
 {
 }
 
@@ -53,7 +53,7 @@ LobbyClient::LobbyClient(void)
  */
 LobbyClient::~LobbyClient(void)
 {
-	Stop();
+    Stop();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -64,58 +64,58 @@ LobbyClient::~LobbyClient(void)
  */
 void LobbyClient::Run(void)
 {
-	if(state == CS_STOPPED)
-		return;
+    if(state == CS_STOPPED)
+        return;
 
-	SocketSet set;
+    SocketSet set;
 
-	// erstmal auf Daten überprüfen
-	set.Clear();
+    // erstmal auf Daten überprüfen
+    set.Clear();
 
-	// zum set hinzufügen
-	set.Add(socket);
-	if(set.Select(0, 0) > 0)
-	{
-		// nachricht empfangen
-		if(!recv_queue.recv(&socket))
-		{
-			LOG.lprintf("Receiving Message from server failed\n");
-			ServerLost();
-			return;
-		}
-	}
+    // zum set hinzufügen
+    set.Add(socket);
+    if(set.Select(0, 0) > 0)
+    {
+        // nachricht empfangen
+        if(!recv_queue.recv(&socket))
+        {
+            LOG.lprintf("Receiving Message from server failed\n");
+            ServerLost();
+            return;
+        }
+    }
 
-	// nun auf Fehler prüfen
-	set.Clear();
+    // nun auf Fehler prüfen
+    set.Clear();
 
-	// zum set hinzufügen
-	set.Add(socket);
+    // zum set hinzufügen
+    set.Add(socket);
 
-	// auf fehler prüfen
-	if(set.Select(0, 2) > 0)
-	{
-		if(set.InSet(socket))
-		{
-			// Server ist weg
-			LOG.lprintf("Error on socket to server\n");
-			ServerLost();
-			return;
-		}
-	}
+    // auf fehler prüfen
+    if(set.Select(0, 2) > 0)
+    {
+        if(set.InSet(socket))
+        {
+            // Server ist weg
+            LOG.lprintf("Error on socket to server\n");
+            ServerLost();
+            return;
+        }
+    }
 
-	// maximal 10 Pakete verschicken
-	if(!send_queue.send(&socket, 10))
-	{
-		ServerLost();
-		return;
-	}
+    // maximal 10 Pakete verschicken
+    if(!send_queue.send(&socket, 10))
+    {
+        ServerLost();
+        return;
+    }
 
-	// recv-queue abarbeiten
-	while(recv_queue.count() > 0)
-	{
-		recv_queue.front()->run(this, 0xFFFFFFFF);
-		recv_queue.pop();
-	}
+    // recv-queue abarbeiten
+    while(recv_queue.count() > 0)
+    {
+        recv_queue.front()->run(this, 0xFFFFFFFF);
+        recv_queue.pop();
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -126,26 +126,26 @@ void LobbyClient::Run(void)
  */
 void LobbyClient::Stop()
 {
-	if(state != CS_CONNECT)
-	{
-		send_queue.push(new Message_Dead(1));
-		send_queue.flush(&socket);
-	}
+    if(state != CS_CONNECT)
+    {
+        send_queue.push(new Message_Dead(1));
+        send_queue.flush(&socket);
+    }
 
-	// Verbindung trennen
-	socket.Close();
+    // Verbindung trennen
+    socket.Close();
 
-	// Queues leeren
-	recv_queue.clear();
-	send_queue.clear();
+    // Queues leeren
+    recv_queue.clear();
+    send_queue.clear();
 
-	state = CS_STOPPED;
-	todo = TD_NOTHING;
+    state = CS_STOPPED;
+    todo = TD_NOTHING;
 
-	refreshserverlist = false;
-	refreshplayerlist = false;
-	refreshrankinglist = false;
-	refreshserverinfo = false;
+    refreshserverlist = false;
+    refreshplayerlist = false;
+    refreshrankinglist = false;
+    refreshserverinfo = false;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -157,18 +157,18 @@ void LobbyClient::Stop()
  *
  *  @author FloSoft
  */
-bool LobbyClient::Login(const std::string &server, const unsigned int port, const std::string &user, const std::string &pass, const bool use_ipv6)
+bool LobbyClient::Login(const std::string& server, const unsigned int port, const std::string& user, const std::string& pass, const bool use_ipv6)
 {
-	// aufräumen
-	Stop();
+    // aufräumen
+    Stop();
 
-	todo = TD_LOGIN;
+    todo = TD_LOGIN;
 
-	userdata.user = user;
-	userdata.pass =  pass;
+    userdata.user = user;
+    userdata.pass =  pass;
 
-	// verbinden
-	return Connect( server, port, use_ipv6 );
+    // verbinden
+    return Connect( server, port, use_ipv6 );
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -180,19 +180,19 @@ bool LobbyClient::Login(const std::string &server, const unsigned int port, cons
  *
  *  @author FloSoft
  */
-bool LobbyClient::Register(const std::string &server, const unsigned int port, const std::string &user, const std::string &pass, const std::string &email, const bool use_ipv6)
+bool LobbyClient::Register(const std::string& server, const unsigned int port, const std::string& user, const std::string& pass, const std::string& email, const bool use_ipv6)
 {
-	// aufräumen
-	Stop();
+    // aufräumen
+    Stop();
 
-	todo = TD_REGISTER;
+    todo = TD_REGISTER;
 
-	userdata.user = user;
-	userdata.pass = pass;
-	userdata.email = email;
+    userdata.user = user;
+    userdata.pass = pass;
+    userdata.email = email;
 
-	// verbinden
-	return Connect( server, port, use_ipv6 );
+    // verbinden
+    return Connect( server, port, use_ipv6 );
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -203,7 +203,7 @@ bool LobbyClient::Register(const std::string &server, const unsigned int port, c
  */
 void LobbyClient::SendServerListRequest(void)
 {
-	send_queue.push(new LobbyMessage_ServerList(1));
+    send_queue.push(new LobbyMessage_ServerList(1));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -214,7 +214,7 @@ void LobbyClient::SendServerListRequest(void)
  */
 void LobbyClient::SendPlayerListRequest(void)
 {
-	send_queue.push(new LobbyMessage_PlayerList(1));
+    send_queue.push(new LobbyMessage_PlayerList(1));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -225,7 +225,7 @@ void LobbyClient::SendPlayerListRequest(void)
  */
 void LobbyClient::SendRankingListRequest(void)
 {
-	send_queue.push(new LobbyMessage_RankingList(1));
+    send_queue.push(new LobbyMessage_RankingList(1));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -238,10 +238,10 @@ void LobbyClient::SendRankingListRequest(void)
  */
 void LobbyClient::SendServerInfoRequest(unsigned int id)
 {
-	if(id == 0)
-		return;
+    if(id == 0)
+        return;
 
-	send_queue.push(new LobbyMessage_ServerInfo(id));
+    send_queue.push(new LobbyMessage_ServerInfo(id));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -252,7 +252,7 @@ void LobbyClient::SendServerInfoRequest(unsigned int id)
  */
 void LobbyClient::SendServerJoinRequest()
 {
-	send_queue.push(new LobbyMessage_Server_Join());
+    send_queue.push(new LobbyMessage_Server_Join());
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -263,7 +263,7 @@ void LobbyClient::SendServerJoinRequest()
  */
 void LobbyClient::SendRankingInfoRequest(const std::string name)
 {
-	send_queue.push(new LobbyMessage_Lobby_Ranking_Info(name));
+    send_queue.push(new LobbyMessage_Lobby_Ranking_Info(name));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -276,7 +276,7 @@ void LobbyClient::SendRankingInfoRequest(const std::string name)
  */
 void LobbyClient::SendChat(std::string text)
 {
-	send_queue.push(new LobbyMessage_Chat(text));
+    send_queue.push(new LobbyMessage_Chat(text));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -289,16 +289,16 @@ void LobbyClient::SendChat(std::string text)
  */
 void LobbyClient::AddServer(std::string name, std::string map, bool has_password, unsigned short port)
 {
-	server.clear();
-	server.setName(name);
-	server.setVersion(GetWindowVersion());
-	server.setPort(port);
-	server.setMap(map);
-	server.setPassword(has_password);
+    server.clear();
+    server.setName(name);
+    server.setVersion(GetWindowVersion());
+    server.setPort(port);
+    server.setMap(map);
+    server.setPassword(has_password);
 
-	send_queue.push(new LobbyMessage_Server_Add(server));
+    send_queue.push(new LobbyMessage_Server_Add(server));
 
-	LOG.lprintf("LobbyClient: GameServer %s wird erstellt ...\n", name.c_str());
+    LOG.lprintf("LobbyClient: GameServer %s wird erstellt ...\n", name.c_str());
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -309,9 +309,9 @@ void LobbyClient::AddServer(std::string name, std::string map, bool has_password
  */
 void LobbyClient::DeleteServer()
 {
-	send_queue.push(new LobbyMessage_Server_Delete());
+    send_queue.push(new LobbyMessage_Server_Delete());
 
-	server.clear();
+    server.clear();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -324,9 +324,9 @@ void LobbyClient::DeleteServer()
  */
 void LobbyClient::UpdateServer(std::string map)
 {
-	server.setMap(map);
+    server.setMap(map);
 
-	send_queue.push(new LobbyMessage_Server_Update_Map(map));
+    send_queue.push(new LobbyMessage_Server_Update_Map(map));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -340,10 +340,10 @@ void LobbyClient::UpdateServer(std::string map)
  */
 void LobbyClient::UpdateServerPlayerCount(unsigned int curplayer, unsigned int maxplayer)
 {
-	server.setCurPlayers(curplayer);
-	server.setMaxPlayers(maxplayer);
+    server.setCurPlayers(curplayer);
+    server.setMaxPlayers(maxplayer);
 
-	send_queue.push(new LobbyMessage_Server_Update_Player(curplayer, maxplayer));
+    send_queue.push(new LobbyMessage_Server_Update_Player(curplayer, maxplayer));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -354,21 +354,21 @@ void LobbyClient::UpdateServerPlayerCount(unsigned int curplayer, unsigned int m
  *
  *  @author FloSoft
  */
-bool LobbyClient::Connect(const std::string &server, const unsigned int port, const bool use_ipv6)
+bool LobbyClient::Connect(const std::string& server, const unsigned int port, const bool use_ipv6)
 {
-	// Verbinden
-	if(!socket.Connect( server.c_str(), port, use_ipv6 ))
-	{
-		ServerLost();
-		return false;
-	}
+    // Verbinden
+    if(!socket.Connect( server.c_str(), port, use_ipv6 ))
+    {
+        ServerLost();
+        return false;
+    }
 
-	state = CS_CONNECT;
+    state = CS_CONNECT;
 
-	if(parent)
-		parent->LC_Status_Waiting();
+    if(parent)
+        parent->LC_Status_Waiting();
 
-	return true;
+    return true;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -379,7 +379,7 @@ bool LobbyClient::Connect(const std::string &server, const unsigned int port, co
  */
 void LobbyClient::OnNMSLobbyPing(unsigned int id)
 {
-	send_queue.push(new LobbyMessage_Pong(1));
+    send_queue.push(new LobbyMessage_Pong(1));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -390,32 +390,32 @@ void LobbyClient::OnNMSLobbyPing(unsigned int id)
  *
  *  @author FloSoft
  */
-void LobbyClient::OnNMSLobbyID(unsigned int id, const unsigned int &playerid)
+void LobbyClient::OnNMSLobbyID(unsigned int id, const unsigned int& playerid)
 {
-	if(playerid == 0xFFFFFFFF)
-	{
-		if(parent)
-			parent->LC_Status_Error(_("This Server is full!"));
-		ServerLost(false);
+    if(playerid == 0xFFFFFFFF)
+    {
+        if(parent)
+            parent->LC_Status_Error(_("This Server is full!"));
+        ServerLost(false);
 
-		return;
-	}
+        return;
+    }
 
-	switch(todo)
-	{
-	case TD_LOGIN:
-		{
-			send_queue.push(new LobbyMessage_Login(userdata.user, userdata.pass, GetWindowVersion()));
-		} break;
-	case TD_REGISTER:
-		{
-			send_queue.push(new LobbyMessage_Register(userdata.user, userdata.pass, userdata.email));
-		} break;
-	default:
-		{
-			ServerLost();
-		} break;
-	}
+    switch(todo)
+    {
+        case TD_LOGIN:
+        {
+            send_queue.push(new LobbyMessage_Login(userdata.user, userdata.pass, GetWindowVersion()));
+        } break;
+        case TD_REGISTER:
+        {
+            send_queue.push(new LobbyMessage_Register(userdata.user, userdata.pass, userdata.email));
+        } break;
+        default:
+        {
+            ServerLost();
+        } break;
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -426,13 +426,13 @@ void LobbyClient::OnNMSLobbyID(unsigned int id, const unsigned int &playerid)
  *
  *  @author FloSoft
  */
-void LobbyClient::OnNMSLobbyLoginError(unsigned int id, const std::string &error)
+void LobbyClient::OnNMSLobbyLoginError(unsigned int id, const std::string& error)
 {
-	this->error = error;
-	if(parent)
-		parent->LC_Status_Error(this->error);
+    this->error = error;
+    if(parent)
+        parent->LC_Status_Error(this->error);
 
-	ServerLost(false);
+    ServerLost(false);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -443,13 +443,13 @@ void LobbyClient::OnNMSLobbyLoginError(unsigned int id, const std::string &error
  *
  *  @author FloSoft
  */
-void LobbyClient::OnNMSLobbyLoginDone(unsigned int id, const std::string &email)
+void LobbyClient::OnNMSLobbyLoginDone(unsigned int id, const std::string& email)
 {
-	userdata.email = email;
-	if(parent)
-		parent->LC_LoggedIn(userdata.email);
+    userdata.email = email;
+    if(parent)
+        parent->LC_LoggedIn(userdata.email);
 
-	state = CS_LOBBY;
+    state = CS_LOBBY;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -460,13 +460,13 @@ void LobbyClient::OnNMSLobbyLoginDone(unsigned int id, const std::string &email)
  *
  *  @author FloSoft
  */
-void LobbyClient::OnNMSLobbyRegisterError(unsigned int id, const std::string &error)
+void LobbyClient::OnNMSLobbyRegisterError(unsigned int id, const std::string& error)
 {
-	this->error = error;
-	if(parent)
-		parent->LC_Status_Error(this->error);
+    this->error = error;
+    if(parent)
+        parent->LC_Status_Error(this->error);
 
-	ServerLost(false);
+    ServerLost(false);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -477,10 +477,10 @@ void LobbyClient::OnNMSLobbyRegisterError(unsigned int id, const std::string &er
  */
 void LobbyClient::OnNMSLobbyRegisterDone(unsigned int id)
 {
-	if(parent)
-		parent->LC_Registered();
+    if(parent)
+        parent->LC_Registered();
 
-	Stop();
+    Stop();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -491,11 +491,11 @@ void LobbyClient::OnNMSLobbyRegisterDone(unsigned int id)
  *
  *  @author FloSoft
  */
-void LobbyClient::OnNMSLobbyServerList(unsigned int id, const LobbyServerList &list)
+void LobbyClient::OnNMSLobbyServerList(unsigned int id, const LobbyServerList& list)
 {
-	serverlist = list;
+    serverlist = list;
 
-	refreshserverlist = true;
+    refreshserverlist = true;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -506,11 +506,11 @@ void LobbyClient::OnNMSLobbyServerList(unsigned int id, const LobbyServerList &l
  *
  *  @author FloSoft
  */
-void LobbyClient::OnNMSLobbyPlayerList(unsigned int id, const LobbyPlayerList &list)
+void LobbyClient::OnNMSLobbyPlayerList(unsigned int id, const LobbyPlayerList& list)
 {
-	playerlist = list;
+    playerlist = list;
 
-	refreshplayerlist = true;
+    refreshplayerlist = true;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -521,11 +521,11 @@ void LobbyClient::OnNMSLobbyPlayerList(unsigned int id, const LobbyPlayerList &l
  *
  *  @author FloSoft
  */
-void LobbyClient::OnNMSLobbyRankingList(unsigned int id, const LobbyPlayerList &list)
+void LobbyClient::OnNMSLobbyRankingList(unsigned int id, const LobbyPlayerList& list)
 {
-	rankinglist = list;
+    rankinglist = list;
 
-	refreshrankinglist = true;
+    refreshrankinglist = true;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -536,11 +536,11 @@ void LobbyClient::OnNMSLobbyRankingList(unsigned int id, const LobbyPlayerList &
  *
  *  @author FloSoft
  */
-void LobbyClient::OnNMSLobbyServerInfo(unsigned int id, const LobbyServerInfo &info)
+void LobbyClient::OnNMSLobbyServerInfo(unsigned int id, const LobbyServerInfo& info)
 {
-	serverinfo = info;
+    serverinfo = info;
 
-	refreshserverinfo = true;
+    refreshserverinfo = true;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -552,10 +552,10 @@ void LobbyClient::OnNMSLobbyServerInfo(unsigned int id, const LobbyServerInfo &i
  *
  *  @author FloSoft
  */
-void LobbyClient::OnNMSLobbyChat(unsigned int id, const std::string &player, const std::string &text)
+void LobbyClient::OnNMSLobbyChat(unsigned int id, const std::string& player, const std::string& text)
 {
-	if(parent)
-		parent->LC_Chat(player, text);
+    if(parent)
+        parent->LC_Chat(player, text);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -566,11 +566,11 @@ void LobbyClient::OnNMSLobbyChat(unsigned int id, const std::string &player, con
  *
  *  @author FloSoft
  */
-void LobbyClient::OnNMSLobbyServerAddFailed(unsigned int id, const std::string &error)
+void LobbyClient::OnNMSLobbyServerAddFailed(unsigned int id, const std::string& error)
 {
-	this->error = error;
-	if(parent)
-		parent->LC_Status_Error(this->error);
+    this->error = error;
+    if(parent)
+        parent->LC_Status_Error(this->error);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -581,15 +581,15 @@ void LobbyClient::OnNMSLobbyServerAddFailed(unsigned int id, const std::string &
  *
  *  @author FloSoft
  */
-void LobbyClient::OnNMSLobbyServerAdd(unsigned int id, const LobbyServerInfo &info)
+void LobbyClient::OnNMSLobbyServerAdd(unsigned int id, const LobbyServerInfo& info)
 {
-	server = info;
+    server = info;
 
-	LOG.lprintf("LobbyClient: GameServer %s erfolgreich erstellt!\n", server.getName().c_str());
+    LOG.lprintf("LobbyClient: GameServer %s erfolgreich erstellt!\n", server.getName().c_str());
 
-	// Server kann jetzt gestartet werden
-	if(parent)
-		parent->LC_Created();
+    // Server kann jetzt gestartet werden
+    if(parent)
+        parent->LC_Created();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -600,10 +600,10 @@ void LobbyClient::OnNMSLobbyServerAdd(unsigned int id, const LobbyServerInfo &in
  *
  *  @author FloSoft
  */
-void LobbyClient::OnNMSLobbyRankingInfo(unsigned int id, const LobbyPlayerInfo &player)
+void LobbyClient::OnNMSLobbyRankingInfo(unsigned int id, const LobbyPlayerInfo& player)
 {
-	if(parent)
-		parent->LC_RankingInfo(player);
+    if(parent)
+        parent->LC_RankingInfo(player);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -614,7 +614,7 @@ void LobbyClient::OnNMSLobbyRankingInfo(unsigned int id, const LobbyPlayerInfo &
  */
 void LobbyClient::OnNMSDeadMsg(unsigned int id)
 {
-	ServerLost();
+    ServerLost();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -625,13 +625,13 @@ void LobbyClient::OnNMSDeadMsg(unsigned int id)
  */
 void LobbyClient::ServerLost(bool message)
 {
-	if(state != CS_STOPPED)
-		LOG.lprintf("lobby client forced to stop\n");
+    if(state != CS_STOPPED)
+        LOG.lprintf("lobby client forced to stop\n");
 
-	Stop();
+    Stop();
 
-	//if(GAMECLIENT.GetState() == GameClient::CS_GAME && window && GLOBALVARS.ingame)
-	//	static_cast<dskGameInterface*>(window)->messenger.AddMessage("", 0, CD_SYSTEM, _("Lost connection to lobby!"), COLOR_RED);
-	if(parent && message)
-		parent->LC_Status_ConnectionLost();
+    //if(GAMECLIENT.GetState() == GameClient::CS_GAME && window && GLOBALVARS.ingame)
+    //  static_cast<dskGameInterface*>(window)->messenger.AddMessage("", 0, CD_SYSTEM, _("Lost connection to lobby!"), COLOR_RED);
+    if(parent && message)
+        parent->LC_Status_ConnectionLost();
 }

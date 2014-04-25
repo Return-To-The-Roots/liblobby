@@ -1,4 +1,4 @@
-// $Id: LobbyMessage.h 7521 2011-09-08 20:45:55Z FloSoft $
+// $Id: LobbyMessage.h 9359 2014-04-25 15:37:22Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -26,15 +26,15 @@
 
 class LobbyMessage : public Message
 {
-public:
-	/// Konstruktor von @p GameMessage.
-	LobbyMessage(unsigned short id) : Message(id) { }
-	/// Destruktor von @p GameMessage.
-	virtual ~LobbyMessage(void) {};
+    public:
+        /// Konstruktor von @p GameMessage.
+        LobbyMessage(unsigned short id) : Message(id) { }
+        /// Destruktor von @p GameMessage.
+        virtual ~LobbyMessage(void) {};
 
-	static Message *create_lobby(unsigned short id);
+        static Message* create_lobby(unsigned short id);
 
-	virtual Message *create(unsigned short id) const { return create_lobby(id); }
+        virtual Message* create(unsigned short id) const { return create_lobby(id); }
 };
 
 #endif // LOBBYMESSAGE_H_INCLUDED

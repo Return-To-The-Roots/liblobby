@@ -1,4 +1,4 @@
-// $Id: main.h 8903 2013-08-27 18:25:24Z jh $
+// $Id: main.h 9359 2014-04-25 15:37:22Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -28,32 +28,32 @@
 #define WIN32_LEAN_AND_MEAN
 
 #ifdef _WIN32
-	#include <windows.h>
-	
-	#ifndef __CYGWIN__
-		#include <conio.h>
-	#endif
-	
-	#include <ws2tcpip.h>
+#include <windows.h>
+
+#ifndef __CYGWIN__
+#include <conio.h>
+#endif
+
+#include <ws2tcpip.h>
 
 #ifdef _MSC_VER
-	#include <crtdbg.h>
+#include <crtdbg.h>
 #else
-    #include <assert.h>
+#include <assert.h>
 #endif
 #else
-	#include <arpa/inet.h>
-	#include <assert.h>
+#include <arpa/inet.h>
+#include <assert.h>
 #endif // !_WIN32
 
 #ifdef _WIN32
 
 #ifdef _MSC_VER
-	#define getch _getch
-	#ifndef snprintf
-		#define snprintf _snprintf
-	#endif
-	#define assert _ASSERT
+#define getch _getch
+#ifndef snprintf
+#define snprintf _snprintf
+#endif
+#define assert _ASSERT
 #endif
 
 #endif // _WIN32
