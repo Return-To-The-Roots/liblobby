@@ -1,4 +1,4 @@
-// $Id: LobbyServer.cpp 9359 2014-04-25 15:37:22Z FloSoft $
+// $Id: LobbyServer.cpp 9383 2014-05-01 11:48:50Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -718,6 +718,20 @@ void LobbyServer::OnNMSLobbyServerJoin(unsigned int id)
     LobbyPlayer& player = players[id];
 
     player.Client();
+
+	std::stringstream text;
+	text << "Player \"" << player.getName() << "\" joined a server";
+
+    for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
+    {
+        LobbyPlayer& p = it->second;
+		if(p.getName() == "LobbyBot")
+		{
+			LobbyMessage* m = new LobbyMessage_Chat("SYSTEM", text.str());
+			p.Send(m);
+			break;
+		}
+	}
 
     // Spielerliste aktualisieren
     SendPlayerList(0xFFFFFFFF);
