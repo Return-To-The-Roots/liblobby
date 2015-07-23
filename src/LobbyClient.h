@@ -35,6 +35,7 @@
 #include "LobbyPlayerList.h"
 
 #include "MessageQueue.h"
+#include "Socket.h"
 
 /// Lobby-Client-Klasse
 class LobbyClient : public Singleton<LobbyClient>, public LobbyMessageInterface
