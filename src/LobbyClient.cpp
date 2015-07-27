@@ -1,4 +1,4 @@
-// $Id: LobbyClient.cpp 9359 2014-04-25 15:37:22Z FloSoft $
+ï»¿// $Id: LobbyClient.cpp 9359 2014-04-25 15:37:22Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -69,10 +69,10 @@ void LobbyClient::Run(void)
 
     SocketSet set;
 
-    // erstmal auf Daten überprüfen
+    // erstmal auf Daten Ã¼berprÃ¼fen
     set.Clear();
 
-    // zum set hinzufügen
+    // zum set hinzufÃ¼gen
     set.Add(socket);
     if(set.Select(0, 0) > 0)
     {
@@ -85,13 +85,13 @@ void LobbyClient::Run(void)
         }
     }
 
-    // nun auf Fehler prüfen
+    // nun auf Fehler prÃ¼fen
     set.Clear();
 
-    // zum set hinzufügen
+    // zum set hinzufÃ¼gen
     set.Add(socket);
 
-    // auf fehler prüfen
+    // auf fehler prÃ¼fen
     if(set.Select(0, 2) > 0)
     {
         if(set.InSet(socket))
@@ -159,7 +159,7 @@ void LobbyClient::Stop()
  */
 bool LobbyClient::Login(const std::string& server, const unsigned int port, const std::string& user, const std::string& pass, const bool use_ipv6)
 {
-    // aufräumen
+    // aufrÃ¤umen
     Stop();
 
     todo = TD_LOGIN;
@@ -182,7 +182,7 @@ bool LobbyClient::Login(const std::string& server, const unsigned int port, cons
  */
 bool LobbyClient::Register(const std::string& server, const unsigned int port, const std::string& user, const std::string& pass, const std::string& email, const bool use_ipv6)
 {
-    // aufräumen
+    // aufrÃ¤umen
     Stop();
 
     todo = TD_REGISTER;
@@ -197,7 +197,7 @@ bool LobbyClient::Register(const std::string& server, const unsigned int port, c
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  schickt einen Request für die Server-Liste.
+ *  schickt einen Request fÃ¼r die Server-Liste.
  *
  *  @author FloSoft
  */
@@ -208,7 +208,7 @@ void LobbyClient::SendServerListRequest(void)
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  schickt einen Request für die Player-Liste.
+ *  schickt einen Request fÃ¼r die Player-Liste.
  *
  *  @author FloSoft
  */
@@ -219,7 +219,7 @@ void LobbyClient::SendPlayerListRequest(void)
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  schickt einen Request für die Top10-Liste.
+ *  schickt einen Request fÃ¼r die Top10-Liste.
  *
  *  @author FloSoft
  */
@@ -230,7 +230,7 @@ void LobbyClient::SendRankingListRequest(void)
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  schickt einen Request für ein Serverinfo.
+ *  schickt einen Request fÃ¼r ein Serverinfo.
  *
  *  @param[in] id Server-ID
  *
@@ -246,7 +246,7 @@ void LobbyClient::SendServerInfoRequest(unsigned int id)
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  schickt einen Request für den Serverjoin.
+ *  schickt einen Request fÃ¼r den Serverjoin.
  *
  *  @author FloSoft
  */
@@ -281,7 +281,7 @@ void LobbyClient::SendChat(std::string text)
 
 ///////////////////////////////////////////////////////////////////////////////
 /*
- *  fügt einen Server zur Lobby hinzu.
+ *  fÃ¼gt einen Server zur Lobby hinzu.
  *
  *  @param[in] name Name des Servers.
  *
@@ -303,7 +303,7 @@ void LobbyClient::AddServer(std::string name, std::string map, bool has_password
 
 ///////////////////////////////////////////////////////////////////////////////
 /*
- *  entfernt den einem zugehörigen Server von der Lobby.
+ *  entfernt den einem zugehÃ¶rigen Server von der Lobby.
  *
  *  @author FloSoft
  */
@@ -316,7 +316,7 @@ void LobbyClient::DeleteServer()
 
 ///////////////////////////////////////////////////////////////////////////////
 /*
- *  aktualisiert den Kartennamen des zugehörigen Servers in der Lobby.
+ *  aktualisiert den Kartennamen des zugehÃ¶rigen Servers in der Lobby.
  *
  *  @param[in] map Kartenname
  *
@@ -331,7 +331,7 @@ void LobbyClient::UpdateServer(std::string map)
 
 ///////////////////////////////////////////////////////////////////////////////
 /*
- *  aktualisiert die Spielerzahlen des zugehörigen Servers in der Lobby.
+ *  aktualisiert die Spielerzahlen des zugehÃ¶rigen Servers in der Lobby.
  *
  *  @param[in] curplayer Aktuelle Anzahl Spieler
  *  @param[in] maxplayer Maximale Anzahl Spieler

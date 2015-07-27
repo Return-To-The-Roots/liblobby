@@ -1,4 +1,4 @@
-// $Id: LobbyPlayer.cpp 9359 2014-04-25 15:37:22Z FloSoft $
+ï»¿// $Id: LobbyPlayer.cpp 9359 2014-04-25 15:37:22Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -57,7 +57,7 @@ LobbyPlayer::~LobbyPlayer(void)
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  räumt den Spieler auf.
+ *  rÃ¤umt den Spieler auf.
  *
  *  @author FloSoft
  */
@@ -97,7 +97,7 @@ void LobbyPlayer::sendPing(void)
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  prüft ob ein Ping gesendet werden muss.
+ *  prÃ¼ft ob ein Ping gesendet werden muss.
  *
  *  @author FloSoft
  */
@@ -114,13 +114,13 @@ bool LobbyPlayer::checkPing(void)
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  prüft ob ein Ping gesendet werden muss.
+ *  prÃ¼ft ob ein Ping gesendet werden muss.
  *
  *  @author FloSoft
  */
 bool LobbyPlayer::checkTimeout(void)
 {
-    // Bei sehr hohen Pings und längeren Reservierungen trennen wir uns von
+    // Bei sehr hohen Pings und lÃ¤ngeren Reservierungen trennen wir uns von
     // den Spielern ( ping timeout )
     if( (playerstate == PS_OCCUPIED) && (pinging == false) && ( (TIME.CurrentTick() - lastping) > 5000) )
     {
@@ -176,7 +176,7 @@ bool LobbyPlayer::Send(LobbyMessage* m, bool flush)
 {
     if(m)
     {
-        // Nachricht einhängen.
+        // Nachricht einhÃ¤ngen.
         send_queue.push(m);
 
         // und nur wenn wir nicht flushen beenden.
@@ -260,7 +260,7 @@ bool LobbyPlayer::Host(LobbyServerInfo info)
 
     LOG.lprintf("Can't create game\n");
 
-    Send(new LobbyMessage_Server_Add_Failed("Datenbankfehler beim Erstellen.\nName ungültig oder schon belegt."));
+    Send(new LobbyMessage_Server_Add_Failed("Datenbankfehler beim Erstellen.\nName ungÃ¼ltig oder schon belegt."));
 
     return false;
 }

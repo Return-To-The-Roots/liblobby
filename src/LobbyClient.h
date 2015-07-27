@@ -1,4 +1,4 @@
-// $Id: LobbyClient.h 9359 2014-04-25 15:37:22Z FloSoft $
+ï»¿// $Id: LobbyClient.h 9359 2014-04-25 15:37:22Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -59,15 +59,15 @@ class LobbyClient : public Singleton<LobbyClient>, public LobbyMessageInterface
         ///  versucht einen Nick auf dem LobbyServer zu registrieren.
         bool Register(const std::string& server, const unsigned int port, const std::string& user, const std::string& pass, const std::string& email, const bool use_ipv6);
 
-        /// schickt einen Request für die Server-Liste.
+        /// schickt einen Request fÃ¼r die Server-Liste.
         void SendServerListRequest(void);
-        /// schickt einen Request für die Player-Liste.
+        /// schickt einen Request fÃ¼r die Player-Liste.
         void SendPlayerListRequest(void);
-        /// schickt einen Request für die Top10-Liste.
+        /// schickt einen Request fÃ¼r die Top10-Liste.
         void SendRankingListRequest(void);
-        /// schickt einen Request für ein Serverinfo.
+        /// schickt einen Request fÃ¼r ein Serverinfo.
         void SendServerInfoRequest(unsigned int id);
-        /// schickt einen Request für den Serverjoin.
+        /// schickt einen Request fÃ¼r den Serverjoin.
         void SendServerJoinRequest(void);
         /// schickt einen Request um die Punkte eines bestimmten Spielers auszulesen.
         void SendRankingInfoRequest(const std::string name);
@@ -75,13 +75,13 @@ class LobbyClient : public Singleton<LobbyClient>, public LobbyMessageInterface
         /// verschickt eine Chatnachricht.
         void SendChat(std::string text);
 
-        /// fügt einen Server zur Lobby hinzu.
+        /// fÃ¼gt einen Server zur Lobby hinzu.
         void AddServer(std::string name, std::string map, bool has_password, unsigned short port);
-        /// entfernt den einem zugehörigen Server von der Lobby.
+        /// entfernt den einem zugehÃ¶rigen Server von der Lobby.
         void DeleteServer();
-        /// aktualisiert den Kartennamen des zugehörigen Servers in der Lobby.
+        /// aktualisiert den Kartennamen des zugehÃ¶rigen Servers in der Lobby.
         void UpdateServer(std::string map);
-        /// aktualisiert die Spielerzahlen des zugehörigen Servers in der Lobby.
+        /// aktualisiert die Spielerzahlen des zugehÃ¶rigen Servers in der Lobby.
         void UpdateServerPlayerCount(unsigned int curplayer, unsigned int maxplayer);
 
         /// liefert die Serverliste.
@@ -90,7 +90,7 @@ class LobbyClient : public Singleton<LobbyClient>, public LobbyMessageInterface
         const LobbyPlayerList* GetPlayerList(void) { return &playerlist; };
         /// liefert die Rankingliste.
         const LobbyPlayerList* GetRankingList(void) { return &rankinglist; }
-        /// liefert Informationen über einen Server
+        /// liefert Informationen Ã¼ber einen Server
         const LobbyServerInfo* GetServerInfo(void) { return &serverinfo; };
         const std::string GetUser(void) { return userdata.user; };
 

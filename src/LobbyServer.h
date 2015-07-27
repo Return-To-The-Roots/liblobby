@@ -1,4 +1,4 @@
-// $Id: LobbyServer.h 9359 2014-04-25 15:37:22Z FloSoft $
+ï»¿// $Id: LobbyServer.h 9359 2014-04-25 15:37:22Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -48,9 +48,9 @@ class LobbyServer : public Singleton<LobbyServer>, public LobbyMessageInterface
         void Stop(void) { stop = true; }
 
     protected:
-        /// prüft aktuelle Clients.
+        /// prÃ¼ft aktuelle Clients.
         bool Test();
-        /// prüft auf neue Clients.
+        /// prÃ¼ft auf neue Clients.
         bool Await();
         /// verarbeitet alle Nachrichten der Clients.
         bool Forward();

@@ -1,4 +1,4 @@
-// $Id: LobbyPlayer.h 9359 2014-04-25 15:37:22Z FloSoft $
+﻿// $Id: LobbyPlayer.h 9359 2014-04-25 15:37:22Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -34,7 +34,7 @@ class LobbyPlayer : public LobbyPlayerInfo
         ~LobbyPlayer(void);
 
     public:
-        /// r�umt den Spieler auf.
+        /// räumt den Spieler auf.
         void clear(void);
 
         void sendPing(void);

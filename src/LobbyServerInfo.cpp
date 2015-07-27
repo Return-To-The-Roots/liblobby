@@ -1,4 +1,4 @@
-// $Id: LobbyServerInfo.cpp 9359 2014-04-25 15:37:22Z FloSoft $
+ï»¿// $Id: LobbyServerInfo.cpp 9359 2014-04-25 15:37:22Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -80,9 +80,9 @@ void LobbyServerInfo::clear(void)
 /*
  *  serialisiert die Daten.
  *
- *  @param[in,out] data Datensatz, muss groß genug sein
+ *  @param[in,out] data Datensatz, muss groÃŸ genug sein
  *
- *  @return liefert die Größe der Daten zurück.
+ *  @return liefert die GrÃ¶ÃŸe der Daten zurÃ¼ck.
  *
  *  @author FloSoft
  */

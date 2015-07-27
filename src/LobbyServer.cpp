@@ -1,4 +1,4 @@
-// $Id: LobbyServer.cpp 9383 2014-05-01 11:48:50Z FloSoft $
+ï»¿// $Id: LobbyServer.cpp 9383 2014-05-01 11:48:50Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
@@ -69,7 +69,7 @@ LobbyServer::~LobbyServer(void)
  *  @param[in] mysql_pass MySQL-Passwort
  *  @param[in] mysql_db   MySQL-Datenbank
  *
- *  @return @p 0 für OK, größer @p 0 für Fehler
+ *  @return @p 0 fÃ¼r OK, grÃ¶ÃŸer @p 0 fÃ¼r Fehler
  *
  *  @author FloSoft
  */
@@ -125,7 +125,7 @@ int LobbyServer::Run(void)
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  prüft aktuelle Clients.
+ *  prÃ¼ft aktuelle Clients.
  *
  *  @author FloSoft
  */
@@ -146,7 +146,7 @@ bool LobbyServer::Test()
         // ggf. Ping senden
         p.checkPing();
 
-        // auf Timeout prüfen
+        // auf Timeout prÃ¼fen
         if(p.checkTimeout())
             Disconnect(p);
     }
@@ -155,7 +155,7 @@ bool LobbyServer::Test()
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  prüft auf neue Clients.
+ *  prÃ¼ft auf neue Clients.
  *
  *  @author FloSoft
  */
@@ -206,10 +206,10 @@ bool LobbyServer::Forward()
     bool not_empty = false;
     unsigned int max_not_empty = 0;
 
-    // erstmal auf Daten überprüfen
+    // erstmal auf Daten Ã¼berprÃ¼fen
     /*do
     {*/
-    // In einem SocketSet alle Clients hinzufügen und gucken, ob etwas empfangen wurde
+    // In einem SocketSet alle Clients hinzufÃ¼gen und gucken, ob etwas empfangen wurde
     for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
     {
         LobbyPlayer& p = it->second;
@@ -243,7 +243,7 @@ bool LobbyServer::Forward()
     set.Clear();
     //} while(not_empty && max_not_empty < 10000);
 
-    // In einem SocketSet alle Clients hinzufügen und gucken, ob fehler aufgetreten sind
+    // In einem SocketSet alle Clients hinzufÃ¼gen und gucken, ob fehler aufgetreten sind
     for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
     {
         LobbyPlayer& p = it->second;
@@ -299,7 +299,7 @@ void LobbyServer::OnNMSDead(unsigned int id)
 /**
  *  verarbeitet die Login-Nachricht eines Clients.
  *
- *  @param[in] message Nachricht, welche ausgeführt wird
+ *  @param[in] message Nachricht, welche ausgefÃ¼hrt wird
  *  @param[in] client  die Nummer des Clients
  *
  *  @author FloSoft
@@ -310,7 +310,7 @@ void LobbyServer::OnNMSLobbyLogin(unsigned int id, const unsigned int revision, 
 
     std::string email;
 
-    // Protokollversion prüfen
+    // Protokollversion prÃ¼fen
     if(revision != LOBBYPROTOCOL_VERSION)
     {
         // zu alt
@@ -332,7 +332,7 @@ void LobbyServer::OnNMSLobbyLogin(unsigned int id, const unsigned int revision, 
     }
     else
     {
-        // prüfen
+        // prÃ¼fen
         if(MYSQLCLIENT.LoginUser(user, pass, email, player.getPeerIP()))
         {
             bool found = false;
@@ -388,7 +388,7 @@ void LobbyServer::OnNMSLobbyLogin(unsigned int id, const unsigned int revision, 
 /**
  *  verarbeitet die Register-Nachricht eines Clients.
  *
- *  @param[in] message Nachricht, welche ausgeführt wird
+ *  @param[in] message Nachricht, welche ausgefÃ¼hrt wird
  *  @param[in] client  die Nummer des Clients
  *
  *  @author FloSoft
@@ -397,7 +397,7 @@ void LobbyServer::OnNMSLobbyRegister(unsigned int id, const unsigned int revisio
 {
     LobbyPlayer& player = players[id];
 
-    // Protokollversion prüfen
+    // Protokollversion prÃ¼fen
     if(revision != LOBBYPROTOCOL_VERSION)
     {
         // zu alt
@@ -634,7 +634,7 @@ void LobbyServer::OnNMSLobbyServerInfo(unsigned int id, const unsigned int& serv
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
- *  fügt einen Server zur Liste hinzu.
+ *  fÃ¼gt einen Server zur Liste hinzu.
  *
  *  @author FloSoft
  */
@@ -780,7 +780,7 @@ void LobbyServer::Disconnect(LobbyPlayer& p)
         delete m;
     }
 
-    // schließen
+    // schlieÃŸen
     p.NoHost();
     p.detach();
 
@@ -792,7 +792,7 @@ void LobbyServer::Disconnect(LobbyPlayer& p)
 /**
  *  verschickt die Serverliste an einen Client.
  *
- *  @param[in] id die Nummer des Clients (0xFFFFFFFF für Broadcast)
+ *  @param[in] id die Nummer des Clients (0xFFFFFFFF fÃ¼r Broadcast)
  *
  *  @author FloSoft
  */
@@ -817,7 +817,7 @@ void LobbyServer::SendServerList(unsigned int id)
 /**
  *  verschickt die Playerliste an einen Client.
  *
- *  @param[in] id die Nummer des Clients (0xFFFFFFFF für Broadcast)
+ *  @param[in] id die Nummer des Clients (0xFFFFFFFF fÃ¼r Broadcast)
  *
  *  @author FloSoft
  */
@@ -857,7 +857,7 @@ void LobbyServer::SendPlayerList(unsigned int id)
 /**
  *  verschickt die Rankingliste an einen Client.
  *
- *  @param[in] client die Nummer des Clients (0xFFFFFFFF für Broadcast)
+ *  @param[in] client die Nummer des Clients (0xFFFFFFFF fÃ¼r Broadcast)
  *
  *  @author FloSoft
  */
