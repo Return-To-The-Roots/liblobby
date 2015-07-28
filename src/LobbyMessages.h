@@ -61,7 +61,7 @@ class LobbyMessage_Login : public LobbyMessage
             unsigned char rev[4];
             PopRawData(rev, 4);
 
-            // haben wir eine gÃ¼ltige Revision erhalten?
+            // haben wir eine gültige Revision erhalten?
             if(rev[0] != 0xFF || rev[3] != 0xFF)
                 revision = 0;
             else
@@ -137,7 +137,7 @@ class LobbyMessage_Login_Error : public LobbyMessage
 
 ///////////////////////////////////////////////////////////////////////////////
 /** eingehende Login-Error-Nachricht. (0.6 compat mode)
- *  sollte niemals empfangen werden (auÃŸer es ist ein pre 0.6 client!)
+ *  sollte niemals empfangen werden (außer es ist ein pre 0.6 client!)
  */
 class LobbyMessage_Login_Error06 : public LobbyMessage
 {
@@ -180,7 +180,7 @@ class LobbyMessage_Register : public LobbyMessage
             unsigned char rev[4];
             PopRawData(rev, 4);
 
-            // haben wir eine gÃ¼ltige Revision erhalten?
+            // haben wir eine gültige Revision erhalten?
             if(rev[0] != 0xFF || rev[3] != 0xFF)
                 revision = 0;
             else
@@ -247,7 +247,7 @@ class LobbyMessage_Register_Error : public LobbyMessage
 
 ///////////////////////////////////////////////////////////////////////////////
 /** eingehende Register-Error-Nachricht. (0.6 compat mode)
- *  sollte niemals empfangen werden (auÃŸer es ist ein pre 0.6 client!)
+ *  sollte niemals empfangen werden (außer es ist ein pre 0.6 client!)
  */
 class LobbyMessage_Register_Error06 : public LobbyMessage
 {
