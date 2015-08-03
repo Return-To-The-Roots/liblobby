@@ -260,7 +260,7 @@ bool LobbyPlayer::Host(LobbyServerInfo info)
 
     LOG.lprintf("Can't create game\n");
 
-    Send(new LobbyMessage_Server_Add_Failed("Datenbankfehler beim Erstellen.\nName ungültig oder schon belegt."));
+    Send(new LobbyMessage_Server_Add_Failed("Database error on create.\nName invalid or already taken."));
 
     return false;
 }

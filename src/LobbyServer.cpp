@@ -82,10 +82,10 @@ int LobbyServer::Start(unsigned short port, std::string mysql_host, std::string 
 #endif
 
     if(!server.Listen(port, use_ipv6))
-        return error("Fehler beim Starten des Server: %s\n", strerror(errno));
+        return error("Error starting the Server: %s\n", strerror(errno));
 
     if(!MYSQLCLIENT.Connect(mysql_host, mysql_user, mysql_pass, mysql_db))
-        return error("Fehler beim Verbinden mit dem MySQL-Server\n");
+        return error("Error connecting to the MySQL-Server\n");
 
     return 0;
 }
@@ -320,12 +320,12 @@ void LobbyServer::OnNMSLobbyLogin(unsigned int id, const unsigned int revision, 
         if( (revision & 0xFF0000FF) == 0xFF0000FF)
         {
             // newer client
-            player.Send(new LobbyMessage_Login_Error("Falsche Protokollversion! Programmversion ist zu alt."));
+            player.Send(new LobbyMessage_Login_Error("Wrong protocal version! Program is to old."));
         }
         else
         {
             // really old client (<= 0.6)
-            player.Send(new LobbyMessage_Login_Error06("Falsche Protokollversion! Programmversion ist zu alt."));
+            player.Send(new LobbyMessage_Login_Error06("Wrong protocal version! Program is to old."));
         }
 
         Disconnect(player);
@@ -345,7 +345,7 @@ void LobbyServer::OnNMSLobbyLogin(unsigned int id, const unsigned int revision, 
                 {
                     LOG.lprintf("User %s@%s already logged on (slot %d == %d)!\n", user.c_str(), player.getPeerIP().c_str(), id, p.getId());
 
-                    player.Send(new LobbyMessage_Login_Error("Bereits eingeloggt! Bei Verbindungsabbruch einen Moment warten."));
+                    player.Send(new LobbyMessage_Login_Error("Already logged in. On connection loss just wait a bit then try again."));
 
                     // alten Spieler rauswerfen
                     Disconnect(p);
@@ -377,7 +377,7 @@ void LobbyServer::OnNMSLobbyLogin(unsigned int id, const unsigned int revision, 
         {
             LOG.lprintf("User %s invalid (password %s wrong?)\n", user.c_str(), "********");
 
-            player.Send(new LobbyMessage_Login_Error("Benutzer/Passwort-Kombination unbekannt!"));
+            player.Send(new LobbyMessage_Login_Error("User/password combination is unknown!"));
 
             Disconnect(player);
         }
@@ -407,12 +407,12 @@ void LobbyServer::OnNMSLobbyRegister(unsigned int id, const unsigned int revisio
         if( (revision & 0xFF0000FF) == 0xFF0000FF)
         {
             // newer client
-            player.Send(new LobbyMessage_Register_Error("Falsche Protokollversion! Programmversion ist zu alt."));
+            player.Send(new LobbyMessage_Register_Error("Wrong protocal version! Program is to old."));
         }
         else
         {
             // really old client (<= 0.6)
-            player.Send(new LobbyMessage_Register_Error06("Falsche Protokollversion! Programmversion ist zu alt."));
+            player.Send(new LobbyMessage_Register_Error06("Wrong protocal version! Program is to old."));
         }
 
         Disconnect(player);
@@ -675,7 +675,7 @@ void LobbyServer::OnNMSLobbyServerUpdateMap(unsigned int id, const std::string& 
         MYSQLCLIENT.GetServerInfo(player.getServerId(), &info);
 
         std::stringstream text;
-        text << player.getName() << " hat den Server " << info.getName() << " erstellt";
+        text << player.getName() << " createt the server " << info.getName();
         LobbyMessage* m = new LobbyMessage_Chat("SYSTEM", text.str());
         SendToAll(m);
         delete m;
@@ -698,7 +698,7 @@ void LobbyServer::OnNMSLobbyServerDelete(unsigned int id)
     player.NoHost();
 
     std::stringstream text;
-    text << player.getName() << " ist wieder anwesend";
+    text << player.getName() << " is available";
     LobbyMessage* m = new LobbyMessage_Chat("SYSTEM", text.str());
     SendToAll(m);
     delete m;
@@ -773,7 +773,7 @@ void LobbyServer::Disconnect(LobbyPlayer& p)
     if(!p.getName().empty())
     {
         std::stringstream text;
-        text << p.getName() << " hat die Lobby verlassen";
+        text << p.getName() << " left the lobby";
         LobbyMessage* m = new LobbyMessage_Chat("SYSTEM", text.str());
 
         SendToAll(m);
