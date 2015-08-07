@@ -1,4 +1,4 @@
-﻿// $Id: LobbyServer.cpp 9383 2014-05-01 11:48:50Z FloSoft $
+// $Id: LobbyServer.cpp 9383 2014-05-01 11:48:50Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //

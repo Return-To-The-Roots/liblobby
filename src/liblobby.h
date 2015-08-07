@@ -1,4 +1,4 @@
-﻿// $Id: liblobby.h 7292 2011-07-12 12:48:19Z FloSoft $
+// $Id: liblobby.h 7292 2011-07-12 12:48:19Z FloSoft $
 //
 // Copyright (c) 2005 - 2011 Settlers Freaks (sf-team at siedler25.org)
 //
