@@ -28,39 +28,28 @@
 ///////////////////////////////////////////////////////////////////////////////
 // System-Header
 
-#define _CRTDBG_MAP_ALLOC
-#define WIN32_LEAN_AND_MEAN
-
 #ifdef _WIN32
-#include <windows.h>
-
-#ifndef __CYGWIN__
-#include <conio.h>
-#endif
-
-#include <ws2tcpip.h>
-
-#ifdef _MSC_VER
-#include <crtdbg.h>
+#   define _CRTDBG_MAP_ALLOC
+#   define WIN32_LEAN_AND_MEAN
+#   include <windows.h>
+#   ifndef __CYGWIN__
+#   include <conio.h>
+#   endif
+#   include <ws2tcpip.h>
+#   ifdef _MSC_VER
+#       include <crtdbg.h>
+#       define getch _getch
+#       if !defined(snprintf) && _MSC_VER < 1800
+#           define snprintf _snprintf
+#       endif
+#       define assert _ASSERT
+#   else
+#       include <assert.h>
+#   endif
 #else
-#include <assert.h>
-#endif
-#else
-#include <arpa/inet.h>
-#include <assert.h>
+#   include <arpa/inet.h>
+#   include <assert.h>
 #endif // !_WIN32
-
-#ifdef _WIN32
-
-#ifdef _MSC_VER
-#define getch _getch
-#ifndef snprintf
-#define snprintf _snprintf
-#endif
-#define assert _ASSERT
-#endif
-
-#endif // _WIN32
 
 #include <errno.h>
 
