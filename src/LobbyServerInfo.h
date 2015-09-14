@@ -33,23 +33,6 @@ class LobbyServerInfo
         /// serialisiert die Daten.
         void serialize(Serializer* ser) const;
 
-        /// Zuweisungsoperator
-        LobbyServerInfo& operator= (const LobbyServerInfo& info)
-        {
-            serverid = info.serverid;
-            name = info.name;
-            host = info.host;
-            port = info.port;
-            version = info.version;
-            ping = info.ping;
-            map = info.map;
-            curplayers = info.curplayers;
-            maxplayers = info.maxplayers;
-            has_password = info.has_password;
-
-            return *this;
-        }
-
         unsigned int getId(void) const { return serverid; }
         std::string getName(void) const { return name; }
         std::string getHost(void) const { return host; }
@@ -62,12 +45,12 @@ class LobbyServerInfo
         bool hasPassword(void) const { return has_password; }
 
         void setId(const unsigned int serverid) { this->serverid = serverid; }
-        void setName(const std::string name) { this->name = name; }
-        void setHost(const std::string host) { this->host = host; }
+        void setName(const std::string& name) { this->name = name; }
+        void setHost(const std::string& host) { this->host = host; }
         void setPort(const unsigned short port) { this->port = port; }
-        void setVersion(const std::string version) { this->version = version; }
+        void setVersion(const std::string& version) { this->version = version; }
         void setPing(const unsigned short ping) { this->ping = ping; }
-        void setMap(const std::string map) { this->map = map; }
+        void setMap(const std::string& map) { this->map = map; }
         void setCurPlayers(const unsigned int curplayers) { this->curplayers = curplayers; }
         void setMaxPlayers(const unsigned int maxplayers) { this->maxplayers = maxplayers; }
         void setPassword(bool has_password) { this->has_password = has_password; }

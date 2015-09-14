@@ -104,7 +104,7 @@ class LobbyServer : public Singleton<LobbyServer>, public LobbyMessageInterface
         LobbyPlayerMap players;
         std::vector<unsigned int> players_kill;
 
-        Socket server;
+        Socket serverSock_;
 };
 
 ///////////////////////////////////////////////////////////////////////////////

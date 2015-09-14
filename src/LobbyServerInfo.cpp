@@ -64,11 +64,11 @@ LobbyServerInfo::LobbyServerInfo(const unsigned playerid, Serializer* ser) :
 void LobbyServerInfo::clear(void)
 {
     serverid = 0;
-    name = "";
-    host = "";
-    version = "";
+    name.clear();
+    host.clear();
+    version.clear();
     ping = 0;
-    map = "";
+    map.clear();
     curplayers = 0;
     maxplayers = 0;
     has_password = false;

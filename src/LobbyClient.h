@@ -68,17 +68,17 @@ class LobbyClient : public Singleton<LobbyClient>, public LobbyMessageInterface
         /// schickt einen Request für den Serverjoin.
         void SendServerJoinRequest(void);
         /// schickt einen Request um die Punkte eines bestimmten Spielers auszulesen.
-        void SendRankingInfoRequest(const std::string name);
+        void SendRankingInfoRequest(const std::string& name);
 
         /// verschickt eine Chatnachricht.
-        void SendChat(std::string text);
+        void SendChat(const std::string& text);
 
         /// fügt einen Server zur Lobby hinzu.
-        void AddServer(std::string name, std::string map, bool has_password, unsigned short port);
+        void AddServer(const std::string& name, const std::string& map, bool has_password, unsigned short port);
         /// entfernt den einem zugehörigen Server von der Lobby.
         void DeleteServer();
         /// aktualisiert den Kartennamen des zugehörigen Servers in der Lobby.
-        void UpdateServer(std::string map);
+        void UpdateServer(const std::string& map);
         /// aktualisiert die Spielerzahlen des zugehörigen Servers in der Lobby.
         void UpdateServerPlayerCount(unsigned int curplayer, unsigned int maxplayer);
 
@@ -180,7 +180,7 @@ class LobbyClient : public Singleton<LobbyClient>, public LobbyMessageInterface
         LobbyPlayerList playerlist;
         LobbyPlayerList rankinglist;
         LobbyServerInfo serverinfo;
-        LobbyServerInfo server;
+        LobbyServerInfo server_;
 };
 
 ///////////////////////////////////////////////////////////////////////////////

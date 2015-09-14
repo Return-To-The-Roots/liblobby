@@ -54,7 +54,7 @@ LobbyServer::~LobbyServer(void)
 {
     MYSQLCLIENT.Disconnect();
 
-    server.Close();
+    serverSock_.Close();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -79,7 +79,7 @@ int LobbyServer::Start(unsigned short port, std::string mysql_host, std::string 
     use_ipv6 = true;
 #endif
 
-    if(!server.Listen(port, use_ipv6))
+    if(!serverSock_.Listen(port, use_ipv6))
         return error("Error starting the Server: %s\n", strerror(errno));
 
     if(!MYSQLCLIENT.Connect(mysql_host, mysql_user, mysql_pass, mysql_db))
@@ -162,24 +162,24 @@ bool LobbyServer::Await()
     SocketSet set;
     int playerid = 0xFFFFFFFF;
 
-    set.Add(server);
+    set.Add(serverSock_);
     if( set.Select(0, 0) > 0)
     {
-        if(set.InSet(server))
+        if(set.InSet(serverSock_))
         {
-            Socket tmp;
-            if(!server.Accept(tmp))
+            Socket client = serverSock_.Accept();
+            if(!client.isValid())
                 return false;
 
             playerid = players.size();
             while(players.find(playerid) != players.end())
                 ++playerid;
 
-            LOG.lprintf("New client connected from %s\n", tmp.GetPeerIP().c_str());
+            LOG.lprintf("New client connected from %s\n", client.GetPeerIP().c_str());
 
             LobbyPlayer p;
 
-            p.attach(tmp, playerid);
+            p.attach(client, playerid);
 
             players[playerid] = p;
 

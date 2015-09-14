@@ -33,7 +33,7 @@ class MySQL : public Singleton<MySQL>
         MySQL(void);
         ~MySQL(void);
 
-        bool Connect(std::string host = "", std::string user = "", std::string pass = "", std::string db = "");
+        bool Connect(const std::string& host = "", const std::string& user = "", const std::string& pass = "", const std::string& db = "");
         void Disconnect(void);
 
         bool LoginUser(const std::string& user, const std::string& pass, std::string& email, const std::string& ip);
@@ -51,7 +51,7 @@ class MySQL : public Singleton<MySQL>
 
         bool SetBan(const std::string& user, bool banned);
     private:
-        bool DoQuery(std::string query);
+        bool DoQuery(const std::string& query);
 
     private:
         MYSQL* m_pMySQL;

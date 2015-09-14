@@ -34,43 +34,30 @@ class LobbyPlayerInfo
         void serialize(Serializer* ser) const;
         void deserialize(Serializer* ser);
 
-        /// Zuweisungsoperator
-        LobbyPlayerInfo& operator= (const LobbyPlayerInfo& info)
-        {
-            playerid = info.playerid;
-            name = info.name;
-            version = info.version;
-            punkte = info.punkte;
-            gewonnen = info.gewonnen;
-            verloren = info.verloren;
+        unsigned int getId(void) const { return playerid_; }
+        std::string getName(void) const { return name_; }
+        std::string getEmail(void) const { return email_; }
+        std::string getVersion(void) const { return version_; }
+        int getPunkte(void) const { return punkte_; }
+        unsigned int getGewonnen(void) const { return gewonnen_; }
+        unsigned int getVerloren(void) const { return verloren_; }
 
-            return *this;
-        }
-
-        unsigned int getId(void) const { return playerid; }
-        std::string getName(void) const { return name; }
-        std::string getEmail(void) const { return email; }
-        std::string getVersion(void) const { return version; }
-        int getPunkte(void) const { return punkte; }
-        unsigned int getGewonnen(void) const { return gewonnen; }
-        unsigned int getVerloren(void) const { return verloren; }
-
-        void setId(const unsigned int playerid) { this->playerid = playerid; }
-        void setName(const std::string name) { this->name = name; }
-        void setEmail(const std::string email) { this->email = email; }
-        void setVersion(const std::string version) { this->version = version; }
-        void setPunkte(const unsigned int punkte) { this->punkte = punkte; }
-        void setGewonnen(const unsigned int gewonnen) { this->gewonnen = gewonnen; }
-        void setVerloren(const unsigned int verloren) { this->verloren = verloren; }
+        void setId(const unsigned int playerid) { this->playerid_ = playerid; }
+        void setName(const std::string& name) { this->name_ = name; }
+        void setEmail(const std::string& email) { this->email_ = email; }
+        void setVersion(const std::string& version) { this->version_ = version; }
+        void setPunkte(const unsigned int punkte) { this->punkte_ = punkte; }
+        void setGewonnen(const unsigned int gewonnen) { this->gewonnen_ = gewonnen; }
+        void setVerloren(const unsigned int verloren) { this->verloren_ = verloren; }
 
     protected:
-        unsigned int playerid;
-        std::string name;
-        std::string email;
-        std::string version;
-        int punkte;
-        unsigned int gewonnen;
-        unsigned int verloren;
+        unsigned int playerid_;
+        std::string name_;
+        std::string email_;
+        std::string version_;
+        int punkte_;
+        unsigned int gewonnen_;
+        unsigned int verloren_;
 };
 
 #endif // LOBBYPLAYERINFO_H_INCLUDED

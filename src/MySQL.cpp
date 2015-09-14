@@ -54,7 +54,7 @@ void MySQL::Disconnect(void)
 
 ///////////////////////////////////////////////////////////////////////////////
 // Zum Server verbinden
-bool MySQL::Connect(std::string host, std::string user, std::string pass, std::string db)
+bool MySQL::Connect(const std::string& host, const std::string& user, const std::string& pass, const std::string& db)
 {
     if(m_Connection.host.empty() && !host.empty())
     {
@@ -97,7 +97,7 @@ bool MySQL::Connect(std::string host, std::string user, std::string pass, std::s
     return true;
 }
 
-bool MySQL::DoQuery(std::string query)
+bool MySQL::DoQuery(const std::string& query)
 {
     if(!Connect())
         return false;
@@ -257,7 +257,7 @@ bool MySQL::GetServerInfo(unsigned int id, LobbyServerInfo* Info)
     MYSQL_ROW   Row;
 
     char query[1024];
-    snprintf(query, 1024, "SELECT * FROM `lobby_servers` WHERE `id` = %d ORDER BY `name` ASC LIMIT 1;", id);
+    snprintf(query, 1024, "SELECT * FROM `lobby_servers` WHERE `id` = %u ORDER BY `name` ASC LIMIT 1;", id);
 
     //LOG.lprintf("%s\n", query);
 
@@ -451,7 +451,7 @@ bool MySQL::DeleteServer(unsigned int id)
         return false;
 
     char query[1024];
-    snprintf(query, 1024, "DELETE FROM `lobby_servers` WHERE `id` = %d LIMIT 1;", id);
+    snprintf(query, 1024, "DELETE FROM `lobby_servers` WHERE `id` = %u LIMIT 1;", id);
 
     if(!DoQuery(query))
         return false;
@@ -470,7 +470,7 @@ bool MySQL::UpdateServer(unsigned int id, const std::string& map)
     mysql_real_escape_string(m_pMySQL, map2, map.c_str(), (unsigned long)map.length());
 
     char query[1024];
-    snprintf(query, 1024, "UPDATE `lobby_servers` SET `map` = '%s' WHERE `id` = '%d';", map2, id);
+    snprintf(query, 1024, "UPDATE `lobby_servers` SET `map` = '%s' WHERE `id` = '%u';", map2, id);
 
     if(!DoQuery(query))
         return false;
@@ -486,12 +486,12 @@ bool MySQL::UpdateServerPC(unsigned int id, unsigned int curplayer, unsigned int
         return false;
 
     char query[1024];
-    snprintf(query, 1024, "UPDATE `lobby_servers` SET `curplayer` = '%d', `maxplayers` = '%d' WHERE `id` = '%d';", curplayer, maxplayer, id);
+    snprintf(query, 1024, "UPDATE `lobby_servers` SET `curplayer` = '%u', `maxplayers` = '%u' WHERE `id` = '%u';", curplayer, maxplayer, id);
 
     if(!DoQuery(query))
         return false;
 
-    LOG.lprintf("Server %s aktualisiert: Aktuelle Spielerzahl: %d/%d->%d/%d\n", Info.getName().c_str(), Info.getCurPlayers(), Info.getMaxPlayers(), curplayer, maxplayer);
+    LOG.lprintf("Server %s aktualisiert: Aktuelle Spielerzahl: %u/%u->%u/%u\n", Info.getName().c_str(), Info.getCurPlayers(), Info.getMaxPlayers(), curplayer, maxplayer);
     return true;
 }
 
@@ -505,7 +505,7 @@ bool MySQL::UpdateServerPing(unsigned int id, unsigned int ping)
         return true;
 
     char query[1024];
-    snprintf(query, 1024, "UPDATE `lobby_servers` SET `ping` = '%d' WHERE `id` = '%d';", ping, id);
+    snprintf(query, 1024, "UPDATE `lobby_servers` SET `ping` = '%u' WHERE `id` = '%u';", ping, id);
 
     if(!DoQuery(query))
         return false;

@@ -75,7 +75,7 @@ void LobbyClient::Run(void)
     if(set.Select(0, 0) > 0)
     {
         // nachricht empfangen
-        if(!recv_queue.recv(&socket))
+        if(!recv_queue.recv(socket))
         {
             LOG.lprintf("Receiving Message from server failed\n");
             ServerLost();
@@ -102,7 +102,7 @@ void LobbyClient::Run(void)
     }
 
     // maximal 10 Pakete verschicken
-    if(!send_queue.send(&socket, 10))
+    if(!send_queue.send(socket, 10))
     {
         ServerLost();
         return;
@@ -127,7 +127,7 @@ void LobbyClient::Stop()
     if(state != CS_CONNECT)
     {
         send_queue.push(new Message_Dead(1));
-        send_queue.flush(&socket);
+        send_queue.flush(socket);
     }
 
     // Verbindung trennen
@@ -259,7 +259,7 @@ void LobbyClient::SendServerJoinRequest()
  *
  *  @author FloSoft
  */
-void LobbyClient::SendRankingInfoRequest(const std::string name)
+void LobbyClient::SendRankingInfoRequest(const std::string& name)
 {
     send_queue.push(new LobbyMessage_Lobby_Ranking_Info(name));
 }
@@ -272,7 +272,7 @@ void LobbyClient::SendRankingInfoRequest(const std::string name)
  *
  *  @author FloSoft
  */
-void LobbyClient::SendChat(std::string text)
+void LobbyClient::SendChat(const std::string& text)
 {
     send_queue.push(new LobbyMessage_Chat(text));
 }
@@ -285,16 +285,16 @@ void LobbyClient::SendChat(std::string text)
  *
  *  @author FloSoft
  */
-void LobbyClient::AddServer(std::string name, std::string map, bool has_password, unsigned short port)
+void LobbyClient::AddServer(const std::string& name, const std::string& map, bool has_password, unsigned short port)
 {
-    server.clear();
-    server.setName(name);
-    server.setVersion(GetWindowVersion());
-    server.setPort(port);
-    server.setMap(map);
-    server.setPassword(has_password);
+    server_.clear();
+    server_.setName(name);
+    server_.setVersion(GetWindowVersion());
+    server_.setPort(port);
+    server_.setMap(map);
+    server_.setPassword(has_password);
 
-    send_queue.push(new LobbyMessage_Server_Add(server));
+    send_queue.push(new LobbyMessage_Server_Add(server_));
 
     LOG.lprintf("LobbyClient: GameServer %s wird erstellt ...\n", name.c_str());
 }
@@ -309,7 +309,7 @@ void LobbyClient::DeleteServer()
 {
     send_queue.push(new LobbyMessage_Server_Delete());
 
-    server.clear();
+    server_.clear();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -320,9 +320,9 @@ void LobbyClient::DeleteServer()
  *
  *  @author FloSoft
  */
-void LobbyClient::UpdateServer(std::string map)
+void LobbyClient::UpdateServer(const std::string& map)
 {
-    server.setMap(map);
+    server_.setMap(map);
 
     send_queue.push(new LobbyMessage_Server_Update_Map(map));
 }
@@ -338,8 +338,8 @@ void LobbyClient::UpdateServer(std::string map)
  */
 void LobbyClient::UpdateServerPlayerCount(unsigned int curplayer, unsigned int maxplayer)
 {
-    server.setCurPlayers(curplayer);
-    server.setMaxPlayers(maxplayer);
+    server_.setCurPlayers(curplayer);
+    server_.setMaxPlayers(maxplayer);
 
     send_queue.push(new LobbyMessage_Server_Update_Player(curplayer, maxplayer));
 }
@@ -581,9 +581,9 @@ void LobbyClient::OnNMSLobbyServerAddFailed(unsigned int id, const std::string& 
  */
 void LobbyClient::OnNMSLobbyServerAdd(unsigned int id, const LobbyServerInfo& info)
 {
-    server = info;
+    server_ = info;
 
-    LOG.lprintf("LobbyClient: GameServer %s erfolgreich erstellt!\n", server.getName().c_str());
+    LOG.lprintf("LobbyClient: GameServer %s erfolgreich erstellt!\n", server_.getName().c_str());
 
     // Server kann jetzt gestartet werden
     if(parent)
