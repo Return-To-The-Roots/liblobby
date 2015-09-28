@@ -36,9 +36,11 @@
 #include "Socket.h"
 
 /// Lobby-Client-Klasse
-class LobbyClient : public Singleton<LobbyClient>, public LobbyMessageInterface
+class LobbyClient : public Singleton<LobbyClient, SingletonPolicies::WithLongevity>, public LobbyMessageInterface
 {
     public:
+        static const unsigned Longevity = 10;
+
         /// Konstruktor von @p LobbyClient.
         LobbyClient(void);
         /// Destruktor von @p LobbyClient.
