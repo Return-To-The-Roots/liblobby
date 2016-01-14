@@ -40,17 +40,17 @@ LobbyServerInfo::LobbyServerInfo(void)
 }
 
 /// Deserialisierungs-Konstruktor von @p LobbyServerInfo.
-LobbyServerInfo::LobbyServerInfo(const unsigned playerid, Serializer* ser) :
-    serverid(ser->PopUnsignedInt()),
-    name(ser->PopString()),
-    host(ser->PopString()),
-    port(ser->PopUnsignedShort()),
-    version(ser->PopString()),
-    ping(ser->PopUnsignedInt()),
-    map(ser->PopString()),
-    curplayers(ser->PopUnsignedInt()),
-    maxplayers(ser->PopUnsignedInt()),
-    has_password(ser->PopBool())
+LobbyServerInfo::LobbyServerInfo(const unsigned playerid, Serializer& ser) :
+    serverid(ser.PopUnsignedInt()),
+    name(ser.PopString()),
+    host(ser.PopString()),
+    port(ser.PopUnsignedShort()),
+    version(ser.PopString()),
+    ping(ser.PopUnsignedInt()),
+    map(ser.PopString()),
+    curplayers(ser.PopUnsignedInt()),
+    maxplayers(ser.PopUnsignedInt()),
+    has_password(ser.PopBool())
 {
 
 }
@@ -84,16 +84,16 @@ void LobbyServerInfo::clear(void)
  *
  *  @author FloSoft
  */
-void LobbyServerInfo::serialize(Serializer* ser) const
+void LobbyServerInfo::serialize(Serializer& ser) const
 {
-    ser->PushUnsignedInt(serverid);
-    ser->PushString(name);
-    ser->PushString(host);
-    ser->PushUnsignedShort(port);
-    ser->PushString(version);
-    ser->PushUnsignedInt(ping);
-    ser->PushString(map);
-    ser->PushUnsignedInt(curplayers);
-    ser->PushUnsignedInt(maxplayers);
-    ser->PushBool(has_password);
+    ser.PushUnsignedInt(serverid);
+    ser.PushString(name);
+    ser.PushString(host);
+    ser.PushUnsignedShort(port);
+    ser.PushString(version);
+    ser.PushUnsignedInt(ping);
+    ser.PushString(map);
+    ser.PushUnsignedInt(curplayers);
+    ser.PushUnsignedInt(maxplayers);
+    ser.PushBool(has_password);
 }

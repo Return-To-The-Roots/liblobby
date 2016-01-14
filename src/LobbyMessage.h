@@ -25,10 +25,7 @@
 class LobbyMessage : public Message
 {
     public:
-        /// Konstruktor von @p GameMessage.
         LobbyMessage(unsigned short id) : Message(id) { }
-        /// Destruktor von @p GameMessage.
-        virtual ~LobbyMessage(void) {};
 
         static Message* create_lobby(unsigned short id);
 
