@@ -27,11 +27,11 @@ class LobbyServerInfo
         /// Konstruktor von @p LobbyServerInfo.
         LobbyServerInfo(void);
         /// Deserialisierungs-Konstruktor von @p LobbyServerInfo.
-        LobbyServerInfo(const unsigned playerid, Serializer* ser);
+        LobbyServerInfo(const unsigned playerid, Serializer& ser);
         /// leert die Informationen.
         void clear(void);
         /// serialisiert die Daten.
-        void serialize(Serializer* ser) const;
+        void serialize(Serializer& ser) const;
 
         unsigned int getId(void) const { return serverid; }
         std::string getName(void) const { return name; }

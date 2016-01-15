@@ -19,6 +19,7 @@
 // Header
 #include "main.h"
 #include "LobbyClient.h"
+#include "Messages.h"
 #include "LobbyMessages.h"
 #include <build_version.h>
 
@@ -126,7 +127,7 @@ void LobbyClient::Stop()
 {
     if(state != CS_CONNECT)
     {
-        send_queue.push(new Message_Dead(1));
+        send_queue.push(new Message_Dead());
         send_queue.flush(socket);
     }
 

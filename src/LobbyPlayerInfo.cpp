@@ -45,7 +45,7 @@ LobbyPlayerInfo::LobbyPlayerInfo(void)
  *
  *  @author FloSoft
  */
-LobbyPlayerInfo::LobbyPlayerInfo(const unsigned playerid, Serializer* ser)
+LobbyPlayerInfo::LobbyPlayerInfo(const unsigned playerid, Serializer& ser)
 {
     deserialize(ser);
 }
@@ -74,14 +74,14 @@ void LobbyPlayerInfo::clear(void)
  *
  *  @author FloSoft
  */
-void LobbyPlayerInfo::serialize(Serializer* ser) const
+void LobbyPlayerInfo::serialize(Serializer& ser) const
 {
-    ser->PushUnsignedInt(playerid_);
-    ser->PushString(name_);
-    ser->PushString(version_);
-    ser->PushSignedInt(punkte_);
-    ser->PushUnsignedInt(gewonnen_);
-    ser->PushUnsignedInt(verloren_);
+    ser.PushUnsignedInt(playerid_);
+    ser.PushString(name_);
+    ser.PushString(version_);
+    ser.PushSignedInt(punkte_);
+    ser.PushUnsignedInt(gewonnen_);
+    ser.PushUnsignedInt(verloren_);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -92,12 +92,12 @@ void LobbyPlayerInfo::serialize(Serializer* ser) const
  *
  *  @author FloSoft
  */
-void LobbyPlayerInfo::deserialize(Serializer* ser)
+void LobbyPlayerInfo::deserialize(Serializer& ser)
 {
-    playerid_ = ser->PopUnsignedInt();
-    name_ = ser->PopString();
-    version_ = ser->PopString();
-    punkte_ = ser->PopSignedInt();
-    gewonnen_ = ser->PopUnsignedInt();
-    verloren_ = ser->PopUnsignedInt();
+    playerid_ = ser.PopUnsignedInt();
+    name_ = ser.PopString();
+    version_ = ser.PopString();
+    punkte_ = ser.PopSignedInt();
+    gewonnen_ = ser.PopUnsignedInt();
+    verloren_ = ser.PopUnsignedInt();
 }
