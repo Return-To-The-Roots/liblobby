@@ -166,7 +166,7 @@ class LobbyMessage_Login_Error06 : public LobbyMessage
         void Serialize(Serializer& ser) const override
         {
             LobbyMessage::Serialize(ser);
-            ser.PushRawData(error.c_str(), error.size());
+            ser.PushRawData(error.c_str(), static_cast<unsigned>(error.size()));
         }
 
         void Deserialize(Serializer& ser) override
@@ -302,7 +302,7 @@ class LobbyMessage_Register_Error06 : public LobbyMessage
         void Serialize(Serializer& ser) const override
         {
             LobbyMessage::Serialize(ser);
-            ser.PushRawData(error.c_str(), error.size());
+            ser.PushRawData(error.c_str(), static_cast<unsigned>(error.size()));
         }
 
         void Deserialize(Serializer& ser) override
