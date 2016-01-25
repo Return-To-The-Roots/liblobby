@@ -356,7 +356,7 @@ void LobbyClient::UpdateServerPlayerCount(unsigned int curplayer, unsigned int m
 bool LobbyClient::Connect(const std::string& server, const unsigned int port, const bool use_ipv6)
 {
     // Verbinden
-    if(!socket.Connect( server.c_str(), port, use_ipv6 ))
+    if(!socket.Connect(server, port, use_ipv6))
     {
         ServerLost();
         return false;
