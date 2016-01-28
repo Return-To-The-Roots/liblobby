@@ -21,13 +21,8 @@
 #include "MySQL.h"
 #include <stdio.h>
 
-///////////////////////////////////////////////////////////////////////////////
-// Makros / Defines
-#if defined _WIN32 && defined _DEBUG
-#define new new(_NORMAL_BLOCK, THIS_FILE, __LINE__)
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
-#endif
+// Include last!
+#include "DebugNew.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Konstruktor
