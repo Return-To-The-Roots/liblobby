@@ -27,7 +27,9 @@
 // System-Header
 
 #ifdef _WIN32
-#   define _CRTDBG_MAP_ALLOC
+#   ifndef _CRTDBG_MAP_ALLOC
+#       define _CRTDBG_MAP_ALLOC
+#   endif
 #   define WIN32_LEAN_AND_MEAN
 #   include <windows.h>
 #   ifndef __CYGWIN__
