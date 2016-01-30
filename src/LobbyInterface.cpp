@@ -20,6 +20,9 @@
 #include "main.h"
 #include "LobbyInterface.h"
 
+// Include last!
+#include "DebugNew.h"
+
 void LobbyInterface::LC_LoggedIn(const std::string& email) { }
 void LobbyInterface::LC_Registered(void) { }
 void LobbyInterface::LC_Connected(void) { }

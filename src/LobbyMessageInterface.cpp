@@ -20,6 +20,9 @@
 #include "main.h"
 #include "LobbyMessageInterface.h"
 
+// Include last!
+#include "DebugNew.h"
+
 ///////////////////////////////////////////////////////////////////////////////
 /**
  *  Lobby-Login-Nachricht.
