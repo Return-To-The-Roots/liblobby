@@ -454,7 +454,7 @@ void LobbyClient::OnNMSLobbyLoginDone(unsigned int id, const std::string& email)
  *
  *  @author FloSoft
  */
-void LobbyClient::OnNMSLobbyRegisterError(unsigned int id, const std::string& error)
+void LobbyClient::OnNMSLobbyRegisterError(unsigned int id, const std::string& error) //-V524
 {
     this->error = error;
     if(parent)

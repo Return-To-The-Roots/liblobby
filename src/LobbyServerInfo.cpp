@@ -61,6 +61,7 @@ void LobbyServerInfo::clear(void)
     serverid = 0;
     name.clear();
     host.clear();
+    port = 0;
     version.clear();
     ping = 0;
     map.clear();

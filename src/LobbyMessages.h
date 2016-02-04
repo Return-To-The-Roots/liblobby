@@ -38,7 +38,7 @@ class LobbyMessage_Login : public LobbyMessage
         std::string version;
 
     public:
-        LobbyMessage_Login(void): LobbyMessage(NMS_LOBBY_LOGIN) { }
+        LobbyMessage_Login(void): LobbyMessage(NMS_LOBBY_LOGIN) { } //-V730
         LobbyMessage_Login(const std::string& user, const std::string& pass, const std::string& version):
             LobbyMessage(NMS_LOBBY_LOGIN), user(user), pass(pass), version(version)
         {
@@ -188,7 +188,7 @@ class LobbyMessage_Register : public LobbyMessage
         std::string email;
 
     public:
-        LobbyMessage_Register(void): LobbyMessage(NMS_LOBBY_REGISTER) {}
+        LobbyMessage_Register(void): LobbyMessage(NMS_LOBBY_REGISTER) {} //-V730
         LobbyMessage_Register(const std::string& user, const std::string& pass, const std::string& email):
             LobbyMessage(NMS_LOBBY_REGISTER), user(user), pass(pass), email(email)
         {
@@ -322,7 +322,7 @@ class LobbyMessage_ServerList : public LobbyMessage
         LobbyServerList list;
 
     public:
-        LobbyMessage_ServerList(void): LobbyMessage(NMS_LOBBY_SERVERLIST) {}
+        LobbyMessage_ServerList(void): LobbyMessage(NMS_LOBBY_SERVERLIST) {} //-V730
         LobbyMessage_ServerList(bool reserved): LobbyMessage(NMS_LOBBY_SERVERLIST), isRequest(true)
         {
             LOG.write(">>> NMS_LOBBY_SERVERLIST\n");
@@ -386,7 +386,7 @@ class LobbyMessage_ServerInfo : public LobbyMessage
         unsigned int server;
 
     public:
-        LobbyMessage_ServerInfo(void): LobbyMessage(NMS_LOBBY_SERVERINFO) {}
+        LobbyMessage_ServerInfo(void): LobbyMessage(NMS_LOBBY_SERVERINFO) {} //-V730
         LobbyMessage_ServerInfo(const unsigned int server): LobbyMessage(NMS_LOBBY_SERVERINFO), isRequest(true), server(server)
         {
             LOG.write(">>> NMS_LOBBY_SERVERINFO(%d)\n", server);
@@ -443,7 +443,7 @@ class LobbyMessage_RankingList : public LobbyMessage
         LobbyPlayerList list;
 
     public:
-        LobbyMessage_RankingList(void): LobbyMessage(NMS_LOBBY_RANKINGLIST) {}
+        LobbyMessage_RankingList(void): LobbyMessage(NMS_LOBBY_RANKINGLIST) {} //-V730
         LobbyMessage_RankingList(bool reserved): LobbyMessage(NMS_LOBBY_RANKINGLIST), isRequest(true)
         {
             LOG.write(">>> NMS_LOBBY_RANKINGLIST\n");
@@ -506,7 +506,7 @@ class LobbyMessage_PlayerList : public LobbyMessage
         LobbyPlayerList list;
 
     public:
-        LobbyMessage_PlayerList(void): LobbyMessage(NMS_LOBBY_PLAYERLIST) { }
+        LobbyMessage_PlayerList(void): LobbyMessage(NMS_LOBBY_PLAYERLIST) { } //-V730
         LobbyMessage_PlayerList(bool reserved): LobbyMessage(NMS_LOBBY_PLAYERLIST), isRequest(true)
         {
             LOG.write(">>> NMS_LOBBY_PLAYERLIST\n");
@@ -569,7 +569,7 @@ class LobbyMessage_Id : public LobbyMessage
         unsigned int playerid;
 
     public:
-        LobbyMessage_Id(void): LobbyMessage(NMS_LOBBY_ID) {}
+        LobbyMessage_Id(void): LobbyMessage(NMS_LOBBY_ID) {} //-V730
         LobbyMessage_Id(const unsigned int playerid): LobbyMessage(NMS_LOBBY_ID), playerid(playerid)
         {
             LOG.write(">>> NMS_LOBBY_ID(%d)\n", playerid);
@@ -775,7 +775,7 @@ class LobbyMessage_Server_Update_Player : public LobbyMessage
         unsigned int maxplayer;
 
     public:
-        LobbyMessage_Server_Update_Player(void): LobbyMessage(NMS_LOBBY_SERVER_UPDATE_PLAYER) { }
+        LobbyMessage_Server_Update_Player(void): LobbyMessage(NMS_LOBBY_SERVER_UPDATE_PLAYER) { } //-V730
         LobbyMessage_Server_Update_Player(const unsigned int curplayer, const unsigned int maxplayer):
             LobbyMessage(NMS_LOBBY_SERVER_UPDATE_PLAYER), curplayer(curplayer), maxplayer(maxplayer)
         {
@@ -869,7 +869,7 @@ class LobbyMessage_Lobby_Ranking_Info : public LobbyMessage
         LobbyPlayerInfo player;
 
     public:
-        LobbyMessage_Lobby_Ranking_Info(void): LobbyMessage(NMS_LOBBY_RANKING_INFO) { }
+        LobbyMessage_Lobby_Ranking_Info(void): LobbyMessage(NMS_LOBBY_RANKING_INFO) { } //-V730
         LobbyMessage_Lobby_Ranking_Info(const std::string& name): LobbyMessage(NMS_LOBBY_RANKING_INFO), isRequest(true), name(name)
         {
             LOG.write(">>> NMS_LOBBY_RANKING_INFO(%s)\n", name.c_str());
