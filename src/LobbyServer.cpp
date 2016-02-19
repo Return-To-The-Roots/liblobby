@@ -17,7 +17,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Header
-#include "main.h"
+#include "main.h" // IWYU pragma: keep
 #include "LobbyServer.h"
 
 #include "MySQL.h"
@@ -26,7 +26,7 @@
 #include <sstream>
 
 // Include last!
-#include "DebugNew.h"
+#include "DebugNew.h" // IWYU pragma: keep
 
 ///////////////////////////////////////////////////////////////////////////////
 /**

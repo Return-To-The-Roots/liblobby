@@ -17,14 +17,14 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Header
-#include "main.h"
+#include "main.h" // IWYU pragma: keep
 #include "LobbyClient.h"
 #include "Messages.h"
 #include "LobbyMessages.h"
 #include <build_version.h>
 
 // Include last!
-#include "DebugNew.h"
+#include "DebugNew.h" // IWYU pragma: keep
 
 ///////////////////////////////////////////////////////////////////////////////
 /**

@@ -17,11 +17,11 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Header
-#include "main.h"
+#include "main.h" // IWYU pragma: keep
 #include "LobbyInterface.h"
 
 // Include last!
-#include "DebugNew.h"
+#include "DebugNew.h" // IWYU pragma: keep
 
 void LobbyInterface::LC_LoggedIn(const std::string& email) { }
 void LobbyInterface::LC_Registered(void) { }

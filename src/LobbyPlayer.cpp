@@ -17,7 +17,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Header
-#include "main.h"
+#include "main.h" // IWYU pragma: keep
 #include <build_version.h>
 #include "LobbyPlayer.h"
 
@@ -25,7 +25,7 @@
 #include "LobbyMessage.h"
 
 // Include last!
-#include "DebugNew.h"
+#include "DebugNew.h" // IWYU pragma: keep
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
