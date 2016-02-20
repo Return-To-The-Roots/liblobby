@@ -19,8 +19,9 @@
 
 #pragma once
 
-#include "LobbyProtocol.h"
-#include "LobbyPlayerInfo.h"
+#include <string>
+
+class LobbyPlayerInfo;
 
 class LobbyInterface
 {

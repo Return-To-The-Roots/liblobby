@@ -19,6 +19,7 @@
 // Header
 #include "main.h" // IWYU pragma: keep
 #include "LobbyPlayerInfo.h"
+#include "Serializer.h"
 
 // Include last!
 #include "DebugNew.h" // IWYU pragma: keep

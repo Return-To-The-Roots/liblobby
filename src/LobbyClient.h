@@ -23,9 +23,6 @@
 // Eigene Header
 #include "Singleton.h"
 
-#include "LobbyInterface.h"
-
-#include "LobbyMessage.h"
 #include "LobbyMessageInterface.h"
 
 #include "LobbyServerList.h"
@@ -34,6 +31,10 @@
 
 #include "MessageQueue.h"
 #include "Socket.h"
+#include <string>
+
+class LobbyInterface;
+class LobbyPlayerInfo;
 
 /// Lobby-Client-Klasse
 class LobbyClient : public Singleton<LobbyClient, SingletonPolicies::WithLongevity>, public LobbyMessageInterface

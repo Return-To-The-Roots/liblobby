@@ -20,6 +20,7 @@
 #pragma once
 
 class Serializer;
+#include <string>
 
 class LobbyServerInfo
 {

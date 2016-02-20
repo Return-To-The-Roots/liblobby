@@ -20,7 +20,6 @@
 #pragma once
 
 #include "Message.h"
-#include "LobbyMessageInterface.h"
 
 class LobbyMessage : public Message
 {

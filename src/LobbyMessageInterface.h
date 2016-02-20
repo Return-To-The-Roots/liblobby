@@ -20,6 +20,7 @@
 #pragma once
 
 #include "MessageInterface.h"
+#include <string>
 
 class LobbyServerList;
 class LobbyPlayerList;

@@ -21,10 +21,12 @@
 #include "LobbyMessage.h"
 
 #include "LobbyMessages.h"
+#include "LobbyProtocol.h"
+
+#include <cstddef>
 
 // Include last!
 #include "DebugNew.h" // IWYU pragma: keep
-
 
 ///////////////////////////////////////////////////////////////////////////////
 /**

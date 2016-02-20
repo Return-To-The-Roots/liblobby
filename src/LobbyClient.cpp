@@ -20,11 +20,21 @@
 #include "main.h" // IWYU pragma: keep
 #include "LobbyClient.h"
 #include "Messages.h"
+#include "LobbyInterface.h"
+#include "LobbyMessage.h"
 #include "LobbyMessages.h"
+#include "Log.h"
+#include "Message.h"
+#include "SocketSet.h"
+#include "mygettext.h"
 #include <build_version.h>
 
 // Include last!
 #include "DebugNew.h" // IWYU pragma: keep
+
+#include <cstddef>
+
+class LobbyPlayerInfo;
 
 ///////////////////////////////////////////////////////////////////////////////
 /**
