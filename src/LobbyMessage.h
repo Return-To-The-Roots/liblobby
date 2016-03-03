@@ -28,7 +28,7 @@ class LobbyMessage : public Message
 
         static Message* create_lobby(unsigned short id);
 
-        virtual Message* create(unsigned short id) const { return create_lobby(id); }
+        Message* create(unsigned short id) const override { return create_lobby(id); }
 };
 
 #endif // LOBBYMESSAGE_H_INCLUDED

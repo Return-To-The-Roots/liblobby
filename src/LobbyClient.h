@@ -45,7 +45,7 @@ class LobbyClient : public Singleton<LobbyClient, SingletonPolicies::WithLongevi
         /// Konstruktor von @p LobbyClient.
         LobbyClient(void);
         /// Destruktor von @p LobbyClient.
-        ~LobbyClient(void);
+        ~LobbyClient(void) override;
 
         /// setzt das Interface
         void SetInterface(LobbyInterface* parent) { this->parent = parent; }
@@ -99,39 +99,39 @@ class LobbyClient : public Singleton<LobbyClient, SingletonPolicies::WithLongevi
         bool LoggedIn() { return (state == CS_LOBBY); }
 
         /// Lobby-Login-Error-Nachricht.
-        virtual void OnNMSLobbyLoginError(unsigned int id, const std::string& error);
+        void OnNMSLobbyLoginError(unsigned int id, const std::string& error) override;
         /// Lobby-Logged-In-Nachricht.
-        virtual void OnNMSLobbyLoginDone(unsigned int id, const std::string& email);
+        void OnNMSLobbyLoginDone(unsigned int id, const std::string& email) override;
 
         /// Lobby-Register-Error-Nachricht.
-        virtual void OnNMSLobbyRegisterError(unsigned int id, const std::string& error);
+        void OnNMSLobbyRegisterError(unsigned int id, const std::string& error) override;
         /// Lobby-Register-Done-Nachricht.
-        virtual void OnNMSLobbyRegisterDone(unsigned int id);
+        void OnNMSLobbyRegisterDone(unsigned int id) override;
 
         /// Lobby-Player-ID-Nachricht.
-        virtual void OnNMSLobbyID(unsigned int id, const unsigned int& playerid);
+        void OnNMSLobbyID(unsigned int id, const unsigned int& playerid) override;
         /// Chat-Nachricht.
-        virtual void OnNMSLobbyChat(unsigned int id, const std::string& player, const std::string& text);
+        void OnNMSLobbyChat(unsigned int id, const std::string& player, const std::string& text) override;
 
         /// Ping-Nachricht.
-        virtual void OnNMSLobbyPing(unsigned int id);
+        void OnNMSLobbyPing(unsigned int id) override;
 
         /// ServerList-Nachricht.
-        virtual void OnNMSLobbyServerList(unsigned int id, const LobbyServerList& list);
+        void OnNMSLobbyServerList(unsigned int id, const LobbyServerList& list) override;
         /// PlayerList-Nachricht.
-        virtual void OnNMSLobbyPlayerList(unsigned int id, const LobbyPlayerList& list);
+        void OnNMSLobbyPlayerList(unsigned int id, const LobbyPlayerList& list) override;
         /// RankingList-Nachricht.
-        virtual void OnNMSLobbyRankingList(unsigned int id, const LobbyPlayerList& list);
+        void OnNMSLobbyRankingList(unsigned int id, const LobbyPlayerList& list) override;
         /// ServerInfo-Nachricht.
-        virtual void OnNMSLobbyServerInfo(unsigned int id, const LobbyServerInfo& info);
+        void OnNMSLobbyServerInfo(unsigned int id, const LobbyServerInfo& info) override;
 
         /// Lobby-Server-Add-Done-Nachricht.
-        virtual void OnNMSLobbyServerAdd(unsigned int id, const LobbyServerInfo& info);
+        void OnNMSLobbyServerAdd(unsigned int id, const LobbyServerInfo& info) override;
         /// Lobby-Server-Add-Failed-Nachricht.
-        virtual void OnNMSLobbyServerAddFailed(unsigned int id, const std::string& error);
+        void OnNMSLobbyServerAddFailed(unsigned int id, const std::string& error) override;
 
         /// Lobby-Ranking-Info Nachricht.
-        virtual void OnNMSLobbyRankingInfo(unsigned int id, const LobbyPlayerInfo& player);
+        void OnNMSLobbyRankingInfo(unsigned int id, const LobbyPlayerInfo& player) override;
 
         /// Dead-Nachricht.
         virtual void OnNMSDeadMsg(unsigned int id);
