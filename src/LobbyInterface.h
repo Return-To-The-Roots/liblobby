@@ -29,14 +29,14 @@ class LobbyInterface
         virtual ~LobbyInterface() {}
 
         virtual void LC_LoggedIn(const std::string& email);
-        virtual void LC_Registered(void);
-        virtual void LC_Connected(void);
-        virtual void LC_Created(void);
+        virtual void LC_Registered();
+        virtual void LC_Connected();
+        virtual void LC_Created();
         virtual void LC_RankingInfo(const LobbyPlayerInfo& player);
 
-        virtual void LC_Status_ConnectionLost(void);
-        virtual void LC_Status_IncompleteMessage(void);
-        virtual void LC_Status_Waiting(void);
+        virtual void LC_Status_ConnectionLost();
+        virtual void LC_Status_IncompleteMessage();
+        virtual void LC_Status_Waiting();
         virtual void LC_Status_Error(const std::string& error);
 
         virtual void LC_Chat(const std::string& player, const std::string& text);

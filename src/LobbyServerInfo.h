@@ -26,24 +26,24 @@ class LobbyServerInfo
 {
     public:
         /// Konstruktor von @p LobbyServerInfo.
-        LobbyServerInfo(void);
+        LobbyServerInfo();
         /// Deserialisierungs-Konstruktor von @p LobbyServerInfo.
         LobbyServerInfo(const unsigned playerid, Serializer& ser);
         /// leert die Informationen.
-        void clear(void);
+        void clear();
         /// serialisiert die Daten.
         void serialize(Serializer& ser) const;
 
-        unsigned int getId(void) const { return serverid; }
-        std::string getName(void) const { return name; }
-        std::string getHost(void) const { return host; }
-        unsigned short getPort(void) const { return port; }
-        std::string getVersion(void) const { return version; }
-        unsigned int getPing(void) const { return ping; }
-        std::string getMap(void) const { return map; }
-        unsigned int getCurPlayers(void) const { return curplayers; }
-        unsigned int getMaxPlayers(void) const { return maxplayers; }
-        bool hasPassword(void) const { return has_password; }
+        unsigned int getId() const { return serverid; }
+        std::string getName() const { return name; }
+        std::string getHost() const { return host; }
+        unsigned short getPort() const { return port; }
+        std::string getVersion() const { return version; }
+        unsigned int getPing() const { return ping; }
+        std::string getMap() const { return map; }
+        unsigned int getCurPlayers() const { return curplayers; }
+        unsigned int getMaxPlayers() const { return maxplayers; }
+        bool hasPassword() const { return has_password; }
 
         void setId(const unsigned int serverid) { this->serverid = serverid; }
         void setName(const std::string& name) { this->name = name; }

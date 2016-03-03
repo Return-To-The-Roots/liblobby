@@ -43,9 +43,9 @@ class LobbyClient : public Singleton<LobbyClient, SingletonPolicies::WithLongevi
         static const unsigned Longevity = 10;
 
         /// Konstruktor von @p LobbyClient.
-        LobbyClient(void);
+        LobbyClient();
         /// Destruktor von @p LobbyClient.
-        ~LobbyClient(void) override;
+        ~LobbyClient() override;
 
         /// setzt das Interface
         void SetInterface(LobbyInterface* parent) { this->parent = parent; }
@@ -53,7 +53,7 @@ class LobbyClient : public Singleton<LobbyClient, SingletonPolicies::WithLongevi
         /// Hauptschleife.
         void Run();
         /// trennt die Verbindung mit dem LobbyServer.
-        void Stop(void);
+        void Stop();
 
         /// versucht einen Login in den LobbyServer.
         bool Login(const std::string& server, const unsigned int port, const std::string& user, const std::string& pass, const bool use_ipv6);
@@ -61,15 +61,15 @@ class LobbyClient : public Singleton<LobbyClient, SingletonPolicies::WithLongevi
         bool Register(const std::string& server, const unsigned int port, const std::string& user, const std::string& pass, const std::string& email, const bool use_ipv6);
 
         /// schickt einen Request für die Server-Liste.
-        void SendServerListRequest(void);
+        void SendServerListRequest();
         /// schickt einen Request für die Player-Liste.
-        void SendPlayerListRequest(void);
+        void SendPlayerListRequest();
         /// schickt einen Request für die Top10-Liste.
-        void SendRankingListRequest(void);
+        void SendRankingListRequest();
         /// schickt einen Request für ein Serverinfo.
         void SendServerInfoRequest(unsigned int id);
         /// schickt einen Request für den Serverjoin.
-        void SendServerJoinRequest(void);
+        void SendServerJoinRequest();
         /// schickt einen Request um die Punkte eines bestimmten Spielers auszulesen.
         void SendRankingInfoRequest(const std::string& name);
 
@@ -86,14 +86,14 @@ class LobbyClient : public Singleton<LobbyClient, SingletonPolicies::WithLongevi
         void UpdateServerPlayerCount(unsigned int curplayer, unsigned int maxplayer);
 
         /// liefert die Serverliste.
-        const LobbyServerList* GetServerList(void) { return &serverlist; }
+        const LobbyServerList* GetServerList() { return &serverlist; }
         /// liefert die Spielerliste.
-        const LobbyPlayerList* GetPlayerList(void) { return &playerlist; };
+        const LobbyPlayerList* GetPlayerList() { return &playerlist; };
         /// liefert die Rankingliste.
-        const LobbyPlayerList* GetRankingList(void) { return &rankinglist; }
+        const LobbyPlayerList* GetRankingList() { return &rankinglist; }
         /// liefert Informationen über einen Server
-        const LobbyServerInfo* GetServerInfo(void) { return &serverinfo; };
-        const std::string GetUser(void) { return userdata.user; };
+        const LobbyServerInfo* GetServerInfo() { return &serverinfo; };
+        const std::string GetUser() { return userdata.user; };
 
         /// sind wir eingeloggt?
         bool LoggedIn() { return (state == CS_LOBBY); }

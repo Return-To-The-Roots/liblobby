@@ -42,7 +42,7 @@ class LobbyPlayerInfo;
  *
  *  @author FloSoft
  */
-LobbyClient::LobbyClient(void)
+LobbyClient::LobbyClient()
     : refreshserverlist(false), refreshserverinfo(false), refreshrankinglist(false), refreshplayerlist(false),
       parent(NULL), recv_queue(&LobbyMessage::create_lobby), send_queue(&LobbyMessage::create_lobby),
       state(CS_STOPPED), todo(TD_NOTHING)
@@ -55,7 +55,7 @@ LobbyClient::LobbyClient(void)
  *
  *  @author FloSoft
  */
-LobbyClient::~LobbyClient(void)
+LobbyClient::~LobbyClient()
 {
     Stop();
 }
@@ -66,7 +66,7 @@ LobbyClient::~LobbyClient(void)
  *
  *  @author FloSoft
  */
-void LobbyClient::Run(void)
+void LobbyClient::Run()
 {
     if(state == CS_STOPPED)
         return;
@@ -205,7 +205,7 @@ bool LobbyClient::Register(const std::string& server, const unsigned int port, c
  *
  *  @author FloSoft
  */
-void LobbyClient::SendServerListRequest(void)
+void LobbyClient::SendServerListRequest()
 {
     send_queue.push(new LobbyMessage_ServerList(1));
 }
@@ -216,7 +216,7 @@ void LobbyClient::SendServerListRequest(void)
  *
  *  @author FloSoft
  */
-void LobbyClient::SendPlayerListRequest(void)
+void LobbyClient::SendPlayerListRequest()
 {
     send_queue.push(new LobbyMessage_PlayerList(1));
 }
@@ -227,7 +227,7 @@ void LobbyClient::SendPlayerListRequest(void)
  *
  *  @author FloSoft
  */
-void LobbyClient::SendRankingListRequest(void)
+void LobbyClient::SendRankingListRequest()
 {
     send_queue.push(new LobbyMessage_RankingList(1));
 }

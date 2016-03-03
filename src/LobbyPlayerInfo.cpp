@@ -30,7 +30,7 @@
  *
  *  @author FloSoft
  */
-LobbyPlayerInfo::LobbyPlayerInfo(void)
+LobbyPlayerInfo::LobbyPlayerInfo()
 {
     clear();
 }
@@ -52,7 +52,7 @@ LobbyPlayerInfo::LobbyPlayerInfo(const unsigned playerid, Serializer& ser)
  *
  *  @author FloSoft
  */
-void LobbyPlayerInfo::clear(void)
+void LobbyPlayerInfo::clear()
 {
     playerid_ = 0;
     name_.clear();

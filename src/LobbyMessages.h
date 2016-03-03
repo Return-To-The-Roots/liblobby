@@ -38,7 +38,7 @@ class LobbyMessage_Login : public LobbyMessage
         std::string version;
 
     public:
-        LobbyMessage_Login(void): LobbyMessage(NMS_LOBBY_LOGIN) { } //-V730
+        LobbyMessage_Login(): LobbyMessage(NMS_LOBBY_LOGIN) { } //-V730
         LobbyMessage_Login(const std::string& user, const std::string& pass, const std::string& version):
             LobbyMessage(NMS_LOBBY_LOGIN), user(user), pass(pass), version(version)
         {
@@ -90,7 +90,7 @@ class LobbyMessage_Login_Done : public LobbyMessage
         std::string email;
 
     public:
-        LobbyMessage_Login_Done(void): LobbyMessage(NMS_LOBBY_LOGIN_DONE) { }
+        LobbyMessage_Login_Done(): LobbyMessage(NMS_LOBBY_LOGIN_DONE) { }
         LobbyMessage_Login_Done(const std::string& email): LobbyMessage(NMS_LOBBY_LOGIN_DONE), email(email)
         {
             LOG.write(">>> NMS_LOBBY_LOGIN_DONE(%s)\n", email.c_str());
@@ -124,7 +124,7 @@ class LobbyMessage_Login_Error : public LobbyMessage
         std::string error;
 
     public:
-        LobbyMessage_Login_Error(void): LobbyMessage(NMS_LOBBY_LOGIN_ERROR) { }
+        LobbyMessage_Login_Error(): LobbyMessage(NMS_LOBBY_LOGIN_ERROR) { }
         LobbyMessage_Login_Error(const std::string& error): LobbyMessage(NMS_LOBBY_LOGIN_ERROR), error(error)
         {
             LOG.write(">>> NMS_LOBBY_LOGIN_ERROR(%s)\n", error.c_str());
@@ -188,7 +188,7 @@ class LobbyMessage_Register : public LobbyMessage
         std::string email;
 
     public:
-        LobbyMessage_Register(void): LobbyMessage(NMS_LOBBY_REGISTER) {} //-V730
+        LobbyMessage_Register(): LobbyMessage(NMS_LOBBY_REGISTER) {} //-V730
         LobbyMessage_Register(const std::string& user, const std::string& pass, const std::string& email):
             LobbyMessage(NMS_LOBBY_REGISTER), user(user), pass(pass), email(email)
         {
@@ -237,7 +237,7 @@ class LobbyMessage_Register : public LobbyMessage
 class LobbyMessage_Register_Done : public LobbyMessage
 {
     public:
-        LobbyMessage_Register_Done(void): LobbyMessage(NMS_LOBBY_REGISTER_DONE) {}
+        LobbyMessage_Register_Done(): LobbyMessage(NMS_LOBBY_REGISTER_DONE) {}
         LobbyMessage_Register_Done(bool reserved): LobbyMessage(NMS_LOBBY_REGISTER_DONE)
         {
             LOG.write(">>> NMS_LOBBY_REGISTER_DONE\n");
@@ -260,7 +260,7 @@ class LobbyMessage_Register_Error : public LobbyMessage
         std::string error;
 
     public:
-        LobbyMessage_Register_Error(void): LobbyMessage(NMS_LOBBY_REGISTER_ERROR) {}
+        LobbyMessage_Register_Error(): LobbyMessage(NMS_LOBBY_REGISTER_ERROR) {}
         LobbyMessage_Register_Error(const std::string& error): LobbyMessage(NMS_LOBBY_LOGIN_ERROR), error(error)
         {
             LOG.write(">>> NMS_LOBBY_REGISTER_ERROR(%s)\n", error.c_str());
@@ -322,7 +322,7 @@ class LobbyMessage_ServerList : public LobbyMessage
         LobbyServerList list;
 
     public:
-        LobbyMessage_ServerList(void): LobbyMessage(NMS_LOBBY_SERVERLIST) {} //-V730
+        LobbyMessage_ServerList(): LobbyMessage(NMS_LOBBY_SERVERLIST) {} //-V730
         LobbyMessage_ServerList(bool reserved): LobbyMessage(NMS_LOBBY_SERVERLIST), isRequest(true)
         {
             LOG.write(">>> NMS_LOBBY_SERVERLIST\n");
@@ -386,7 +386,7 @@ class LobbyMessage_ServerInfo : public LobbyMessage
         unsigned int server;
 
     public:
-        LobbyMessage_ServerInfo(void): LobbyMessage(NMS_LOBBY_SERVERINFO) {} //-V730
+        LobbyMessage_ServerInfo(): LobbyMessage(NMS_LOBBY_SERVERINFO) {} //-V730
         LobbyMessage_ServerInfo(const unsigned int server): LobbyMessage(NMS_LOBBY_SERVERINFO), isRequest(true), server(server)
         {
             LOG.write(">>> NMS_LOBBY_SERVERINFO(%d)\n", server);
@@ -443,7 +443,7 @@ class LobbyMessage_RankingList : public LobbyMessage
         LobbyPlayerList list;
 
     public:
-        LobbyMessage_RankingList(void): LobbyMessage(NMS_LOBBY_RANKINGLIST) {} //-V730
+        LobbyMessage_RankingList(): LobbyMessage(NMS_LOBBY_RANKINGLIST) {} //-V730
         LobbyMessage_RankingList(bool reserved): LobbyMessage(NMS_LOBBY_RANKINGLIST), isRequest(true)
         {
             LOG.write(">>> NMS_LOBBY_RANKINGLIST\n");
@@ -506,7 +506,7 @@ class LobbyMessage_PlayerList : public LobbyMessage
         LobbyPlayerList list;
 
     public:
-        LobbyMessage_PlayerList(void): LobbyMessage(NMS_LOBBY_PLAYERLIST) { } //-V730
+        LobbyMessage_PlayerList(): LobbyMessage(NMS_LOBBY_PLAYERLIST) { } //-V730
         LobbyMessage_PlayerList(bool reserved): LobbyMessage(NMS_LOBBY_PLAYERLIST), isRequest(true)
         {
             LOG.write(">>> NMS_LOBBY_PLAYERLIST\n");
@@ -569,7 +569,7 @@ class LobbyMessage_Id : public LobbyMessage
         unsigned int playerid;
 
     public:
-        LobbyMessage_Id(void): LobbyMessage(NMS_LOBBY_ID) {} //-V730
+        LobbyMessage_Id(): LobbyMessage(NMS_LOBBY_ID) {} //-V730
         LobbyMessage_Id(const unsigned int playerid): LobbyMessage(NMS_LOBBY_ID), playerid(playerid)
         {
             LOG.write(">>> NMS_LOBBY_ID(%d)\n", playerid);
@@ -605,7 +605,7 @@ class LobbyMessage_Chat : public LobbyMessage
         std::string text;
 
     public:
-        LobbyMessage_Chat(void): LobbyMessage(NMS_LOBBY_CHAT) { }
+        LobbyMessage_Chat(): LobbyMessage(NMS_LOBBY_CHAT) { }
         LobbyMessage_Chat(const std::string& text): LobbyMessage(NMS_LOBBY_CHAT), player(""), text(text)
         {
             LOG.write(">>> NMS_LOBBY_CHAT(%s)\n", text.c_str());
@@ -642,7 +642,7 @@ class LobbyMessage_Chat : public LobbyMessage
 class LobbyMessage_Ping : public LobbyMessage
 {
     public:
-        LobbyMessage_Ping(void): LobbyMessage(NMS_LOBBY_PING) { }
+        LobbyMessage_Ping(): LobbyMessage(NMS_LOBBY_PING) { }
         LobbyMessage_Ping(bool reserved): LobbyMessage(NMS_LOBBY_PING)
         {
             //LOG.write(">>> NMS_LOBBY_PING\n");
@@ -661,7 +661,7 @@ class LobbyMessage_Ping : public LobbyMessage
 class LobbyMessage_Pong : public LobbyMessage
 {
     public:
-        LobbyMessage_Pong(void): LobbyMessage(NMS_LOBBY_PONG) { }
+        LobbyMessage_Pong(): LobbyMessage(NMS_LOBBY_PONG) { }
         LobbyMessage_Pong(bool reserved): LobbyMessage(NMS_LOBBY_PONG)
         {
             //LOG.write(">>> NMS_LOBBY_PONG\n");
@@ -683,7 +683,7 @@ class LobbyMessage_Server_Add : public LobbyMessage
         LobbyServerInfo info;
 
     public:
-        LobbyMessage_Server_Add(void): LobbyMessage(NMS_LOBBY_SERVER_ADD) { }
+        LobbyMessage_Server_Add(): LobbyMessage(NMS_LOBBY_SERVER_ADD) { }
         LobbyMessage_Server_Add(const LobbyServerInfo& info): LobbyMessage(NMS_LOBBY_SERVER_ADD), info(info)
         {
             LOG.write(">>> NMS_LOBBY_SERVER_ADD\n");
@@ -720,7 +720,7 @@ class LobbyMessage_Server_Add_Failed : public LobbyMessage
         std::string error;
 
     public:
-        LobbyMessage_Server_Add_Failed(void): LobbyMessage(NMS_LOBBY_SERVER_ADD_FAILED) { }
+        LobbyMessage_Server_Add_Failed(): LobbyMessage(NMS_LOBBY_SERVER_ADD_FAILED) { }
         LobbyMessage_Server_Add_Failed(const std::string& error): LobbyMessage(NMS_LOBBY_SERVER_ADD_FAILED), error(error)
         {
             LOG.write(">>> NMS_LOBBY_SERVER_ADD_FAILED(%s)\n", error.c_str());
@@ -752,7 +752,7 @@ class LobbyMessage_Server_Add_Failed : public LobbyMessage
 class LobbyMessage_Server_Delete : public LobbyMessage
 {
     public:
-        LobbyMessage_Server_Delete(void): LobbyMessage(NMS_LOBBY_SERVER_DELETE) { }
+        LobbyMessage_Server_Delete(): LobbyMessage(NMS_LOBBY_SERVER_DELETE) { }
         LobbyMessage_Server_Delete(bool reserved): LobbyMessage(NMS_LOBBY_SERVER_DELETE)
         {
             LOG.write(">>> NMS_LOBBY_SERVER_DELETE\n");
@@ -775,7 +775,7 @@ class LobbyMessage_Server_Update_Player : public LobbyMessage
         unsigned int maxplayer;
 
     public:
-        LobbyMessage_Server_Update_Player(void): LobbyMessage(NMS_LOBBY_SERVER_UPDATE_PLAYER) { } //-V730
+        LobbyMessage_Server_Update_Player(): LobbyMessage(NMS_LOBBY_SERVER_UPDATE_PLAYER) { } //-V730
         LobbyMessage_Server_Update_Player(const unsigned int curplayer, const unsigned int maxplayer):
             LobbyMessage(NMS_LOBBY_SERVER_UPDATE_PLAYER), curplayer(curplayer), maxplayer(maxplayer)
         {
@@ -812,7 +812,7 @@ class LobbyMessage_Server_Update_Map : public LobbyMessage
         std::string map;
 
     public:
-        LobbyMessage_Server_Update_Map(void): LobbyMessage(NMS_LOBBY_SERVER_UPDATE_MAP) { }
+        LobbyMessage_Server_Update_Map(): LobbyMessage(NMS_LOBBY_SERVER_UPDATE_MAP) { }
         LobbyMessage_Server_Update_Map(const std::string& map): LobbyMessage(NMS_LOBBY_SERVER_UPDATE_MAP), map(map)
         {
             LOG.write(">>> NMS_LOBBY_SERVER_UPDATE_MAP(%s)\n", map.c_str());
@@ -844,7 +844,7 @@ class LobbyMessage_Server_Update_Map : public LobbyMessage
 class LobbyMessage_Server_Join : public LobbyMessage
 {
     public:
-        LobbyMessage_Server_Join(void): LobbyMessage(NMS_LOBBY_SERVER_JOIN) { }
+        LobbyMessage_Server_Join(): LobbyMessage(NMS_LOBBY_SERVER_JOIN) { }
         LobbyMessage_Server_Join(bool reserved): LobbyMessage(NMS_LOBBY_SERVER_JOIN)
         {
             LOG.write(">>> NMS_LOBBY_SERVER_JOIN\n");
@@ -869,7 +869,7 @@ class LobbyMessage_Lobby_Ranking_Info : public LobbyMessage
         LobbyPlayerInfo player;
 
     public:
-        LobbyMessage_Lobby_Ranking_Info(void): LobbyMessage(NMS_LOBBY_RANKING_INFO) { } //-V730
+        LobbyMessage_Lobby_Ranking_Info(): LobbyMessage(NMS_LOBBY_RANKING_INFO) { } //-V730
         LobbyMessage_Lobby_Ranking_Info(const std::string& name): LobbyMessage(NMS_LOBBY_RANKING_INFO), isRequest(true), name(name)
         {
             LOG.write(">>> NMS_LOBBY_RANKING_INFO(%s)\n", name.c_str());
