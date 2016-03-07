@@ -36,7 +36,7 @@ LobbyServerInfo::LobbyServerInfo()
 }
 
 /// Deserialisierungs-Konstruktor von @p LobbyServerInfo.
-LobbyServerInfo::LobbyServerInfo(const unsigned playerid, Serializer& ser) :
+LobbyServerInfo::LobbyServerInfo(const unsigned  /*playerid*/, Serializer& ser) :
     serverid(ser.PopUnsignedInt()),
     name(ser.PopString()),
     host(ser.PopString()),

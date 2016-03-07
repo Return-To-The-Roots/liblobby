@@ -174,7 +174,7 @@ class LobbyMessage_Login_Error06 : public LobbyMessage
             LobbyMessage::Deserialize(ser);
         }
 
-        void run(MessageInterface* callback, unsigned int id) override {}
+        void run(MessageInterface*  /*callback*/, unsigned int  /*id*/) override {}
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -238,7 +238,7 @@ class LobbyMessage_Register_Done : public LobbyMessage
 {
     public:
         LobbyMessage_Register_Done(): LobbyMessage(NMS_LOBBY_REGISTER_DONE) {}
-        LobbyMessage_Register_Done(bool reserved): LobbyMessage(NMS_LOBBY_REGISTER_DONE)
+        LobbyMessage_Register_Done(bool  /*reserved*/): LobbyMessage(NMS_LOBBY_REGISTER_DONE)
         {
             LOG.write(">>> NMS_LOBBY_REGISTER_DONE\n");
         }
@@ -310,7 +310,7 @@ class LobbyMessage_Register_Error06 : public LobbyMessage
             LobbyMessage::Deserialize(ser);
         }
 
-        void run(MessageInterface* callback, unsigned int id) override {}
+        void run(MessageInterface*  /*callback*/, unsigned int  /*id*/) override {}
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -323,7 +323,7 @@ class LobbyMessage_ServerList : public LobbyMessage
 
     public:
         LobbyMessage_ServerList(): LobbyMessage(NMS_LOBBY_SERVERLIST) {} //-V730
-        LobbyMessage_ServerList(bool reserved): LobbyMessage(NMS_LOBBY_SERVERLIST), isRequest(true)
+        LobbyMessage_ServerList(bool  /*reserved*/): LobbyMessage(NMS_LOBBY_SERVERLIST), isRequest(true)
         {
             LOG.write(">>> NMS_LOBBY_SERVERLIST\n");
         }
@@ -444,7 +444,7 @@ class LobbyMessage_RankingList : public LobbyMessage
 
     public:
         LobbyMessage_RankingList(): LobbyMessage(NMS_LOBBY_RANKINGLIST) {} //-V730
-        LobbyMessage_RankingList(bool reserved): LobbyMessage(NMS_LOBBY_RANKINGLIST), isRequest(true)
+        LobbyMessage_RankingList(bool  /*reserved*/): LobbyMessage(NMS_LOBBY_RANKINGLIST), isRequest(true)
         {
             LOG.write(">>> NMS_LOBBY_RANKINGLIST\n");
         }
@@ -507,7 +507,7 @@ class LobbyMessage_PlayerList : public LobbyMessage
 
     public:
         LobbyMessage_PlayerList(): LobbyMessage(NMS_LOBBY_PLAYERLIST) { } //-V730
-        LobbyMessage_PlayerList(bool reserved): LobbyMessage(NMS_LOBBY_PLAYERLIST), isRequest(true)
+        LobbyMessage_PlayerList(bool  /*reserved*/): LobbyMessage(NMS_LOBBY_PLAYERLIST), isRequest(true)
         {
             LOG.write(">>> NMS_LOBBY_PLAYERLIST\n");
         }
@@ -643,7 +643,7 @@ class LobbyMessage_Ping : public LobbyMessage
 {
     public:
         LobbyMessage_Ping(): LobbyMessage(NMS_LOBBY_PING) { }
-        LobbyMessage_Ping(bool reserved): LobbyMessage(NMS_LOBBY_PING)
+        LobbyMessage_Ping(bool  /*reserved*/): LobbyMessage(NMS_LOBBY_PING)
         {
             //LOG.write(">>> NMS_LOBBY_PING\n");
         }
@@ -662,7 +662,7 @@ class LobbyMessage_Pong : public LobbyMessage
 {
     public:
         LobbyMessage_Pong(): LobbyMessage(NMS_LOBBY_PONG) { }
-        LobbyMessage_Pong(bool reserved): LobbyMessage(NMS_LOBBY_PONG)
+        LobbyMessage_Pong(bool  /*reserved*/): LobbyMessage(NMS_LOBBY_PONG)
         {
             //LOG.write(">>> NMS_LOBBY_PONG\n");
         }
@@ -753,7 +753,7 @@ class LobbyMessage_Server_Delete : public LobbyMessage
 {
     public:
         LobbyMessage_Server_Delete(): LobbyMessage(NMS_LOBBY_SERVER_DELETE) { }
-        LobbyMessage_Server_Delete(bool reserved): LobbyMessage(NMS_LOBBY_SERVER_DELETE)
+        LobbyMessage_Server_Delete(bool  /*reserved*/): LobbyMessage(NMS_LOBBY_SERVER_DELETE)
         {
             LOG.write(">>> NMS_LOBBY_SERVER_DELETE\n");
         }
@@ -845,7 +845,7 @@ class LobbyMessage_Server_Join : public LobbyMessage
 {
     public:
         LobbyMessage_Server_Join(): LobbyMessage(NMS_LOBBY_SERVER_JOIN) { }
-        LobbyMessage_Server_Join(bool reserved): LobbyMessage(NMS_LOBBY_SERVER_JOIN)
+        LobbyMessage_Server_Join(bool  /*reserved*/): LobbyMessage(NMS_LOBBY_SERVER_JOIN)
         {
             LOG.write(">>> NMS_LOBBY_SERVER_JOIN\n");
         }

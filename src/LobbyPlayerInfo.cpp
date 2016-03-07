@@ -41,7 +41,7 @@ LobbyPlayerInfo::LobbyPlayerInfo()
  *
  *  @author FloSoft
  */
-LobbyPlayerInfo::LobbyPlayerInfo(const unsigned playerid, Serializer& ser)
+LobbyPlayerInfo::LobbyPlayerInfo(const unsigned  /*playerid*/, Serializer& ser)
 {
     deserialize(ser);
 }

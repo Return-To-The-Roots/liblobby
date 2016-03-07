@@ -381,7 +381,7 @@ bool LobbyClient::Connect(const std::string& server, const unsigned int port, co
  *
  *  @author FloSoft
  */
-void LobbyClient::OnNMSLobbyPing(unsigned int id)
+void LobbyClient::OnNMSLobbyPing(unsigned int  /*id*/)
 {
     send_queue.push(new LobbyMessage_Pong(1));
 }
@@ -394,7 +394,7 @@ void LobbyClient::OnNMSLobbyPing(unsigned int id)
  *
  *  @author FloSoft
  */
-void LobbyClient::OnNMSLobbyID(unsigned int id, const unsigned int& playerid)
+void LobbyClient::OnNMSLobbyID(unsigned int  /*id*/, const unsigned int& playerid)
 {
     if(playerid == 0xFFFFFFFF)
     {
@@ -430,7 +430,7 @@ void LobbyClient::OnNMSLobbyID(unsigned int id, const unsigned int& playerid)
  *
  *  @author FloSoft
  */
-void LobbyClient::OnNMSLobbyLoginError(unsigned int id, const std::string& error)
+void LobbyClient::OnNMSLobbyLoginError(unsigned int  /*id*/, const std::string& error)
 {
     this->error = error;
     if(parent)
@@ -447,7 +447,7 @@ void LobbyClient::OnNMSLobbyLoginError(unsigned int id, const std::string& error
  *
  *  @author FloSoft
  */
-void LobbyClient::OnNMSLobbyLoginDone(unsigned int id, const std::string& email)
+void LobbyClient::OnNMSLobbyLoginDone(unsigned int  /*id*/, const std::string& email)
 {
     userdata.email = email;
     if(parent)
@@ -464,7 +464,7 @@ void LobbyClient::OnNMSLobbyLoginDone(unsigned int id, const std::string& email)
  *
  *  @author FloSoft
  */
-void LobbyClient::OnNMSLobbyRegisterError(unsigned int id, const std::string& error) //-V524
+void LobbyClient::OnNMSLobbyRegisterError(unsigned int  /*id*/, const std::string& error) //-V524
 {
     this->error = error;
     if(parent)
@@ -479,7 +479,7 @@ void LobbyClient::OnNMSLobbyRegisterError(unsigned int id, const std::string& er
  *
  *  @author FloSoft
  */
-void LobbyClient::OnNMSLobbyRegisterDone(unsigned int id)
+void LobbyClient::OnNMSLobbyRegisterDone(unsigned int  /*id*/)
 {
     if(parent)
         parent->LC_Registered();
@@ -495,7 +495,7 @@ void LobbyClient::OnNMSLobbyRegisterDone(unsigned int id)
  *
  *  @author FloSoft
  */
-void LobbyClient::OnNMSLobbyServerList(unsigned int id, const LobbyServerList& list)
+void LobbyClient::OnNMSLobbyServerList(unsigned int  /*id*/, const LobbyServerList& list)
 {
     serverlist = list;
 
@@ -510,7 +510,7 @@ void LobbyClient::OnNMSLobbyServerList(unsigned int id, const LobbyServerList& l
  *
  *  @author FloSoft
  */
-void LobbyClient::OnNMSLobbyPlayerList(unsigned int id, const LobbyPlayerList& list)
+void LobbyClient::OnNMSLobbyPlayerList(unsigned int  /*id*/, const LobbyPlayerList& list)
 {
     playerlist = list;
 
@@ -525,7 +525,7 @@ void LobbyClient::OnNMSLobbyPlayerList(unsigned int id, const LobbyPlayerList& l
  *
  *  @author FloSoft
  */
-void LobbyClient::OnNMSLobbyRankingList(unsigned int id, const LobbyPlayerList& list)
+void LobbyClient::OnNMSLobbyRankingList(unsigned int  /*id*/, const LobbyPlayerList& list)
 {
     rankinglist = list;
 
@@ -540,7 +540,7 @@ void LobbyClient::OnNMSLobbyRankingList(unsigned int id, const LobbyPlayerList& 
  *
  *  @author FloSoft
  */
-void LobbyClient::OnNMSLobbyServerInfo(unsigned int id, const LobbyServerInfo& info)
+void LobbyClient::OnNMSLobbyServerInfo(unsigned int  /*id*/, const LobbyServerInfo& info)
 {
     serverinfo = info;
 
@@ -556,7 +556,7 @@ void LobbyClient::OnNMSLobbyServerInfo(unsigned int id, const LobbyServerInfo& i
  *
  *  @author FloSoft
  */
-void LobbyClient::OnNMSLobbyChat(unsigned int id, const std::string& player, const std::string& text)
+void LobbyClient::OnNMSLobbyChat(unsigned int  /*id*/, const std::string& player, const std::string& text)
 {
     if(parent)
         parent->LC_Chat(player, text);
@@ -570,7 +570,7 @@ void LobbyClient::OnNMSLobbyChat(unsigned int id, const std::string& player, con
  *
  *  @author FloSoft
  */
-void LobbyClient::OnNMSLobbyServerAddFailed(unsigned int id, const std::string& error)
+void LobbyClient::OnNMSLobbyServerAddFailed(unsigned int  /*id*/, const std::string& error)
 {
     this->error = error;
     if(parent)
@@ -585,7 +585,7 @@ void LobbyClient::OnNMSLobbyServerAddFailed(unsigned int id, const std::string& 
  *
  *  @author FloSoft
  */
-void LobbyClient::OnNMSLobbyServerAdd(unsigned int id, const LobbyServerInfo& info)
+void LobbyClient::OnNMSLobbyServerAdd(unsigned int  /*id*/, const LobbyServerInfo& info)
 {
     server_ = info;
 
@@ -604,7 +604,7 @@ void LobbyClient::OnNMSLobbyServerAdd(unsigned int id, const LobbyServerInfo& in
  *
  *  @author FloSoft
  */
-void LobbyClient::OnNMSLobbyRankingInfo(unsigned int id, const LobbyPlayerInfo& player)
+void LobbyClient::OnNMSLobbyRankingInfo(unsigned int  /*id*/, const LobbyPlayerInfo& player)
 {
     if(parent)
         parent->LC_RankingInfo(player);
@@ -616,7 +616,7 @@ void LobbyClient::OnNMSLobbyRankingInfo(unsigned int id, const LobbyPlayerInfo& 
  *
  *  @author FloSoft
  */
-void LobbyClient::OnNMSDeadMsg(unsigned int id)
+void LobbyClient::OnNMSDeadMsg(unsigned int  /*id*/)
 {
     ServerLost();
 }
