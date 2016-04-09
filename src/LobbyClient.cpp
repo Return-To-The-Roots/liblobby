@@ -634,8 +634,6 @@ void LobbyClient::ServerLost(bool message)
 
     Stop();
 
-    //if(GAMECLIENT.GetState() == GameClient::CS_GAME && window && GLOBALVARS.ingame)
-    //  static_cast<dskGameInterface*>(window)->messenger.AddMessage("", 0, CD_SYSTEM, _("Lost connection to lobby!"), COLOR_RED);
     if(parent && message)
         parent->LC_Status_ConnectionLost();
 }
