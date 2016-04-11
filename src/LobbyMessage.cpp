@@ -28,12 +28,6 @@
 // Include last!
 #include "DebugNew.h" // IWYU pragma: keep
 
-///////////////////////////////////////////////////////////////////////////////
-/**
- *
- *
- *  @author FloSoft
- */
 Message* LobbyMessage::create_lobby(unsigned short id)
 {
     Message* msg = NULL;
