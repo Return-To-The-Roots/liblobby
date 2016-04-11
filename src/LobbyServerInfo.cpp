@@ -24,18 +24,11 @@
 // Include last!
 #include "DebugNew.h" // IWYU pragma: keep
 
-///////////////////////////////////////////////////////////////////////////////
-/*
- *  Konstruktor von @p LobbyServerInfo.
- *
- *  @author FloSoft
- */
 LobbyServerInfo::LobbyServerInfo()
 {
     clear();
 }
 
-/// Deserialisierungs-Konstruktor von @p LobbyServerInfo.
 LobbyServerInfo::LobbyServerInfo(const unsigned  /*playerid*/, Serializer& ser) :
     serverid(ser.PopUnsignedInt()),
     name(ser.PopString()),

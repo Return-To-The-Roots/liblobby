@@ -24,23 +24,11 @@
 // Include last!
 #include "DebugNew.h" // IWYU pragma: keep
 
-///////////////////////////////////////////////////////////////////////////////
-/*
- *  Konstruktor von @p LobbyPlayerInfo.
- *
- *  @author FloSoft
- */
 LobbyPlayerInfo::LobbyPlayerInfo()
 {
     clear();
 }
 
-///////////////////////////////////////////////////////////////////////////////
-/*
- *  Deserialisierungs-Konstruktor von @p LobbyPlayerInfo.
- *
- *  @author FloSoft
- */
 LobbyPlayerInfo::LobbyPlayerInfo(const unsigned  /*playerid*/, Serializer& ser)
 {
     deserialize(ser);

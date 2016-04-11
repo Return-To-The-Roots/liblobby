@@ -25,9 +25,7 @@ class Serializer;
 class LobbyServerInfo
 {
     public:
-        /// Konstruktor von @p LobbyServerInfo.
         LobbyServerInfo();
-        /// Deserialisierungs-Konstruktor von @p LobbyServerInfo.
         LobbyServerInfo(const unsigned playerid, Serializer& ser);
         /// leert die Informationen.
         void clear();

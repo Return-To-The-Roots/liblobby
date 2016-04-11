@@ -36,12 +36,6 @@
 
 class LobbyPlayerInfo;
 
-///////////////////////////////////////////////////////////////////////////////
-/**
- *  Konstruktor von @p LobbyClient.
- *
- *  @author FloSoft
- */
 LobbyClient::LobbyClient()
     : refreshserverlist(false), refreshserverinfo(false), refreshrankinglist(false), refreshplayerlist(false),
       parent(NULL), recv_queue(&LobbyMessage::create_lobby), send_queue(&LobbyMessage::create_lobby),
@@ -49,12 +43,6 @@ LobbyClient::LobbyClient()
 {
 }
 
-///////////////////////////////////////////////////////////////////////////////
-/**
- *  Destruktor von @p LobbyClient.
- *
- *  @author FloSoft
- */
 LobbyClient::~LobbyClient()
 {
     Stop();

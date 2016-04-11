@@ -42,9 +42,7 @@ class LobbyClient : public Singleton<LobbyClient, SingletonPolicies::WithLongevi
     public:
         static const unsigned Longevity = 10;
 
-        /// Konstruktor von @p LobbyClient.
         LobbyClient();
-        /// Destruktor von @p LobbyClient.
         ~LobbyClient() override;
 
         /// setzt das Interface
