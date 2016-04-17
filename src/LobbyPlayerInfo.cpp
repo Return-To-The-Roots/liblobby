@@ -35,8 +35,6 @@ LobbyPlayerInfo::LobbyPlayerInfo(const unsigned  /*playerid*/, Serializer& ser)
 ///////////////////////////////////////////////////////////////////////////////
 /*
  *  leert die Informationen.
- *
- *  @author FloSoft
  */
 void LobbyPlayerInfo::clear()
 {
@@ -53,8 +51,6 @@ void LobbyPlayerInfo::clear()
  *  serialisiert die Daten.
  *
  *  @param[in] ser der benutzte Serializer
- *
- *  @author FloSoft
  */
 void LobbyPlayerInfo::serialize(Serializer& ser) const
 {
@@ -71,8 +67,6 @@ void LobbyPlayerInfo::serialize(Serializer& ser) const
  *  deserialisiert die Daten.
  *
  *  @param[in] ser der benutzte Serializer
- *
- *  @author FloSoft
  */
 void LobbyPlayerInfo::deserialize(Serializer& ser)
 {

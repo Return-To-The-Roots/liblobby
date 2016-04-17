@@ -23,8 +23,6 @@
 
 /**
  *  Lobby-Login-Nachricht.
- *
- *  @author FloSoft
  */
 void LobbyMessageInterface::OnNMSLobbyLogin(unsigned int  /*id*/, const unsigned int  /*revision*/, const std::string&  /*user*/, const std::string&  /*pass*/, const std::string&  /*version*/)
 {
@@ -32,8 +30,6 @@ void LobbyMessageInterface::OnNMSLobbyLogin(unsigned int  /*id*/, const unsigned
 
 /**
  *  Lobby-Login-Error-Nachricht.
- *
- *  @author FloSoft
  */
 void LobbyMessageInterface::OnNMSLobbyLoginError(unsigned int  /*id*/, const std::string&  /*error*/)
 {
@@ -41,8 +37,6 @@ void LobbyMessageInterface::OnNMSLobbyLoginError(unsigned int  /*id*/, const std
 
 /**
  *  Lobby-Logged-In-Nachricht.
- *
- *  @author FloSoft
  */
 void LobbyMessageInterface::OnNMSLobbyLoginDone(unsigned int  /*id*/, const std::string&  /*email*/)
 {
@@ -50,8 +44,6 @@ void LobbyMessageInterface::OnNMSLobbyLoginDone(unsigned int  /*id*/, const std:
 
 /**
  *  Lobby-Register-Nachricht.
- *
- *  @author FloSoft
  */
 void LobbyMessageInterface::OnNMSLobbyRegister(unsigned int  /*id*/, const unsigned int  /*revision*/, const std::string&  /*user*/, const std::string&  /*pass*/, const std::string&  /*email*/)
 {
@@ -59,8 +51,6 @@ void LobbyMessageInterface::OnNMSLobbyRegister(unsigned int  /*id*/, const unsig
 
 /**
  *  Lobby-Register-Error-Nachricht.
- *
- *  @author FloSoft
  */
 void LobbyMessageInterface::OnNMSLobbyRegisterError(unsigned int  /*id*/, const std::string&  /*error*/)
 {
@@ -68,8 +58,6 @@ void LobbyMessageInterface::OnNMSLobbyRegisterError(unsigned int  /*id*/, const 
 
 /**
  *  Lobby-Register-Done-Nachricht.
- *
- *  @author FloSoft
  */
 void LobbyMessageInterface::OnNMSLobbyRegisterDone(unsigned int  /*id*/)
 {
@@ -77,8 +65,6 @@ void LobbyMessageInterface::OnNMSLobbyRegisterDone(unsigned int  /*id*/)
 
 /**
  *  Lobby-Player-ID-Nachricht.
- *
- *  @author FloSoft
  */
 void LobbyMessageInterface::OnNMSLobbyID(unsigned int  /*id*/, const unsigned int&  /*playerid*/)
 {
@@ -86,8 +72,6 @@ void LobbyMessageInterface::OnNMSLobbyID(unsigned int  /*id*/, const unsigned in
 
 /**
  *  Chat-Nachricht.
- *
- *  @author FloSoft
  */
 void LobbyMessageInterface::OnNMSLobbyChat(unsigned int  /*id*/, const std::string&  /*player*/, const std::string&  /*text*/)
 {
@@ -95,8 +79,6 @@ void LobbyMessageInterface::OnNMSLobbyChat(unsigned int  /*id*/, const std::stri
 
 /**
  *  Ping-Nachricht.
- *
- *  @author FloSoft
  */
 void LobbyMessageInterface::OnNMSLobbyPing(unsigned int  /*id*/)
 {
@@ -104,8 +86,6 @@ void LobbyMessageInterface::OnNMSLobbyPing(unsigned int  /*id*/)
 
 /**
  *  Pong-Nachricht.
- *
- *  @author FloSoft
  */
 void LobbyMessageInterface::OnNMSLobbyPong(unsigned int  /*id*/)
 {
@@ -113,8 +93,6 @@ void LobbyMessageInterface::OnNMSLobbyPong(unsigned int  /*id*/)
 
 /**
  *  ServerList-Nachricht.
- *
- *  @author FloSoft
  */
 void LobbyMessageInterface::OnNMSLobbyServerList(unsigned int  /*id*/)
 {
@@ -126,8 +104,6 @@ void LobbyMessageInterface::OnNMSLobbyServerList(unsigned int  /*id*/, const Lob
 
 /**
  *  PlayerList-Nachricht.
- *
- *  @author FloSoft
  */
 void LobbyMessageInterface::OnNMSLobbyPlayerList(unsigned int  /*id*/)
 {
@@ -139,8 +115,6 @@ void LobbyMessageInterface::OnNMSLobbyPlayerList(unsigned int  /*id*/, const Lob
 
 /**
  *  RankingList-Nachricht.
- *
- *  @author FloSoft
  */
 void LobbyMessageInterface::OnNMSLobbyRankingList(unsigned int  /*id*/)
 {
@@ -152,8 +126,6 @@ void LobbyMessageInterface::OnNMSLobbyRankingList(unsigned int  /*id*/, const Lo
 
 /**
  *  ServerInfo-Nachricht.
- *
- *  @author FloSoft
  */
 void LobbyMessageInterface::OnNMSLobbyServerInfo(unsigned int  /*id*/, const unsigned int&  /*server*/)
 {
@@ -165,8 +137,6 @@ void LobbyMessageInterface::OnNMSLobbyServerInfo(unsigned int  /*id*/, const Lob
 
 /**
  *  Lobby-Server-Add-Done-Nachricht.
- *
- *  @author FloSoft
  */
 void LobbyMessageInterface::OnNMSLobbyServerAdd(unsigned int  /*id*/, const LobbyServerInfo&  /*info*/)
 {
@@ -174,8 +144,6 @@ void LobbyMessageInterface::OnNMSLobbyServerAdd(unsigned int  /*id*/, const Lobb
 
 /**
  *  Lobby-Server-Add-Failed-Nachricht.
- *
- *  @author FloSoft
  */
 void LobbyMessageInterface::OnNMSLobbyServerAddFailed(unsigned int  /*id*/, const std::string&  /*error*/)
 {
@@ -183,8 +151,6 @@ void LobbyMessageInterface::OnNMSLobbyServerAddFailed(unsigned int  /*id*/, cons
 
 /**
  *  Lobby-Server-Update-Player-Nachricht.
- *
- *  @author FloSoft
  */
 void LobbyMessageInterface::OnNMSLobbyServerUpdatePlayer(unsigned int  /*id*/, const unsigned int  /*curplayer*/, const unsigned int  /*maxplayer*/)
 {
@@ -192,8 +158,6 @@ void LobbyMessageInterface::OnNMSLobbyServerUpdatePlayer(unsigned int  /*id*/, c
 
 /**
  *  Lobby-Server-Update-Map-Nachricht.
- *
- *  @author FloSoft
  */
 void LobbyMessageInterface::OnNMSLobbyServerUpdateMap(unsigned int  /*id*/, const std::string&  /*map*/)
 {
@@ -201,8 +165,6 @@ void LobbyMessageInterface::OnNMSLobbyServerUpdateMap(unsigned int  /*id*/, cons
 
 /**
  *  Lobby-Server-Delete-Nachricht.
- *
- *  @author FloSoft
  */
 void LobbyMessageInterface::OnNMSLobbyServerDelete(unsigned int  /*id*/)
 {
@@ -210,8 +172,6 @@ void LobbyMessageInterface::OnNMSLobbyServerDelete(unsigned int  /*id*/)
 
 /**
  *  Lobby-Server-Join-Nachricht.
- *
- *  @author FloSoft
  */
 void LobbyMessageInterface::OnNMSLobbyServerJoin(unsigned int  /*id*/)
 {
@@ -219,8 +179,6 @@ void LobbyMessageInterface::OnNMSLobbyServerJoin(unsigned int  /*id*/)
 
 /**
  *  Lobby-Ranking-Info-Nachricht.
- *
- *  @author FloSoft
  */
 void LobbyMessageInterface::OnNMSLobbyRankingInfo(unsigned int  /*id*/, const LobbyPlayerInfo&  /*player*/)
 {

@@ -35,8 +35,6 @@ void LobbyInterface::LC_Chat(const std::string&  /*player*/, const std::string& 
 
 /**
  *  Status: Verbindung verloren.
- *
- *  @author FloSoft
  */
 void LobbyInterface::LC_Status_ConnectionLost()
 {
@@ -45,8 +43,6 @@ void LobbyInterface::LC_Status_ConnectionLost()
 
 /**
  *  Status: fehlerhafte Anfrage / kaputte Daten.
- *
- *  @author FloSoft
  */
 void LobbyInterface::LC_Status_IncompleteMessage()
 {

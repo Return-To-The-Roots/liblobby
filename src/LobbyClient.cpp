@@ -48,8 +48,6 @@ LobbyClient::~LobbyClient()
 
 /**
  *  Hauptschleife.
- *
- *  @author FloSoft
  */
 void LobbyClient::Run()
 {
@@ -109,8 +107,6 @@ void LobbyClient::Run()
 
 /**
  *  trennt die Verbindung mit dem LobbyServer.
- *
- *  @author FloSoft
  */
 void LobbyClient::Stop()
 {
@@ -141,8 +137,6 @@ void LobbyClient::Stop()
  *
  *  @param[in] user Benutzername
  *  @param[in] pass Passwort
- *
- *  @author FloSoft
  */
 bool LobbyClient::Login(const std::string& server, const unsigned int port, const std::string& user, const std::string& pass, const bool use_ipv6)
 {
@@ -163,8 +157,6 @@ bool LobbyClient::Login(const std::string& server, const unsigned int port, cons
  *
  *  @param[in] user Benutzername
  *  @param[in] pass Passwort
- *
- *  @author FloSoft
  */
 bool LobbyClient::Register(const std::string& server, const unsigned int port, const std::string& user, const std::string& pass, const std::string& email, const bool use_ipv6)
 {
@@ -183,8 +175,6 @@ bool LobbyClient::Register(const std::string& server, const unsigned int port, c
 
 /**
  *  schickt einen Request für die Server-Liste.
- *
- *  @author FloSoft
  */
 void LobbyClient::SendServerListRequest()
 {
@@ -193,8 +183,6 @@ void LobbyClient::SendServerListRequest()
 
 /**
  *  schickt einen Request für die Player-Liste.
- *
- *  @author FloSoft
  */
 void LobbyClient::SendPlayerListRequest()
 {
@@ -203,8 +191,6 @@ void LobbyClient::SendPlayerListRequest()
 
 /**
  *  schickt einen Request für die Top10-Liste.
- *
- *  @author FloSoft
  */
 void LobbyClient::SendRankingListRequest()
 {
@@ -215,8 +201,6 @@ void LobbyClient::SendRankingListRequest()
  *  schickt einen Request für ein Serverinfo.
  *
  *  @param[in] id Server-ID
- *
- *  @author FloSoft
  */
 void LobbyClient::SendServerInfoRequest(unsigned int id)
 {
@@ -228,8 +212,6 @@ void LobbyClient::SendServerInfoRequest(unsigned int id)
 
 /**
  *  schickt einen Request für den Serverjoin.
- *
- *  @author FloSoft
  */
 void LobbyClient::SendServerJoinRequest()
 {
@@ -238,8 +220,6 @@ void LobbyClient::SendServerJoinRequest()
 
 /**
  *  schickt einen Request um die Punkte eines bestimmten Spielers auszulesen.
- *
- *  @author FloSoft
  */
 void LobbyClient::SendRankingInfoRequest(const std::string& name)
 {
@@ -250,8 +230,6 @@ void LobbyClient::SendRankingInfoRequest(const std::string& name)
  *  verschickt eine Chatnachricht.
  *
  *  @param[in] text Der Text
- *
- *  @author FloSoft
  */
 void LobbyClient::SendChat(const std::string& text)
 {
@@ -263,8 +241,6 @@ void LobbyClient::SendChat(const std::string& text)
  *  fügt einen Server zur Lobby hinzu.
  *
  *  @param[in] name Name des Servers.
- *
- *  @author FloSoft
  */
 void LobbyClient::AddServer(const std::string& name, const std::string& map, bool has_password, unsigned short port)
 {
@@ -283,8 +259,6 @@ void LobbyClient::AddServer(const std::string& name, const std::string& map, boo
 ///////////////////////////////////////////////////////////////////////////////
 /*
  *  entfernt den einem zugehörigen Server von der Lobby.
- *
- *  @author FloSoft
  */
 void LobbyClient::DeleteServer()
 {
@@ -298,8 +272,6 @@ void LobbyClient::DeleteServer()
  *  aktualisiert den Kartennamen des zugehörigen Servers in der Lobby.
  *
  *  @param[in] map Kartenname
- *
- *  @author FloSoft
  */
 void LobbyClient::UpdateServer(const std::string& map)
 {
@@ -314,8 +286,6 @@ void LobbyClient::UpdateServer(const std::string& map)
  *
  *  @param[in] curplayer Aktuelle Anzahl Spieler
  *  @param[in] maxplayer Maximale Anzahl Spieler
- *
- *  @author FloSoft
  */
 void LobbyClient::UpdateServerPlayerCount(unsigned int curplayer, unsigned int maxplayer)
 {
@@ -329,8 +299,6 @@ void LobbyClient::UpdateServerPlayerCount(unsigned int curplayer, unsigned int m
  *  verbindet mit dem LobbyServer.
  *
  *  @return @p true bei Erfolg, @p false bei Fehler
- *
- *  @author FloSoft
  */
 bool LobbyClient::Connect(const std::string& server, const unsigned int port, const bool use_ipv6)
 {
@@ -351,8 +319,6 @@ bool LobbyClient::Connect(const std::string& server, const unsigned int port, co
 
 /**
  *  Ping-Nachricht.
- *
- *  @author FloSoft
  */
 void LobbyClient::OnNMSLobbyPing(unsigned int  /*id*/)
 {
@@ -363,8 +329,6 @@ void LobbyClient::OnNMSLobbyPing(unsigned int  /*id*/)
  *  Lobby-Player-ID-Nachricht.
  *
  *  @param[in] playerid Die empfangene Spieler-ID
- *
- *  @author FloSoft
  */
 void LobbyClient::OnNMSLobbyID(unsigned int  /*id*/, const unsigned int& playerid)
 {
@@ -398,8 +362,6 @@ void LobbyClient::OnNMSLobbyID(unsigned int  /*id*/, const unsigned int& playeri
  *  Lobby-Login-Error-Nachricht.
  *
  *  @param[in] error Die empfangene Fehlermeldung
- *
- *  @author FloSoft
  */
 void LobbyClient::OnNMSLobbyLoginError(unsigned int  /*id*/, const std::string& error)
 {
@@ -414,8 +376,6 @@ void LobbyClient::OnNMSLobbyLoginError(unsigned int  /*id*/, const std::string& 
  *  Lobby-Logged-In-Nachricht.
  *
  *  @param[in] email Die empfangene Emailadresse des Accounts
- *
- *  @author FloSoft
  */
 void LobbyClient::OnNMSLobbyLoginDone(unsigned int  /*id*/, const std::string& email)
 {
@@ -430,8 +390,6 @@ void LobbyClient::OnNMSLobbyLoginDone(unsigned int  /*id*/, const std::string& e
  *  Lobby-Register-Error-Nachricht.
  *
  *  @param[in] error Die empfangene Fehlermeldung
- *
- *  @author FloSoft
  */
 void LobbyClient::OnNMSLobbyRegisterError(unsigned int  /*id*/, const std::string& error) //-V524
 {
@@ -444,8 +402,6 @@ void LobbyClient::OnNMSLobbyRegisterError(unsigned int  /*id*/, const std::strin
 
 /**
  *  Lobby-Register-Done-Nachricht.
- *
- *  @author FloSoft
  */
 void LobbyClient::OnNMSLobbyRegisterDone(unsigned int  /*id*/)
 {
@@ -459,8 +415,6 @@ void LobbyClient::OnNMSLobbyRegisterDone(unsigned int  /*id*/)
  *  ServerList-Nachricht.
  *
  *  @param[in] error Die empfangene Serverliste
- *
- *  @author FloSoft
  */
 void LobbyClient::OnNMSLobbyServerList(unsigned int  /*id*/, const LobbyServerList& list)
 {
@@ -473,8 +427,6 @@ void LobbyClient::OnNMSLobbyServerList(unsigned int  /*id*/, const LobbyServerLi
  *  PlayerList-Nachricht.
  *
  *  @param[in] error Die empfangene Spielerliste
- *
- *  @author FloSoft
  */
 void LobbyClient::OnNMSLobbyPlayerList(unsigned int  /*id*/, const LobbyPlayerList& list)
 {
@@ -487,8 +439,6 @@ void LobbyClient::OnNMSLobbyPlayerList(unsigned int  /*id*/, const LobbyPlayerLi
  *  RankingList-Nachricht.
  *
  *  @param[in] error Die empfangene Spielerliste (Top 10)
- *
- *  @author FloSoft
  */
 void LobbyClient::OnNMSLobbyRankingList(unsigned int  /*id*/, const LobbyPlayerList& list)
 {
@@ -501,8 +451,6 @@ void LobbyClient::OnNMSLobbyRankingList(unsigned int  /*id*/, const LobbyPlayerL
  *  ServerList-Nachricht.
  *
  *  @param[in] error Das empfangene ServerInfo
- *
- *  @author FloSoft
  */
 void LobbyClient::OnNMSLobbyServerInfo(unsigned int  /*id*/, const LobbyServerInfo& info)
 {
@@ -516,8 +464,6 @@ void LobbyClient::OnNMSLobbyServerInfo(unsigned int  /*id*/, const LobbyServerIn
  *
  *  @param[in] player Der empfangene Spielername
  *  @param[in] text   Der empfangene Text
- *
- *  @author FloSoft
  */
 void LobbyClient::OnNMSLobbyChat(unsigned int  /*id*/, const std::string& player, const std::string& text)
 {
@@ -529,8 +475,6 @@ void LobbyClient::OnNMSLobbyChat(unsigned int  /*id*/, const std::string& player
  *  Lobby-Server-Add-Failed-Nachricht.
  *
  *  @param[in] error Die empfangene Fehlermeldung
- *
- *  @author FloSoft
  */
 void LobbyClient::OnNMSLobbyServerAddFailed(unsigned int  /*id*/, const std::string& error)
 {
@@ -543,8 +487,6 @@ void LobbyClient::OnNMSLobbyServerAddFailed(unsigned int  /*id*/, const std::str
  *  Lobby-Server-Add-Done-Nachricht.
  *
  *  @param[in] info Das empfangene ServerInfo
- *
- *  @author FloSoft
  */
 void LobbyClient::OnNMSLobbyServerAdd(unsigned int  /*id*/, const LobbyServerInfo& info)
 {
@@ -561,8 +503,6 @@ void LobbyClient::OnNMSLobbyServerAdd(unsigned int  /*id*/, const LobbyServerInf
  *  Lobby-Ranking-Info Nachricht.
  *
  *  @param[in] email Die empfangene PlayerInfo des angefragten Spielers.
- *
- *  @author FloSoft
  */
 void LobbyClient::OnNMSLobbyRankingInfo(unsigned int  /*id*/, const LobbyPlayerInfo& player)
 {
@@ -572,8 +512,6 @@ void LobbyClient::OnNMSLobbyRankingInfo(unsigned int  /*id*/, const LobbyPlayerI
 
 /**
  *  Dead-Nachricht.
- *
- *  @author FloSoft
  */
 void LobbyClient::OnNMSDeadMsg(unsigned int  /*id*/)
 {
@@ -582,8 +520,6 @@ void LobbyClient::OnNMSDeadMsg(unsigned int  /*id*/)
 
 /**
  *  Server verloren.
- *
- *  @author FloSoft
  */
 void LobbyClient::ServerLost(bool message)
 {

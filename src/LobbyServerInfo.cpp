@@ -45,8 +45,6 @@ LobbyServerInfo::LobbyServerInfo(const unsigned  /*playerid*/, Serializer& ser) 
 ///////////////////////////////////////////////////////////////////////////////
 /*
  *  leert die Informationen.
- *
- *  @author FloSoft
  */
 void LobbyServerInfo::clear()
 {
@@ -69,8 +67,6 @@ void LobbyServerInfo::clear()
  *  @param[in,out] data Datensatz, muss groß genug sein
  *
  *  @return liefert die Größe der Daten zurück.
- *
- *  @author FloSoft
  */
 void LobbyServerInfo::serialize(Serializer& ser) const
 {
