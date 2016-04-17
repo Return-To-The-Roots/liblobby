@@ -46,7 +46,6 @@ LobbyClient::~LobbyClient()
     Stop();
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  Hauptschleife.
  *
@@ -108,7 +107,6 @@ void LobbyClient::Run()
     }
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  trennt die Verbindung mit dem LobbyServer.
  *
@@ -138,7 +136,6 @@ void LobbyClient::Stop()
     refreshserverinfo = false;
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  versucht einen Login in den LobbyServer.
  *
@@ -161,7 +158,6 @@ bool LobbyClient::Login(const std::string& server, const unsigned int port, cons
     return Connect( server, port, use_ipv6 );
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  versucht einen Nick auf dem LobbyServer zu registrieren.
  *
@@ -185,7 +181,6 @@ bool LobbyClient::Register(const std::string& server, const unsigned int port, c
     return Connect( server, port, use_ipv6 );
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  schickt einen Request für die Server-Liste.
  *
@@ -196,7 +191,6 @@ void LobbyClient::SendServerListRequest()
     send_queue.push(new LobbyMessage_ServerList(1));
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  schickt einen Request für die Player-Liste.
  *
@@ -207,7 +201,6 @@ void LobbyClient::SendPlayerListRequest()
     send_queue.push(new LobbyMessage_PlayerList(1));
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  schickt einen Request für die Top10-Liste.
  *
@@ -218,7 +211,6 @@ void LobbyClient::SendRankingListRequest()
     send_queue.push(new LobbyMessage_RankingList(1));
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  schickt einen Request für ein Serverinfo.
  *
@@ -234,7 +226,6 @@ void LobbyClient::SendServerInfoRequest(unsigned int id)
     send_queue.push(new LobbyMessage_ServerInfo(id));
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  schickt einen Request für den Serverjoin.
  *
@@ -245,7 +236,6 @@ void LobbyClient::SendServerJoinRequest()
     send_queue.push(new LobbyMessage_Server_Join());
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  schickt einen Request um die Punkte eines bestimmten Spielers auszulesen.
  *
@@ -256,7 +246,6 @@ void LobbyClient::SendRankingInfoRequest(const std::string& name)
     send_queue.push(new LobbyMessage_Lobby_Ranking_Info(name));
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  verschickt eine Chatnachricht.
  *
@@ -336,7 +325,6 @@ void LobbyClient::UpdateServerPlayerCount(unsigned int curplayer, unsigned int m
     send_queue.push(new LobbyMessage_Server_Update_Player(curplayer, maxplayer));
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  verbindet mit dem LobbyServer.
  *
@@ -361,7 +349,6 @@ bool LobbyClient::Connect(const std::string& server, const unsigned int port, co
     return true;
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  Ping-Nachricht.
  *
@@ -372,7 +359,6 @@ void LobbyClient::OnNMSLobbyPing(unsigned int  /*id*/)
     send_queue.push(new LobbyMessage_Pong(1));
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  Lobby-Player-ID-Nachricht.
  *
@@ -408,7 +394,6 @@ void LobbyClient::OnNMSLobbyID(unsigned int  /*id*/, const unsigned int& playeri
     }
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  Lobby-Login-Error-Nachricht.
  *
@@ -425,7 +410,6 @@ void LobbyClient::OnNMSLobbyLoginError(unsigned int  /*id*/, const std::string& 
     ServerLost(false);
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  Lobby-Logged-In-Nachricht.
  *
@@ -442,7 +426,6 @@ void LobbyClient::OnNMSLobbyLoginDone(unsigned int  /*id*/, const std::string& e
     state = CS_LOBBY;
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  Lobby-Register-Error-Nachricht.
  *
@@ -459,7 +442,6 @@ void LobbyClient::OnNMSLobbyRegisterError(unsigned int  /*id*/, const std::strin
     ServerLost(false);
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  Lobby-Register-Done-Nachricht.
  *
@@ -473,7 +455,6 @@ void LobbyClient::OnNMSLobbyRegisterDone(unsigned int  /*id*/)
     Stop();
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  ServerList-Nachricht.
  *
@@ -488,7 +469,6 @@ void LobbyClient::OnNMSLobbyServerList(unsigned int  /*id*/, const LobbyServerLi
     refreshserverlist = true;
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  PlayerList-Nachricht.
  *
@@ -503,7 +483,6 @@ void LobbyClient::OnNMSLobbyPlayerList(unsigned int  /*id*/, const LobbyPlayerLi
     refreshplayerlist = true;
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  RankingList-Nachricht.
  *
@@ -518,7 +497,6 @@ void LobbyClient::OnNMSLobbyRankingList(unsigned int  /*id*/, const LobbyPlayerL
     refreshrankinglist = true;
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  ServerList-Nachricht.
  *
@@ -533,7 +511,6 @@ void LobbyClient::OnNMSLobbyServerInfo(unsigned int  /*id*/, const LobbyServerIn
     refreshserverinfo = true;
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  Chat-Nachricht.
  *
@@ -548,7 +525,6 @@ void LobbyClient::OnNMSLobbyChat(unsigned int  /*id*/, const std::string& player
         parent->LC_Chat(player, text);
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  Lobby-Server-Add-Failed-Nachricht.
  *
@@ -563,7 +539,6 @@ void LobbyClient::OnNMSLobbyServerAddFailed(unsigned int  /*id*/, const std::str
         parent->LC_Status_Error(this->error);
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  Lobby-Server-Add-Done-Nachricht.
  *
@@ -582,7 +557,6 @@ void LobbyClient::OnNMSLobbyServerAdd(unsigned int  /*id*/, const LobbyServerInf
         parent->LC_Created();
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  Lobby-Ranking-Info Nachricht.
  *
@@ -596,7 +570,6 @@ void LobbyClient::OnNMSLobbyRankingInfo(unsigned int  /*id*/, const LobbyPlayerI
         parent->LC_RankingInfo(player);
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  Dead-Nachricht.
  *
@@ -607,7 +580,6 @@ void LobbyClient::OnNMSDeadMsg(unsigned int  /*id*/)
     ServerLost();
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  Server verloren.
  *

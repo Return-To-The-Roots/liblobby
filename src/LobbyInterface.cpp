@@ -33,7 +33,6 @@ void LobbyInterface::LC_Status_Error(const std::string&  /*error*/) { }
 
 void LobbyInterface::LC_Chat(const std::string&  /*player*/, const std::string&  /*text*/) { }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  Status: Verbindung verloren.
  *
@@ -44,7 +43,6 @@ void LobbyInterface::LC_Status_ConnectionLost()
     LC_Status_Error(_("Connection to Host closed!"));
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  Status: fehlerhafte Anfrage / kaputte Daten.
  *

@@ -150,7 +150,6 @@ class LobbyMessage_Login_Error : public LobbyMessage
         }
 };
 
-///////////////////////////////////////////////////////////////////////////////
 /** eingehende Login-Error-Nachricht. (0.6 compat mode)
  *  sollte niemals empfangen werden (außer es ist ein pre 0.6 client!)
  */
@@ -286,7 +285,6 @@ class LobbyMessage_Register_Error : public LobbyMessage
         }
 };
 
-///////////////////////////////////////////////////////////////////////////////
 /** eingehende Register-Error-Nachricht. (0.6 compat mode)
  *  sollte niemals empfangen werden (außer es ist ein pre 0.6 client!)
  */

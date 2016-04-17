@@ -21,7 +21,6 @@
 // Include last!
 #include "DebugNew.h" // IWYU pragma: keep
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  Lobby-Login-Nachricht.
  *
@@ -31,7 +30,6 @@ void LobbyMessageInterface::OnNMSLobbyLogin(unsigned int  /*id*/, const unsigned
 {
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  Lobby-Login-Error-Nachricht.
  *
@@ -41,7 +39,6 @@ void LobbyMessageInterface::OnNMSLobbyLoginError(unsigned int  /*id*/, const std
 {
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  Lobby-Logged-In-Nachricht.
  *
@@ -51,7 +48,6 @@ void LobbyMessageInterface::OnNMSLobbyLoginDone(unsigned int  /*id*/, const std:
 {
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  Lobby-Register-Nachricht.
  *
@@ -61,7 +57,6 @@ void LobbyMessageInterface::OnNMSLobbyRegister(unsigned int  /*id*/, const unsig
 {
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  Lobby-Register-Error-Nachricht.
  *
@@ -71,7 +66,6 @@ void LobbyMessageInterface::OnNMSLobbyRegisterError(unsigned int  /*id*/, const 
 {
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  Lobby-Register-Done-Nachricht.
  *
@@ -81,7 +75,6 @@ void LobbyMessageInterface::OnNMSLobbyRegisterDone(unsigned int  /*id*/)
 {
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  Lobby-Player-ID-Nachricht.
  *
@@ -91,7 +84,6 @@ void LobbyMessageInterface::OnNMSLobbyID(unsigned int  /*id*/, const unsigned in
 {
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  Chat-Nachricht.
  *
@@ -101,7 +93,6 @@ void LobbyMessageInterface::OnNMSLobbyChat(unsigned int  /*id*/, const std::stri
 {
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  Ping-Nachricht.
  *
@@ -111,7 +102,6 @@ void LobbyMessageInterface::OnNMSLobbyPing(unsigned int  /*id*/)
 {
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  Pong-Nachricht.
  *
@@ -121,7 +111,6 @@ void LobbyMessageInterface::OnNMSLobbyPong(unsigned int  /*id*/)
 {
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  ServerList-Nachricht.
  *
@@ -135,7 +124,6 @@ void LobbyMessageInterface::OnNMSLobbyServerList(unsigned int  /*id*/, const Lob
 {
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  PlayerList-Nachricht.
  *
@@ -149,7 +137,6 @@ void LobbyMessageInterface::OnNMSLobbyPlayerList(unsigned int  /*id*/, const Lob
 {
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  RankingList-Nachricht.
  *
@@ -163,7 +150,6 @@ void LobbyMessageInterface::OnNMSLobbyRankingList(unsigned int  /*id*/, const Lo
 {
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  ServerInfo-Nachricht.
  *
@@ -177,7 +163,6 @@ void LobbyMessageInterface::OnNMSLobbyServerInfo(unsigned int  /*id*/, const Lob
 {
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  Lobby-Server-Add-Done-Nachricht.
  *
@@ -187,7 +172,6 @@ void LobbyMessageInterface::OnNMSLobbyServerAdd(unsigned int  /*id*/, const Lobb
 {
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  Lobby-Server-Add-Failed-Nachricht.
  *
@@ -197,7 +181,6 @@ void LobbyMessageInterface::OnNMSLobbyServerAddFailed(unsigned int  /*id*/, cons
 {
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  Lobby-Server-Update-Player-Nachricht.
  *
@@ -207,7 +190,6 @@ void LobbyMessageInterface::OnNMSLobbyServerUpdatePlayer(unsigned int  /*id*/, c
 {
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  Lobby-Server-Update-Map-Nachricht.
  *
@@ -217,7 +199,6 @@ void LobbyMessageInterface::OnNMSLobbyServerUpdateMap(unsigned int  /*id*/, cons
 {
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  Lobby-Server-Delete-Nachricht.
  *
@@ -227,7 +208,6 @@ void LobbyMessageInterface::OnNMSLobbyServerDelete(unsigned int  /*id*/)
 {
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  Lobby-Server-Join-Nachricht.
  *
@@ -237,7 +217,6 @@ void LobbyMessageInterface::OnNMSLobbyServerJoin(unsigned int  /*id*/)
 {
 }
 
-///////////////////////////////////////////////////////////////////////////////
 /**
  *  Lobby-Ranking-Info-Nachricht.
  *
