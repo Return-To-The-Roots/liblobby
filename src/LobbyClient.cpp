@@ -236,8 +236,7 @@ void LobbyClient::SendChat(const std::string& text)
     send_queue.push(new LobbyMessage_Chat(text));
 }
 
-///////////////////////////////////////////////////////////////////////////////
-/*
+/**
  *  fügt einen Server zur Lobby hinzu.
  *
  *  @param[in] name Name des Servers.
@@ -256,8 +255,7 @@ void LobbyClient::AddServer(const std::string& name, const std::string& map, boo
     LOG.lprintf("LobbyClient: GameServer %s wird erstellt ...\n", name.c_str());
 }
 
-///////////////////////////////////////////////////////////////////////////////
-/*
+/**
  *  entfernt den einem zugehörigen Server von der Lobby.
  */
 void LobbyClient::DeleteServer()
@@ -267,8 +265,7 @@ void LobbyClient::DeleteServer()
     server_.clear();
 }
 
-///////////////////////////////////////////////////////////////////////////////
-/*
+/**
  *  aktualisiert den Kartennamen des zugehörigen Servers in der Lobby.
  *
  *  @param[in] map Kartenname
@@ -280,8 +277,7 @@ void LobbyClient::UpdateServer(const std::string& map)
     send_queue.push(new LobbyMessage_Server_Update_Map(map));
 }
 
-///////////////////////////////////////////////////////////////////////////////
-/*
+/**
  *  aktualisiert die Spielerzahlen des zugehörigen Servers in der Lobby.
  *
  *  @param[in] curplayer Aktuelle Anzahl Spieler

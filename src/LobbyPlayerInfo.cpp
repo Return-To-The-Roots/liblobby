@@ -32,8 +32,7 @@ LobbyPlayerInfo::LobbyPlayerInfo(const unsigned  /*playerid*/, Serializer& ser)
     deserialize(ser);
 }
 
-///////////////////////////////////////////////////////////////////////////////
-/*
+/**
  *  leert die Informationen.
  */
 void LobbyPlayerInfo::clear()
@@ -46,8 +45,7 @@ void LobbyPlayerInfo::clear()
     verloren_ = 0;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-/*
+/**
  *  serialisiert die Daten.
  *
  *  @param[in] ser der benutzte Serializer
@@ -62,8 +60,7 @@ void LobbyPlayerInfo::serialize(Serializer& ser) const
     ser.PushUnsignedInt(verloren_);
 }
 
-///////////////////////////////////////////////////////////////////////////////
-/*
+/**
  *  deserialisiert die Daten.
  *
  *  @param[in] ser der benutzte Serializer

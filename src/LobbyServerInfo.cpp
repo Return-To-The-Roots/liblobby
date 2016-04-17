@@ -42,8 +42,7 @@ LobbyServerInfo::LobbyServerInfo(const unsigned  /*playerid*/, Serializer& ser) 
 
 }
 
-///////////////////////////////////////////////////////////////////////////////
-/*
+/**
  *  leert die Informationen.
  */
 void LobbyServerInfo::clear()
@@ -60,8 +59,7 @@ void LobbyServerInfo::clear()
     has_password = false;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-/*
+/**
  *  serialisiert die Daten.
  *
  *  @param[in,out] data Datensatz, muss groß genug sein
