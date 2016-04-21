@@ -18,9 +18,6 @@
 #include "main.h" // IWYU pragma: keep
 #include "LobbyMessageInterface.h"
 
-// Include last!
-#include "DebugNew.h" // IWYU pragma: keep
-
 /**
  *  Lobby-Login-Nachricht.
  */

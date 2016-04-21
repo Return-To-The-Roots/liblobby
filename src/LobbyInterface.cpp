@@ -17,9 +17,6 @@
 
 #include "main.h" // IWYU pragma: keep
 #include "LobbyInterface.h"
-
-// Include last!
-#include "DebugNew.h" // IWYU pragma: keep
 #include "mygettext.h"
 
 void LobbyInterface::LC_LoggedIn(const std::string&  /*email*/) { }

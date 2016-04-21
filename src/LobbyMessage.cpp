@@ -23,9 +23,6 @@
 
 #include <cstddef>
 
-// Include last!
-#include "DebugNew.h" // IWYU pragma: keep
-
 Message* LobbyMessage::create_lobby(unsigned short id)
 {
     Message* msg = NULL;

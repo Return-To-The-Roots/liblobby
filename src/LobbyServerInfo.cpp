@@ -19,9 +19,6 @@
 #include "LobbyServerInfo.h"
 #include "Serializer.h"
 
-// Include last!
-#include "DebugNew.h" // IWYU pragma: keep
-
 LobbyServerInfo::LobbyServerInfo()
 {
     clear();

@@ -21,9 +21,6 @@
 #include "MySQL.h"
 #include <stdio.h>
 
-// Include last!
-#include "DebugNew.h" // IWYU pragma: keep
-
 ///////////////////////////////////////////////////////////////////////////////
 // Konstruktor
 MySQL::MySQL(void)

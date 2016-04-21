@@ -24,9 +24,6 @@
 #include "MySQL.h"
 #include "LobbyMessage.h"
 
-// Include last!
-#include "DebugNew.h" // IWYU pragma: keep
-
 ///////////////////////////////////////////////////////////////////////////////
 /**
  *  Konstruktor von @p LobbyPlayer.
