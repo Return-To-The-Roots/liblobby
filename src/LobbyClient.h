@@ -107,7 +107,7 @@ class LobbyClient : public Singleton<LobbyClient, SingletonPolicies::WithLongevi
         void OnNMSLobbyRegisterDone(unsigned int id) override;
 
         /// Lobby-Player-ID-Nachricht.
-        void OnNMSLobbyID(unsigned int id, const unsigned int& playerid) override;
+        void OnNMSLobbyID(unsigned int id, unsigned playerId) override;
         /// Chat-Nachricht.
         void OnNMSLobbyChat(unsigned int id, const std::string& player, const std::string& text) override;
 

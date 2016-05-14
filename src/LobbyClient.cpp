@@ -321,11 +321,11 @@ void LobbyClient::OnNMSLobbyPing(unsigned int  /*id*/)
 /**
  *  Lobby-Player-ID-Nachricht.
  *
- *  @param[in] playerid Die empfangene Spieler-ID
+ *  @param[in] playerId Die empfangene Spieler-ID
  */
-void LobbyClient::OnNMSLobbyID(unsigned int  /*id*/, const unsigned int& playerid)
+void LobbyClient::OnNMSLobbyID(unsigned int  /*id*/, unsigned playerId)
 {
-    if(playerid == 0xFFFFFFFF)
+    if(playerId == 0xFFFFFFFF)
     {
         if(parent)
             parent->LC_Status_Error(_("This Server is full!"));

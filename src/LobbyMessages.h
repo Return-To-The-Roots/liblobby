@@ -564,33 +564,33 @@ class LobbyMessage_PlayerList : public LobbyMessage
 class LobbyMessage_Id : public LobbyMessage
 {
     private:
-        unsigned int playerid;
+        unsigned int playerId;
 
     public:
         LobbyMessage_Id(): LobbyMessage(NMS_LOBBY_ID) {} //-V730
-        LobbyMessage_Id(const unsigned int playerid): LobbyMessage(NMS_LOBBY_ID), playerid(playerid)
+        LobbyMessage_Id(const unsigned int playerId): LobbyMessage(NMS_LOBBY_ID), playerId(playerId)
         {
-            LOG.write(">>> NMS_LOBBY_ID(%d)\n", playerid);
+            LOG.write(">>> NMS_LOBBY_ID(%d)\n", playerId);
         }
 
         void Serialize(Serializer& ser) const override
         {
             LobbyMessage::Serialize(ser);
-            ser.PushUnsignedInt(playerid);
+            ser.PushUnsignedInt(playerId);
         }
 
         void Deserialize(Serializer& ser) override
         {
             LobbyMessage::Deserialize(ser);
-            playerid = ser.PopUnsignedInt();
+            playerId = ser.PopUnsignedInt();
         }
 
         void run(MessageInterface* callback, unsigned int id) override
         {
             LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
-            LOG.write("<<< NMS_LOBBY_ID(%d)\n", playerid);
+            LOG.write("<<< NMS_LOBBY_ID(%d)\n", playerId);
 
-            cb->OnNMSLobbyID(id, playerid);
+            cb->OnNMSLobbyID(id, playerId);
         }
 };
 

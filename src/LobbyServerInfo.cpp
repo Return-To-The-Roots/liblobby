@@ -24,7 +24,7 @@ LobbyServerInfo::LobbyServerInfo()
     clear();
 }
 
-LobbyServerInfo::LobbyServerInfo(const unsigned  /*playerid*/, Serializer& ser) :
+LobbyServerInfo::LobbyServerInfo(const unsigned  /*playerId*/, Serializer& ser) :
     serverid(ser.PopUnsignedInt()),
     name(ser.PopString()),
     host(ser.PopString()),

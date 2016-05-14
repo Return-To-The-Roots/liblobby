@@ -26,14 +26,14 @@ class LobbyPlayerInfo
 {
     public:
         LobbyPlayerInfo();
-        LobbyPlayerInfo(const unsigned playerid, Serializer& ser);
+        LobbyPlayerInfo(const unsigned playerId, Serializer& ser);
         /// leert die Informationen.
         void clear();
         /// serialisiert die Daten.
         void serialize(Serializer& ser) const;
         void deserialize(Serializer& ser);
 
-        unsigned int getId() const { return playerid_; }
+        unsigned int getId() const { return playerId_; }
         std::string getName() const { return name_; }
         std::string getEmail() const { return email_; }
         std::string getVersion() const { return version_; }
@@ -41,7 +41,7 @@ class LobbyPlayerInfo
         unsigned int getGewonnen() const { return gewonnen_; }
         unsigned int getVerloren() const { return verloren_; }
 
-        void setId(const unsigned int playerid) { this->playerid_ = playerid; }
+        void setId(const unsigned int playerId) { this->playerId_ = playerId; }
         void setName(const std::string& name) { this->name_ = name; }
         void setEmail(const std::string& email) { this->email_ = email; }
         void setVersion(const std::string& version) { this->version_ = version; }
@@ -50,7 +50,7 @@ class LobbyPlayerInfo
         void setVerloren(const unsigned int verloren) { this->verloren_ = verloren; }
 
     protected:
-        unsigned int playerid_;
+        unsigned int playerId_;
         std::string name_;
         std::string email_;
         std::string version_;

@@ -1,7 +1,7 @@
 
 SET(SOURCES_LOBBY LobbyMessage.cpp          LobbyMessage.h
                   LobbyMessages.h
-                  LobbyMessageInterface.cpp LobbyMessageInterface.h
+                                            LobbyMessageInterface.h
                   LobbyInterface.cpp        LobbyInterface.h
                   LobbyPlayerInfo.cpp       LobbyPlayerInfo.h
                   LobbyPlayerList.h

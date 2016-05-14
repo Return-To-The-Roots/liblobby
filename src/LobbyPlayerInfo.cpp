@@ -24,7 +24,7 @@ LobbyPlayerInfo::LobbyPlayerInfo()
     clear();
 }
 
-LobbyPlayerInfo::LobbyPlayerInfo(const unsigned  /*playerid*/, Serializer& ser)
+LobbyPlayerInfo::LobbyPlayerInfo(const unsigned  /*playerId*/, Serializer& ser)
 {
     deserialize(ser);
 }
@@ -34,7 +34,7 @@ LobbyPlayerInfo::LobbyPlayerInfo(const unsigned  /*playerid*/, Serializer& ser)
  */
 void LobbyPlayerInfo::clear()
 {
-    playerid_ = 0;
+    playerId_ = 0;
     name_.clear();
     version_.clear();
     punkte_ = 0;
@@ -49,7 +49,7 @@ void LobbyPlayerInfo::clear()
  */
 void LobbyPlayerInfo::serialize(Serializer& ser) const
 {
-    ser.PushUnsignedInt(playerid_);
+    ser.PushUnsignedInt(playerId_);
     ser.PushString(name_);
     ser.PushString(version_);
     ser.PushSignedInt(punkte_);
@@ -64,7 +64,7 @@ void LobbyPlayerInfo::serialize(Serializer& ser) const
  */
 void LobbyPlayerInfo::deserialize(Serializer& ser)
 {
-    playerid_ = ser.PopUnsignedInt();
+    playerId_ = ser.PopUnsignedInt();
     name_ = ser.PopString();
     version_ = ser.PopString();
     punkte_ = ser.PopSignedInt();
