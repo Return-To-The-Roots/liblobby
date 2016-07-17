@@ -36,6 +36,8 @@ int main(int argc, char* argv[])
     std::string mysqlPass = argv[4];
     std::string mysqlDb = argv[5];
     LOBBYSERVER.Start(port, mysqlHost, mysqlUser, mysqlPass, mysqlDb);
+    while(LOBBYSERVER.Run() == 0)
+        ;
     // Dummy test only! Hence we quit again
     LOBBYSERVER.Stop();
     return 0;
