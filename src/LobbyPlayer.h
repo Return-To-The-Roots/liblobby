@@ -55,27 +55,29 @@ class LobbyPlayer : public LobbyPlayerInfo
         bool isOccupied(void) { return (playerstate == PS_OCCUPIED); }
         bool isReserved(void) { return (playerstate == PS_RESERVED); }
         bool isLoggedIn(void) { return (loggedin && playerstate == PS_OCCUPIED); }
-        bool isHost(void)     { return host; }
-        bool isClient(void)   { return client; }
+        bool isHost(void)     { return host_; }
+        bool isClient(void)   { return client_; }
 
         bool Receive(void);
         bool Send(LobbyMessage* m = NULL, bool flush = false);
         void Run(LobbyMessageInterface* callback);
 
-        unsigned int getServerId(void) { return serverid; }
+        unsigned int getServerId(void) { return serverid_; }
 
         bool Host(LobbyServerInfo info);
         void NoHost(void);
         bool updateHost(const unsigned int curplayer, const unsigned int maxplayer);
         bool updateHost(const std::string& map);
 
-        void Client(void) { client = true; }
+        void makeClient();
 
     private:
         MessageQueue send_queue;
         MessageQueue recv_queue;
 
     private:
+        void makeHost(unsigned serverId);
+
         enum PS
         {
             PS_FREE = 0,
@@ -91,10 +93,10 @@ class LobbyPlayer : public LobbyPlayerInfo
         unser_time_t connectiontime;
         unsigned short ping;
 
-        unsigned int serverid;
+        unsigned int serverid_;
 
-        bool client;
-        bool host;
+        bool client_;
+        bool host_;
 };
 
 #endif // !LOBBYPLAYER_H_INCLUDED

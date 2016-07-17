@@ -66,9 +66,9 @@ void LobbyPlayer::clear(void)
     connectiontime = 0;
     ping = 0;
 
-    client = false;
-    host = false;
-    serverid = 0;
+    client_ = false;
+    host_ = false;
+    serverid_ = 0;
 
     LobbyPlayerInfo::clear();
 }
@@ -210,12 +210,9 @@ void LobbyPlayer::occupy(const std::string& user, const std::string& email, cons
     setEmail(email);
     setVersion(version);
 
+    Send(new LobbyMessage_Chat("Hinweis", GetWindowTitle()));
+
     std::stringstream text;
-
-    text.str("");
-    text << GetWindowTitle();
-    Send(new LobbyMessage_Chat("Hinweis", text.str()));
-
     text.str("");
     text << "Serverversion: " << GetWindowVersion() << "-r" << GetWindowRevision();
     Send(new LobbyMessage_Chat("Hinweis", text.str()));
@@ -229,8 +226,8 @@ void LobbyPlayer::gotPing(void)
 
     lastping = TIME.CurrentTick();
 
-    if(host && serverid != 0)
-        MYSQLCLIENT.UpdateServerPing(serverid, ping);
+    if(isHost())
+        MYSQLCLIENT.UpdateServerPing(getServerId(), ping);
 }
 
 bool LobbyPlayer::Host(LobbyServerInfo info)
@@ -240,42 +237,50 @@ bool LobbyPlayer::Host(LobbyServerInfo info)
     if(MYSQLCLIENT.AddServer(&info))
     {
         LOG.lprintf("Player %s creates game '%s'\n", getName().c_str(), info.getName().c_str());
-
+        makeHost(info.getId());
         Send(new LobbyMessage_Server_Add(info));
-
-        host = true;
-        serverid = info.getId();
-
         return true;
+    } else{
+        LOG.lprintf("Can't create game\n");
+        Send(new LobbyMessage_Server_Add_Failed("Database error on create.\nName invalid or already taken."));
+        return false;
     }
-
-    LOG.lprintf("Can't create game\n");
-
-    Send(new LobbyMessage_Server_Add_Failed("Database error on create.\nName invalid or already taken."));
-
-    return false;
 }
 
 void LobbyPlayer::NoHost(void)
 {
-    if(host == true && serverid != 0)
-        MYSQLCLIENT.DeleteServer(serverid);
+    if(isHost())
+        MYSQLCLIENT.DeleteServer(getServerId());
 
-    client = false;
-    host = false;
-    serverid = 0;
+    client_ = false;
+    host_ = false;
+    serverid_ = 0;
 }
 
 bool LobbyPlayer::updateHost(const unsigned int curplayer, const unsigned int maxplayer)
 {
-    if(host = true && serverid != 0)
-        return MYSQLCLIENT.UpdateServerPC(serverid, curplayer, maxplayer);
+    if(isHost())
+        return MYSQLCLIENT.UpdateServerPC(getServerId(), curplayer, maxplayer);
     return false;
 }
 
 bool LobbyPlayer::updateHost(const std::string& map)
 {
-    if(host = true && serverid != 0)
-        return MYSQLCLIENT.UpdateServer(serverid, map);
+    if(isHost())
+        return MYSQLCLIENT.UpdateServer(getServerId(), map);
     return false;
+}
+
+void LobbyPlayer::makeClient()
+{
+    NoHost();
+    client_ = true;    
+}
+
+void LobbyPlayer::makeHost(unsigned serverId)
+{
+    assert(serverId);
+    client_ = false;
+    host_ = true;
+    serverid_ = serverId;
 }

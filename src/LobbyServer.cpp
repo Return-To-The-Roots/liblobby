@@ -568,7 +568,7 @@ void LobbyServer::OnNMSLobbyServerJoin(unsigned int id)
 {
     LobbyPlayer& player = players[id];
 
-    player.Client();
+    player.makeClient();
 
 	std::stringstream text;
 	text << "Player \"" << player.getName() << "\" joined a server";
