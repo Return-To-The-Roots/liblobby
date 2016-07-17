@@ -273,7 +273,6 @@ bool LobbyPlayer::updateHost(const std::string& map)
 
 void LobbyPlayer::makeClient()
 {
-    NoHost();
     client_ = true;    
 }
 
