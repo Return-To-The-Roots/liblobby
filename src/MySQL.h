@@ -27,9 +27,11 @@
 #include "LobbyServerInfo.h"
 #include "LobbyPlayerList.h"
 
-class MySQL : public Singleton<MySQL>
+class MySQL : public Singleton<MySQL, SingletonPolicies::WithLongevity>
 {
     public:
+        static const unsigned Longevity = 2;
+
         MySQL(void);
         ~MySQL(void);
 

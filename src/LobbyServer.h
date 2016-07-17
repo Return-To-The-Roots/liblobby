@@ -28,12 +28,14 @@
 #include <map>
 
 /// Der LobbyServer
-class LobbyServer : public Singleton<LobbyServer>, public LobbyMessageInterface
+class LobbyServer : public Singleton<LobbyServer, SingletonPolicies::WithLongevity>, public LobbyMessageInterface
 {
         typedef std::map<unsigned int, LobbyPlayer> LobbyPlayerMap;
         typedef std::map<unsigned int, LobbyPlayer>::iterator LobbyPlayerMapIterator;
 
     public:
+        static const unsigned Longevity = 1;
+
         /// Konstruktor von @p LobbyServer.
         LobbyServer(void);
         /// Destruktor von @p LobbyServer.
