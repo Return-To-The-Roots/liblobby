@@ -20,6 +20,7 @@
 #include "main.h" // IWYU pragma: keep
 #include "MySQL.h"
 #include "libutil/src/Log.h"
+#include <cstring>
 
 ///////////////////////////////////////////////////////////////////////////////
 // Konstruktor

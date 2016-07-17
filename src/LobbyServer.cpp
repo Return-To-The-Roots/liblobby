@@ -24,6 +24,8 @@
 #include "LobbyProtocol.h"
 #include "libutil/src/error.h"
 #include <sstream>
+#include <cstring>
+#include <cerrno>
 #ifndef _WIN32
 #   include <unistd.h>
 #endif
