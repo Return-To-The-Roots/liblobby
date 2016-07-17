@@ -34,6 +34,10 @@ IF (LOBBY_S)
 	INCLUDE_DIRECTORIES(${MYSQL_INCLUDE_DIRS})
     ADD_LIBRARY(lobby_s STATIC ${SOURCES_LOBBY_S})
     TARGET_LINK_LIBRARIES(lobby_s s25util mygettext ${MYSQL_LIBRARIES})
+	if(RTTR_BUILD_LOBBY_SERVER)
+		add_executable(lobbyServer main.cpp ${PROJECT_SOURCE_DIR}/build_version.cpp)
+		target_link_libraries(lobbyServer lobby_s)
+	endif()
 ENDIF (LOBBY_S)
 
 ################################################################################
