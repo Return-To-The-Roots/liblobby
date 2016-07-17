@@ -152,7 +152,6 @@ bool LobbyServer::Test()
 bool LobbyServer::Await()
 {
     SocketSet set;
-    int playerid = 0xFFFFFFFF;
 
     set.Add(serverSock_);
     if( set.Select(0, 0) > 0)
@@ -163,7 +162,7 @@ bool LobbyServer::Await()
             if(!client.isValid())
                 return false;
 
-            playerid = players.size();
+            unsigned playerid = static_cast<unsigned>(players.size());
             while(players.find(playerid) != players.end())
                 ++playerid;
 

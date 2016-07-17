@@ -132,7 +132,7 @@ void LobbyPlayer::attach(const Socket& socket, const unsigned int& playerid)
     detach();
 
     this->socket = socket;
-    this->playerid_ = playerid;
+    setId(playerid);
 
     playerstate = PS_RESERVED;
 
@@ -156,7 +156,7 @@ bool LobbyPlayer::Receive(void)
 {
     if(!recv_queue.recv( socket ))
     {
-        LOG.lprintf("SERVER: Receiving message for player %d failed\n", playerid_);
+        LOG.lprintf("SERVER: Receiving message for player %d failed\n", getId());
         return false;
     }
     return true;
@@ -183,7 +183,7 @@ bool LobbyPlayer::Send(LobbyMessage* m, bool flush)
 
     if( !send_queue.send( socket, 10, 512 ) )
     {
-        LOG.lprintf("SERVER: Sending message for player %d failed\n", playerid_);
+        LOG.lprintf("SERVER: Sending message for player %d failed\n", getId());
         return false;
     }
     return true;
@@ -194,7 +194,7 @@ void LobbyPlayer::Run(LobbyMessageInterface* callback)
     // recv-queue abarbeiten
     while(recv_queue.count() > 0)
     {
-        recv_queue.front()->run(callback, playerid_);
+        recv_queue.front()->run(callback, getId());
         recv_queue.pop();
     }
 }
