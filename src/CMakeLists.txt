@@ -1,4 +1,3 @@
-
 SET(SOURCES_LOBBY LobbyMessage.cpp          LobbyMessage.h
                   LobbyMessages.h
                                             LobbyMessageInterface.h
@@ -31,10 +30,10 @@ ENDIF (LOBBY_C)
 ################################################################################
 
 IF (LOBBY_S)
-
+	FIND_PACKAGE(MYSQL REQUIRED)
+	INCLUDE_DIRECTORIES(${MYSQL_INCLUDE_DIRS})
     ADD_LIBRARY(lobby_s STATIC ${SOURCES_LOBBY_S})
-    TARGET_LINK_LIBRARIES(lobby_s s25util mygettext mysqlclient)
-
+    TARGET_LINK_LIBRARIES(lobby_s s25util mygettext ${MYSQL_LIBRARIES})
 ENDIF (LOBBY_S)
 
 ################################################################################
