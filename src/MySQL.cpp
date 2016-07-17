@@ -108,9 +108,6 @@ bool MySQL::DoQuery(const std::string& query)
 // Benutzer "einloggen"
 bool MySQL::LoginUser(const std::string& user, const std::string& pass, std::string& email, const std::string& ip)
 {
-    MYSQL_RES*   pResult;
-    MYSQL_ROW   Row;
-
     char user2[256], pass2[256];
     mysql_real_escape_string(m_pMySQL, user2, user.c_str(), (unsigned long)user.length());
     mysql_real_escape_string(m_pMySQL, pass2, pass.c_str(), (unsigned long)pass.length());
@@ -125,7 +122,7 @@ bool MySQL::LoginUser(const std::string& user, const std::string& pass, std::str
     if(!DoQuery(query))
         return false;
 
-    pResult = mysql_store_result(m_pMySQL);
+    MYSQL_RES* pResult = mysql_store_result(m_pMySQL);
 
     int iRows = (int)mysql_num_rows(pResult);
 
@@ -135,14 +132,13 @@ bool MySQL::LoginUser(const std::string& user, const std::string& pass, std::str
         return false;
     }
 
-    Row = mysql_fetch_row(pResult);
+    MYSQL_ROW Row = mysql_fetch_row(pResult);
 
     // LOG.lprintf("%s %s %s %s\n", Row[0], Row[1], Row[2], Row[3]);
 
     if( (strcmp(Row[0], user2) == 0) && Row[1] )
     {
         email = Row[1];
-        mysql_free_result(pResult);
 
         // save login
         snprintf(query, 1024, "INSERT INTO `users_online` (`uid`, `time`, `ip`, `from`) VALUES(%s, UNIX_TIMESTAMP(), '%s', 'rttr');", Row[2], ip.c_str());
@@ -152,6 +148,7 @@ bool MySQL::LoginUser(const std::string& user, const std::string& pass, std::str
         snprintf(query, 1024, "DELETE FROM `users_online` WHERE `uid` = %s AND `time` < UNIX_TIMESTAMP()-%d;", Row[2], 3600 * 24 * 30);
         DoQuery(query);
 
+        mysql_free_result(pResult);
         return true;
     }
     mysql_free_result(pResult);
