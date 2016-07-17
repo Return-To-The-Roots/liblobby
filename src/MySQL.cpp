@@ -19,7 +19,7 @@
 // Header
 #include "main.h" // IWYU pragma: keep
 #include "MySQL.h"
-#include <stdio.h>
+#include "libutil/src/Log.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Konstruktor

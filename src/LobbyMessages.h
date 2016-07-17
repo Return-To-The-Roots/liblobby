@@ -21,11 +21,10 @@
 
 #include "LobbyMessage.h"
 #include "LobbyMessageInterface.h"
-
 #include "LobbyServerList.h"
 #include "LobbyPlayerList.h"
-
 #include "LobbyProtocol.h"
+#include "libutil/src/Log.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 /// ausgehende Login-Nachricht

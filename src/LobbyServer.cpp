@@ -22,8 +22,11 @@
 
 #include "MySQL.h"
 #include "LobbyProtocol.h"
-
+#include "libutil/src/error.h"
 #include <sstream>
+#ifndef _WIN32
+#   include <unistd.h>
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 /**

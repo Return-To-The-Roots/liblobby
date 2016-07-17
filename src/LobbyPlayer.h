@@ -22,6 +22,9 @@
 #include "MessageQueue.h"
 #include "LobbyPlayerInfo.h"
 #include "LobbyMessages.h"
+#include "libutil/src/Socket.h"
+#include "libutil/src/SocketSet.h"
+#include "libutil/src/MyTime.h"
 
 class LobbyPlayer : public LobbyPlayerInfo
 {

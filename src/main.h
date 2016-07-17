@@ -33,7 +33,7 @@
 #   define WIN32_LEAN_AND_MEAN
 #   include <windows.h>
 #   ifndef __CYGWIN__
-#   include <conio.h>
+#       include <conio.h>
 #   endif
 #   include <ws2tcpip.h>
 #   ifdef _MSC_VER
@@ -50,23 +50,5 @@
 #   include <arpa/inet.h>
 #   include <cassert>
 #endif // !_WIN32
-
-#include <cerrno>
-
-#include <cstdlib>
-#include <cstdarg>
-#include <cstring>
-
-#include <map>
-#include <string>
-#include <vector>
-#include <sstream>
-
-///////////////////////////////////////////////////////////////////////////////
-// Eigene Header
-#include <build_paths.h>
-#include "libutil.h"
-#include "mygettext.h"
-#include "liblobby.h"
 
 #endif // MAIN_H_INCLUDED

@@ -25,6 +25,7 @@
 
 #include "LobbyMessages.h"
 #include "LobbyPlayer.h"
+#include <map>
 
 /// Der LobbyServer
 class LobbyServer : public Singleton<LobbyServer>, public LobbyMessageInterface
