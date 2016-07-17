@@ -24,7 +24,7 @@ find_library(MYSQL_LIBRARY
 
 # handle the QUIETLY and REQUIRED arguments and set MYSQL_FOUND to TRUE if found
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(MYSQL DEFAULT_MSG MYSQL_LIBRARY MYSQL_INCLUDE_DIRS)
+find_package_handle_standard_args(MYSQL DEFAULT_MSG MYSQL_LIBRARY MYSQL_INCLUDE_DIR)
 
 set(MYSQL_INCLUDE_DIRS ${MYSQL_INCLUDE_DIR})
 set(MYSQL_LIBRARIES ${MYSQL_LIBRARY})
