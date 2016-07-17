@@ -47,11 +47,11 @@ class LobbyServer : public Singleton<LobbyServer>, public LobbyMessageInterface
 
     protected:
         /// prüft aktuelle Clients.
-        bool Test();
+        bool CheckClientTimeouts();
         /// prüft auf neue Clients.
-        bool Await();
+        bool CheckForNewClients();
         /// verarbeitet alle Nachrichten der Clients.
-        bool Forward();
+        bool ProcessMessages();
 
         /// verarbeitet die Todes-Nachricht eines Clients.
         virtual void OnNMSDead(unsigned int id);
@@ -89,7 +89,7 @@ class LobbyServer : public Singleton<LobbyServer>, public LobbyMessageInterface
 
     private:
         /// schickt eine Nachricht an alle Clients.
-        void SendToAll(const LobbyMessage* m);
+        void SendToAll(const LobbyMessage& m);
         /// trennt die Verbindung zu einem Client.
         void Disconnect(LobbyPlayer& p);
         /// verschickt die Serverliste an einen Client.
@@ -100,6 +100,11 @@ class LobbyServer : public Singleton<LobbyServer>, public LobbyMessageInterface
         void SendRankingList(unsigned int client);
 
     private:
+        /// Return the player with the given name or NULL if not found
+        LobbyPlayer* GetPlayer(const std::string& name);
+        /// Check if the users protocol version can be used. Return false if not and also notify and disconnect the user
+        bool CheckProtocolVersion(unsigned userVersion, const std::string& userName, LobbyPlayer& player);
+
         bool stop;
         LobbyPlayerMap players;
         std::vector<unsigned int> players_kill;

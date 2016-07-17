@@ -267,7 +267,7 @@ void LobbyClient::DeleteServer()
  *
  *  @param[in] map Kartenname
  */
-void LobbyClient::UpdateServer(const std::string& map)
+void LobbyClient::UpdateServerMap(const std::string& map)
 {
     server_.setMap(map);
 
@@ -514,13 +514,13 @@ void LobbyClient::OnNMSDeadMsg(unsigned int  /*id*/)
 /**
  *  Server verloren.
  */
-void LobbyClient::ServerLost(bool message)
+void LobbyClient::ServerLost(bool notifyParent)
 {
     if(state != CS_STOPPED)
         LOG.lprintf("lobby client forced to stop\n");
 
     Stop();
 
-    if(parent && message)
+    if(parent && notifyParent)
         parent->LC_Status_ConnectionLost();
 }

@@ -79,7 +79,7 @@ class LobbyClient : public Singleton<LobbyClient, SingletonPolicies::WithLongevi
         /// entfernt den einem zugehörigen Server von der Lobby.
         void DeleteServer();
         /// aktualisiert den Kartennamen des zugehörigen Servers in der Lobby.
-        void UpdateServer(const std::string& map);
+        void UpdateServerMap(const std::string& map);
         /// aktualisiert die Spielerzahlen des zugehörigen Servers in der Lobby.
         void UpdateServerPlayerCount(unsigned int curplayer, unsigned int maxplayer);
 
@@ -94,7 +94,7 @@ class LobbyClient : public Singleton<LobbyClient, SingletonPolicies::WithLongevi
         const std::string GetUser() { return userdata.user; };
 
         /// sind wir eingeloggt?
-        bool LoggedIn() { return (state == CS_LOBBY); }
+        bool IsLoggedIn() { return (state == CS_LOBBY); }
 
         /// Lobby-Login-Error-Nachricht.
         void OnNMSLobbyLoginError(unsigned int id, const std::string& error) override;
