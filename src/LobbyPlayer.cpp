@@ -115,13 +115,13 @@ bool LobbyPlayer::checkTimeout(void)
     // den Spielern ( ping timeout )
     if( (playerstate == PS_OCCUPIED) && (pinging == false) && ( (TIME.CurrentTick() - lastping) > 5000) )
     {
-        LOG.lprintf("Kicking authenticated player %s (Ping timeout)\n", getName().c_str());
+        LOG.write("Kicking authenticated player %s (Ping timeout)\n", getName().c_str());
         return true;
     }
 
     if( (playerstate == PS_RESERVED) && ( (TIME.CurrentTick() - connectiontime) > 10000) )
     {
-        LOG.lprintf("Removing unauthenticated client (Ping timeout)\n");
+        LOG.write("Removing unauthenticated client (Ping timeout)\n");
         return true;
     }
 
@@ -145,7 +145,7 @@ void LobbyPlayer::detach(void)
     NoHost();
 
     if(!isFree())
-        LOG.lprintf("Removing player %s\n", getName().c_str());
+        LOG.write("Removing player %s\n", getName().c_str());
 
     Send(NULL, true);
     socket.Close();
@@ -157,7 +157,7 @@ bool LobbyPlayer::Receive(void)
 {
     if(!recv_queue.recv( socket ))
     {
-        LOG.lprintf("SERVER: Receiving message for player %d failed\n", getId());
+        LOG.write("SERVER: Receiving message for player %d failed\n", getId());
         return false;
     }
     return true;
@@ -184,7 +184,7 @@ bool LobbyPlayer::Send(LobbyMessage* m, bool flush)
 
     if( !send_queue.send( socket, 10, 512 ) )
     {
-        LOG.lprintf("SERVER: Sending message for player %d failed\n", getId());
+        LOG.write("SERVER: Sending message for player %d failed\n", getId());
         return false;
     }
     return true;
@@ -236,12 +236,12 @@ bool LobbyPlayer::Host(LobbyServerInfo info)
 
     if(MYSQLCLIENT.AddServer(&info))
     {
-        LOG.lprintf("Player %s creates game '%s'\n", getName().c_str(), info.getName().c_str());
+        LOG.write("Player %s creates game '%s'\n", getName().c_str(), info.getName().c_str());
         makeHost(info.getId());
         Send(new LobbyMessage_Server_Add(info));
         return true;
     } else{
-        LOG.lprintf("Can't create game\n");
+        LOG.write("Can't create game\n");
         Send(new LobbyMessage_Server_Add_Failed("Database error on create.\nName invalid or already taken."));
         return false;
     }
