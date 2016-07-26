@@ -171,7 +171,7 @@ bool LobbyServer::CheckForNewClients()
             while(players.find(playerid) != players.end())
                 ++playerid;
 
-            LOG.writeCFormat("New client connected from %s\n", client.GetPeerIP().c_str());
+            LOG.write("New client connected from %s\n") % client.GetPeerIP();
 
             LobbyPlayer p;
 
@@ -179,7 +179,7 @@ bool LobbyServer::CheckForNewClients()
 
             players[playerid] = p;
 
-            LOG.writeCFormat("Player-ID %d\n", playerid);
+            LOG.write("Player-ID %d\n") % playerid;
 
             p.Send(new LobbyMessage_Id(playerid), true);
         }
@@ -230,7 +230,7 @@ bool LobbyServer::ProcessMessages()
 
     if(set.Select(0, 2) > 0)
     {
-        LOG.writeCFormat("Error on Sockets\n");
+        LOG.write("Error on Sockets\n");
 
         for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
         {
@@ -238,7 +238,7 @@ bool LobbyServer::ProcessMessages()
 
             if( p.inSet(set) )
             {
-                LOG.writeCFormat("Player %d: Connection lost\n", p.getId() );
+                LOG.write("Player %d: Connection lost\n") % p.getId();
                 Disconnect(p);
             }
         }
@@ -294,13 +294,13 @@ void LobbyServer::OnNMSLobbyLogin(unsigned int id, const unsigned int revision, 
         LobbyPlayer* oldPlayer = GetPlayer(user);
         if(oldPlayer && oldPlayer->isLoggedIn())
         {
-            LOG.writeCFormat("User %s@%s already logged on (slot %d == %d)!\n", user.c_str(), player.getPeerIP().c_str(), id, oldPlayer->getId());
+            LOG.write("User %s@%s already logged on (slot %d == %d)!\n") % user % player.getPeerIP() % id % oldPlayer->getId();
             player.Send(new LobbyMessage_Login_Error("Already logged in. On connection loss just wait a bit then try again."));
             // alten Spieler rauswerfen
             Disconnect(*oldPlayer);
         }else
         {
-            LOG.writeCFormat("User %s@%s logged on\n", user.c_str(), player.getPeerIP().c_str());
+            LOG.write("User %s@%s logged on\n") % user % player.getPeerIP();
 
             player.occupy(user, email, version);
             player.Send(new LobbyMessage_Login_Done(email));
@@ -313,7 +313,7 @@ void LobbyServer::OnNMSLobbyLogin(unsigned int id, const unsigned int revision, 
     }
     else
     {
-        LOG.writeCFormat("User %s invalid (password %s wrong?)\n", user.c_str(), "********");
+        LOG.write("User %s invalid (password %s wrong?)\n") % user % "********";
         player.Send(new LobbyMessage_Login_Error("User/password combination is unknown!"));
         Disconnect(player);
     }
@@ -338,19 +338,19 @@ void LobbyServer::OnNMSLobbyRegister(unsigned int id, const unsigned int revisio
 
     /*if(MYSQLCLIENT.RegisterUser(user, pass, email))
     {
-        LOG.writeCFormat(("User %s registered\n", user.c_str());
+        LOG.write(("User %s registered\n", user);
 
         player.Send(new LobbyMessage_Register_Done(1));
     }
     else
     {
-        LOG.writeCFormat(("User %s failed to register\n", user.c_str());
+        LOG.write(("User %s failed to register\n", user);
 
         player.Send(new LobbyMessage_Register_Error("Registrierung fehlgeschlagen: Datenbankfehler oder Benutzer existiert schon"));
 
         Disconnect(player);
     }*/
-    LOG.writeCFormat("User %s tried to register\n", user.c_str());
+    LOG.write("User %s tried to register\n") % user;
 
     player.Send(new LobbyMessage_Register_Error("To register, you have to create a valid board account at\nhttp://forum.siedler25.org\nat the moment.\n"));
 
@@ -646,7 +646,7 @@ void LobbyServer::SendServerList(unsigned int id)
     LobbyServerList list;
 
     if(!MYSQLCLIENT.GetServerList(&list))
-        LOG.writeCFormat("Failed to lookup Serverlist!\n");
+        LOG.write("Failed to lookup Serverlist!\n");
 
     if(id == 0xFFFFFFFF)
         SendToAll(LobbyMessage_ServerList(list));
@@ -677,7 +677,7 @@ void LobbyServer::SendPlayerList(unsigned int id)
         if(p.isOccupied() && !p.isHost() && !p.isClient() )
         {
             if(p.getPunkte() == 0 && !MYSQLCLIENT.GetRankingInfo(p))
-                LOG.writeCFormat("Failed to lookup Ranking of player %s!\n", p.getName().c_str());
+                LOG.write("Failed to lookup Ranking of player %s!\n") % p.getName();
 
             ++count;
             list.push_back(p);
@@ -703,7 +703,7 @@ void LobbyServer::SendRankingList(unsigned int id)
     LobbyPlayerList list;
 
     if(!MYSQLCLIENT.GetRankingList(&list))
-        LOG.writeCFormat("Failed to lookup Ranking!\n");
+        LOG.write("Failed to lookup Ranking!\n");
 
     if(id == 0xFFFFFFFF)
         SendToAll(LobbyMessage_RankingList(list));
@@ -726,7 +726,7 @@ bool LobbyServer::CheckProtocolVersion(unsigned userVersion, const std::string& 
 {
     if(userVersion != LOBBYPROTOCOL_VERSION)
     {
-        LOG.writeCFormat("User %s@%s invalid (protocoll version wrong)\n", userName.c_str(), player.getPeerIP().c_str());
+        LOG.write("User %s@%s invalid (protocoll version wrong)\n") % userName % player.getPeerIP();
 
         // do we've got a revision? or is it so damn old that it does not send a revision?
         if((userVersion & 0xFF0000FF) == 0xFF0000FF)
@@ -758,7 +758,7 @@ void LobbyServer::OnNMSLobbyRankingInfo(unsigned int id, const LobbyPlayerInfo& 
     LobbyPlayerInfo p = player;
 
     if(!MYSQLCLIENT.GetRankingInfo(p))
-        LOG.writeCFormat("Failed to lookup Ranking of player %s!\n", p.getName().c_str());
+        LOG.write("Failed to lookup Ranking of player %s!\n") % p.getName();
 
     SendToAll(LobbyMessage_Lobby_Ranking_Info(p));
 }

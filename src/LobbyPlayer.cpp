@@ -115,13 +115,13 @@ bool LobbyPlayer::checkTimeout(void)
     // den Spielern ( ping timeout )
     if( (playerstate == PS_OCCUPIED) && (pinging == false) && ( (TIME.CurrentTick() - lastping) > 5000) )
     {
-        LOG.writeCFormat("Kicking authenticated player %s (Ping timeout)\n", getName().c_str());
+        LOG.write("Kicking authenticated player %s (Ping timeout)\n") % getName();
         return true;
     }
 
     if( (playerstate == PS_RESERVED) && ( (TIME.CurrentTick() - connectiontime) > 10000) )
     {
-        LOG.writeCFormat("Removing unauthenticated client (Ping timeout)\n");
+        LOG.write("Removing unauthenticated client (Ping timeout)\n");
         return true;
     }
 
@@ -145,7 +145,7 @@ void LobbyPlayer::detach(void)
     NoHost();
 
     if(!isFree())
-        LOG.writeCFormat("Removing player %s\n", getName().c_str());
+        LOG.write("Removing player %s\n") % getName();
 
     Send(NULL, true);
     socket.Close();
@@ -157,7 +157,7 @@ bool LobbyPlayer::Receive(void)
 {
     if(!recv_queue.recv( socket ))
     {
-        LOG.writeCFormat("SERVER: Receiving message for player %d failed\n", getId());
+        LOG.write("SERVER: Receiving message for player %d failed\n") % getId();
         return false;
     }
     return true;
@@ -184,7 +184,7 @@ bool LobbyPlayer::Send(LobbyMessage* m, bool flush)
 
     if( !send_queue.send( socket, 10, 512 ) )
     {
-        LOG.writeCFormat("SERVER: Sending message for player %d failed\n", getId());
+        LOG.write("SERVER: Sending message for player %d failed\n") % getId();
         return false;
     }
     return true;
@@ -236,12 +236,12 @@ bool LobbyPlayer::Host(LobbyServerInfo info)
 
     if(MYSQLCLIENT.AddServer(&info))
     {
-        LOG.writeCFormat("Player %s creates game '%s'\n", getName().c_str(), info.getName().c_str());
+        LOG.write("Player %s creates game '%s'\n") % getName() % info.getName();
         makeHost(info.getId());
         Send(new LobbyMessage_Server_Add(info));
         return true;
     } else{
-        LOG.writeCFormat("Can't create game\n");
+        LOG.write("Can't create game\n");
         Send(new LobbyMessage_Server_Add_Failed("Database error on create.\nName invalid or already taken."));
         return false;
     }

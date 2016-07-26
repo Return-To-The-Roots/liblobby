@@ -74,12 +74,12 @@ bool MySQL::Connect(const std::string& host, const std::string& user, const std:
     {
         if(mysql_real_connect(m_pMySQL, m_Connection.host.c_str(), m_Connection.user.c_str(), m_Connection.pass.c_str(), m_Connection.db.c_str(), MYSQL_PORT, NULL, 0) == NULL)
         {
-            LOG.writeCFormat("Failed to connect to database: Error: %s\n", mysql_error(m_pMySQL));
+            LOG.write("Failed to connect to database: Error: %s\n") % mysql_error(m_pMySQL);
             return false;
         }
         if(mysql_select_db(m_pMySQL, m_Connection.db.c_str() ) < 0 )
         {
-            LOG.writeCFormat("Can't select the %s database: %s\n", m_Connection.db.c_str(), mysql_error(m_pMySQL)) ;
+            LOG.write("Can't select the %s database: %s\n") % m_Connection.db % mysql_error(m_pMySQL);
             return false;
         }
     }
@@ -97,7 +97,7 @@ bool MySQL::DoQuery(const std::string& query)
 
     if(mysql_query(m_pMySQL, query.c_str()))
     {
-        LOG.writeCFormat("Failed to send query to database: Error: %s\n", mysql_error(m_pMySQL));
+        LOG.write("Failed to send query to database: Error: %s\n") % mysql_error(m_pMySQL);
         return false;
     }
     return true;
@@ -117,7 +117,7 @@ bool MySQL::LoginUser(const std::string& user, const std::string& pass, std::str
     //snprintf(query, 1024, "SELECT `username`,`useremail` FROM `tb_user` WHERE `username` = '%s' AND `userpassword` = MD5('%s') AND `userbanned` = 0 AND `useremail` IS NOT NULL LIMIT 1;", user2, pass2);
     snprintf(query, 1024, "SELECT `user`,`mail`,id FROM `users` WHERE `user` = '%s' AND `pass` = MD5('%s') AND `mail` IS NOT NULL AND login_allowed = 1 AND banned = 0 LIMIT 1;", user2, pass2);
 
-    // LOG.writeCFormat(("%s\n", query);
+    // LOG.write(("%s\n", query);
 
     if(!DoQuery(query))
         return false;
@@ -134,7 +134,7 @@ bool MySQL::LoginUser(const std::string& user, const std::string& pass, std::str
 
     MYSQL_ROW Row = mysql_fetch_row(pResult);
 
-    // LOG.writeCFormat(("%s %s %s %s\n", Row[0], Row[1], Row[2], Row[3]);
+    // LOG.write(("%s %s %s %s\n", Row[0], Row[1], Row[2], Row[3]);
 
     if( (strcmp(Row[0], user2) == 0) && Row[1] )
     {
@@ -180,7 +180,7 @@ bool MySQL::RegisterUser(const std::string& user, const std::string& pass, const
 
     if(iRows != 0)
     {
-        LOG.writeCFormat("User %s already exist (%d %d rows) / %s!\n", user.c_str(), iRows, pResult->row_count, mysql_error(m_pMySQL));
+        LOG.write("User %s already exist (%d %d rows) / %s!\n") % user % iRows % pResult->row_count % mysql_error(m_pMySQL);
         mysql_free_result(pResult);
         return false;
     }
@@ -249,7 +249,7 @@ bool MySQL::GetServerInfo(unsigned int id, LobbyServerInfo* Info)
     char query[1024];
     snprintf(query, 1024, "SELECT * FROM `lobby_servers` WHERE `id` = %u ORDER BY `name` ASC LIMIT 1;", id);
 
-    //LOG.writeCFormat(("%s\n", query);
+    //LOG.write(("%s\n", query);
 
     if(!DoQuery(query))
         return false;
@@ -430,7 +430,7 @@ bool MySQL::AddServer(LobbyServerInfo* Info)
 
     Info->setId((unsigned int)mysql_insert_id(m_pMySQL));
 
-    LOG.writeCFormat("Neuer Server erstellt: %d: %s!\n", Info->getId(), Info->getName().c_str());
+    LOG.write("Neuer Server erstellt: %d: %s!\n") % Info->getId() % Info->getName();
     return true;
 }
 
@@ -446,7 +446,7 @@ bool MySQL::DeleteServer(unsigned int id)
     if(!DoQuery(query))
         return false;
 
-    LOG.writeCFormat("Server %s entfernt\n", Info.getName().c_str());
+    LOG.write("Server %s entfernt\n") % Info.getName();
     return true;
 }
 
@@ -465,7 +465,7 @@ bool MySQL::UpdateServer(unsigned int id, const std::string& map)
     if(!DoQuery(query))
         return false;
 
-    LOG.writeCFormat("Server %s aktualisiert: Karte: %s->%s\n", Info.getName().c_str(), Info.getMap().c_str(), map.c_str());
+    LOG.write("Server %s aktualisiert: Karte: %s->%s\n") % Info.getName() % Info.getMap() % map;
     return true;
 }
 
@@ -481,7 +481,7 @@ bool MySQL::UpdateServerPC(unsigned int id, unsigned int curplayer, unsigned int
     if(!DoQuery(query))
         return false;
 
-    LOG.writeCFormat("Server %s aktualisiert: Aktuelle Spielerzahl: %u/%u->%u/%u\n", Info.getName().c_str(), Info.getCurPlayers(), Info.getMaxPlayers(), curplayer, maxplayer);
+    LOG.write("Server %s aktualisiert: Aktuelle Spielerzahl: %u/%u->%u/%u\n") % Info.getName() % Info.getCurPlayers() % Info.getMaxPlayers() % curplayer % maxplayer;
     return true;
 }
 
@@ -500,7 +500,7 @@ bool MySQL::UpdateServerPing(unsigned int id, unsigned int ping)
     if(!DoQuery(query))
         return false;
 
-    //LOG.writeCFormat(("Server %s aktualisiert: Neuer Ping: %d->%d\n", Info.getName().c_str(), Info.getPing(), ping);
+    //LOG.write(("Server %s aktualisiert: Neuer Ping: %d->%d\n", Info.getName(), Info.getPing(), ping);
     return true;
 }
 
