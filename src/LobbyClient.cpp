@@ -63,7 +63,7 @@ void LobbyClient::Run()
         // nachricht empfangen
         if(!recv_queue.recv(socket))
         {
-            LOG.write("Receiving Message from server failed\n");
+            LOG.writeCFormat("Receiving Message from server failed\n");
             ServerLost();
             return;
         }
@@ -81,7 +81,7 @@ void LobbyClient::Run()
         if(set.InSet(socket))
         {
             // Server ist weg
-            LOG.write("Error on socket to server\n");
+            LOG.writeCFormat("Error on socket to server\n");
             ServerLost();
             return;
         }
@@ -249,7 +249,7 @@ void LobbyClient::AddServer(const std::string& name, const std::string& map, boo
 
     send_queue.push(new LobbyMessage_Server_Add(server_));
 
-    LOG.write("LobbyClient: GameServer %s wird erstellt ...\n", name.c_str());
+    LOG.writeCFormat("LobbyClient: GameServer %s wird erstellt ...\n", name.c_str());
 }
 
 /**
@@ -485,7 +485,7 @@ void LobbyClient::OnNMSLobbyServerAdd(unsigned int  /*id*/, const LobbyServerInf
 {
     server_ = info;
 
-    LOG.write("LobbyClient: GameServer %s erfolgreich erstellt!\n", server_.getName().c_str());
+    LOG.writeCFormat("LobbyClient: GameServer %s erfolgreich erstellt!\n", server_.getName().c_str());
 
     // Server kann jetzt gestartet werden
     if(parent)
@@ -517,7 +517,7 @@ void LobbyClient::OnNMSDeadMsg(unsigned int  /*id*/)
 void LobbyClient::ServerLost(bool notifyParent)
 {
     if(state != CS_STOPPED)
-        LOG.write("lobby client forced to stop\n");
+        LOG.writeCFormat("lobby client forced to stop\n");
 
     Stop();
 

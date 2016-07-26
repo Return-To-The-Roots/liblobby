@@ -1,3 +1,5 @@
+FIND_PACKAGE(Boost 1.55 REQUIRED)
+
 SET(SOURCES_LOBBY LobbyMessage.cpp          LobbyMessage.h
                   LobbyMessages.h
                                             LobbyMessageInterface.h
@@ -16,6 +18,7 @@ SET(SOURCES_LOBBY_S ${SOURCES_LOBBY} LobbyServer.cpp LobbyServer.h  LobbyPlayer.
 INCLUDE_DIRECTORIES("../../"
                     "${PROJECT_SOURCE_DIR}/libutil/src/"
                     "${PROJECT_SOURCE_DIR}/mygettext/src/"
+					${Boost_INCLUDE_DIR}
                    )
 
 ################################################################################
