@@ -501,6 +501,7 @@ class LobbyMessage_PlayerList : public LobbyMessage
     private:
         bool isRequest;
         LobbyPlayerList list;
+        LobbyPlayerList ingamePlayers;
 
     public:
         LobbyMessage_PlayerList(): LobbyMessage(NMS_LOBBY_PLAYERLIST) { } //-V730
@@ -532,7 +533,16 @@ class LobbyMessage_PlayerList : public LobbyMessage
             LobbyMessage::Deserialize(ser);
             isRequest = ser.GetBytesLeft() == 0;
             if(!isRequest)
+            {
                 list.deserialize(ser);
+                if(ser.GetBytesLeft() > 0)
+                {
+                    ingamePlayers.deserialize(ser);
+                    for(LobbyPlayerList::iterator it = ingamePlayers.begin(); it != ingamePlayers.end(); ++it)
+                        it->isIngame = true;
+                } else
+                    ingamePlayers.clear();
+            }
         }
 
         void run(MessageInterface* callback, unsigned int id) override
@@ -553,7 +563,7 @@ class LobbyMessage_PlayerList : public LobbyMessage
                     LOG.writeToFile("    %d: %d %s %s %d %d %d\n") % i % player->getId() % player->getName() % player->getVersion() % player->getPunkte() % player->getGewonnen() % player->getVerloren();
                 }
 
-                cb->OnNMSLobbyPlayerList(id, list);
+                cb->OnNMSLobbyPlayerList(id, list, ingamePlayers);
             }
         }
 };

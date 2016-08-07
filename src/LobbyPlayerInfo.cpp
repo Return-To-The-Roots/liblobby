@@ -27,6 +27,7 @@ LobbyPlayerInfo::LobbyPlayerInfo()
 LobbyPlayerInfo::LobbyPlayerInfo(const unsigned  /*playerId*/, Serializer& ser)
 {
     deserialize(ser);
+    isIngame = false;
 }
 
 /**
@@ -40,6 +41,7 @@ void LobbyPlayerInfo::clear()
     punkte_ = 0;
     gewonnen_ = 0;
     verloren_ = 0;
+    isIngame = false;
 }
 
 /**

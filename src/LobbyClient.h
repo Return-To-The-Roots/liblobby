@@ -117,7 +117,7 @@ class LobbyClient : public Singleton<LobbyClient, SingletonPolicies::WithLongevi
         /// ServerList-Nachricht.
         void OnNMSLobbyServerList(unsigned int id, const LobbyServerList& list) override;
         /// PlayerList-Nachricht.
-        void OnNMSLobbyPlayerList(unsigned int id, const LobbyPlayerList& list) override;
+        void OnNMSLobbyPlayerList(unsigned int id, const LobbyPlayerList& onlinePlayers, const LobbyPlayerList& ingamePlayers) override;
         /// RankingList-Nachricht.
         void OnNMSLobbyRankingList(unsigned int id, const LobbyPlayerList& list) override;
         /// ServerInfo-Nachricht.

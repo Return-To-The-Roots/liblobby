@@ -421,10 +421,11 @@ void LobbyClient::OnNMSLobbyServerList(unsigned int  /*id*/, const LobbyServerLi
  *
  *  @param[in] error Die empfangene Spielerliste
  */
-void LobbyClient::OnNMSLobbyPlayerList(unsigned int  /*id*/, const LobbyPlayerList& list)
+void LobbyClient::OnNMSLobbyPlayerList(unsigned int  /*id*/, const LobbyPlayerList& onlinePlayers, const LobbyPlayerList& ingamePlayers)
 {
-    playerlist = list;
-
+    playerlist = onlinePlayers;
+    for(LobbyPlayerList::const_iterator it = ingamePlayers.begin(); it != ingamePlayers.end(); ++it)
+        playerlist.push_back(*it);
     refreshplayerlist = true;
 }
 

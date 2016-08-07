@@ -59,7 +59,7 @@ class LobbyMessageInterface : public MessageInterface
         virtual void OnNMSLobbyServerList(unsigned int id, const LobbyServerList& list){}
         /// PlayerList-Nachricht.
         virtual void OnNMSLobbyPlayerList(unsigned int id){}
-        virtual void OnNMSLobbyPlayerList(unsigned int id, const LobbyPlayerList& list){}
+        virtual void OnNMSLobbyPlayerList(unsigned int id, const LobbyPlayerList& onlinePlayers, const LobbyPlayerList& ingamePlayers){}
         /// RankingList-Nachricht.
         virtual void OnNMSLobbyRankingList(unsigned int id){}
         virtual void OnNMSLobbyRankingList(unsigned int id, const LobbyPlayerList& list){}

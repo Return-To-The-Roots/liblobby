@@ -49,6 +49,9 @@ class LobbyPlayerInfo
         void setGewonnen(const unsigned int gewonnen) { this->gewonnen_ = gewonnen; }
         void setVerloren(const unsigned int verloren) { this->verloren_ = verloren; }
 
+        /// Is the player in a game (not synchronized ATM)
+        bool isIngame;
+
     protected:
         unsigned int playerId_;
         std::string name_;
