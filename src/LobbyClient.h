@@ -46,7 +46,7 @@ class LobbyClient : public Singleton<LobbyClient, SingletonPolicies::WithLongevi
         ~LobbyClient() override;
 
         /// setzt das Interface
-        void SetInterface(LobbyInterface* parent) { this->parent = parent; }
+        void SetInterface(LobbyInterface* parent) { this->listener = parent; }
 
         /// Hauptschleife.
         void Run();
@@ -66,10 +66,13 @@ class LobbyClient : public Singleton<LobbyClient, SingletonPolicies::WithLongevi
         void SendRankingListRequest();
         /// schickt einen Request für ein Serverinfo.
         void SendServerInfoRequest(unsigned int id);
-        /// schickt einen Request für den Serverjoin.
-        void SendServerJoinRequest();
         /// schickt einen Request um die Punkte eines bestimmten Spielers auszulesen.
         void SendRankingInfoRequest(const std::string& name);
+
+        /// schickt einen Request für den Serverjoin.
+        void SendServerJoinRequest();
+        /// Notify that we left a server
+        void SendLeaveServer();
 
         /// verschickt eine Chatnachricht.
         void SendChat(const std::string& text);
@@ -84,17 +87,18 @@ class LobbyClient : public Singleton<LobbyClient, SingletonPolicies::WithLongevi
         void UpdateServerPlayerCount(unsigned int curplayer, unsigned int maxplayer);
 
         /// liefert die Serverliste.
-        const LobbyServerList* GetServerList() { return &serverlist; }
+        const LobbyServerList& GetServerList() const { return serverList; }
         /// liefert die Spielerliste.
-        const LobbyPlayerList* GetPlayerList() { return &playerlist; };
+        const LobbyPlayerList& GetPlayerList() const { return playerList; };
         /// liefert die Rankingliste.
-        const LobbyPlayerList* GetRankingList() { return &rankinglist; }
+        const LobbyPlayerList& GetRankingList() const { return rankingList; }
         /// liefert Informationen über einen Server
-        const LobbyServerInfo* GetServerInfo() { return &serverinfo; };
-        const std::string GetUser() { return userdata.user; };
+        const LobbyServerInfo& GetServerInfo() const { return serverInfo; };
+        const std::string GetUser() const { return userdata.user; };
 
         /// sind wir eingeloggt?
-        bool IsLoggedIn() { return (state == CS_LOBBY); }
+        bool IsLoggedIn() const { return (state == CS_LOBBY || state == CS_INGAME); }
+        bool IsIngame() const { return state == CS_INGAME; }
 
         /// Lobby-Login-Error-Nachricht.
         void OnNMSLobbyLoginError(unsigned int id, const std::string& error) override;
@@ -138,16 +142,16 @@ class LobbyClient : public Singleton<LobbyClient, SingletonPolicies::WithLongevi
         /// verbindet mit dem LobbyServer.
         bool Connect(const std::string& server, const unsigned int port, const bool use_ipv6);
         /// Server verloren.
-        void ServerLost(bool message = true);
+        void ServerLost(bool notifyListener = true);
 
     public:
-        bool refreshserverlist;
-        bool refreshserverinfo;
-        bool refreshrankinglist;
-        bool refreshplayerlist;
+        bool receivedNewServerList;
+        bool receivedNewServerInfo;
+        bool receivedNewRankingList;
+        bool receivedNewPlayerList;
 
     private:
-        LobbyInterface* parent;
+        LobbyInterface* listener;
 
         MessageQueue recv_queue;
         MessageQueue send_queue;
@@ -156,7 +160,8 @@ class LobbyClient : public Singleton<LobbyClient, SingletonPolicies::WithLongevi
         {
             CS_STOPPED = 0,
             CS_CONNECT,
-            CS_LOBBY
+            CS_LOBBY,
+            CS_INGAME
         } state;
 
         enum ClientTodo
@@ -164,7 +169,7 @@ class LobbyClient : public Singleton<LobbyClient, SingletonPolicies::WithLongevi
             TD_NOTHING = 0,
             TD_LOGIN,
             TD_REGISTER
-        } todo;
+        } todoAfterConnect;
 
         struct UserData
         {
@@ -173,15 +178,14 @@ class LobbyClient : public Singleton<LobbyClient, SingletonPolicies::WithLongevi
             std::string email;
         } userdata;
 
-        std::string error;
 
         Socket socket;
 
-        LobbyServerList serverlist;
-        LobbyPlayerList playerlist;
-        LobbyPlayerList rankinglist;
-        LobbyServerInfo serverinfo;
-        LobbyServerInfo server_;
+        LobbyServerList serverList;
+        LobbyPlayerList playerList;
+        LobbyPlayerList rankingList;
+        LobbyServerInfo serverInfo;
+        bool isHost;
 };
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -32,9 +32,9 @@
 class LobbyPlayerInfo;
 
 LobbyClient::LobbyClient()
-    : refreshserverlist(false), refreshserverinfo(false), refreshrankinglist(false), refreshplayerlist(false),
-      parent(NULL), recv_queue(&LobbyMessage::create_lobby), send_queue(&LobbyMessage::create_lobby),
-      state(CS_STOPPED), todo(TD_NOTHING)
+    : receivedNewServerList(false), receivedNewServerInfo(false), receivedNewRankingList(false), receivedNewPlayerList(false),
+      listener(NULL), recv_queue(&LobbyMessage::create_lobby), send_queue(&LobbyMessage::create_lobby),
+      state(CS_STOPPED), todoAfterConnect(TD_NOTHING), isHost(false)
 {
 }
 
@@ -121,12 +121,13 @@ void LobbyClient::Stop()
     send_queue.clear();
 
     state = CS_STOPPED;
-    todo = TD_NOTHING;
+    todoAfterConnect = TD_NOTHING;
 
-    refreshserverlist = false;
-    refreshplayerlist = false;
-    refreshrankinglist = false;
-    refreshserverinfo = false;
+    receivedNewServerList = false;
+    receivedNewPlayerList = false;
+    receivedNewRankingList = false;
+    receivedNewServerInfo = false;
+    isHost = false;
 }
 
 /**
@@ -140,7 +141,7 @@ bool LobbyClient::Login(const std::string& server, const unsigned int port, cons
     // aufräumen
     Stop();
 
-    todo = TD_LOGIN;
+    todoAfterConnect = TD_LOGIN;
 
     userdata.user = user;
     userdata.pass =  pass;
@@ -160,7 +161,7 @@ bool LobbyClient::Register(const std::string& server, const unsigned int port, c
     // aufräumen
     Stop();
 
-    todo = TD_REGISTER;
+    todoAfterConnect = TD_REGISTER;
 
     userdata.user = user;
     userdata.pass = pass;
@@ -175,6 +176,7 @@ bool LobbyClient::Register(const std::string& server, const unsigned int port, c
  */
 void LobbyClient::SendServerListRequest()
 {
+    assert(state == CS_LOBBY);
     send_queue.push(new LobbyMessage_ServerList(1));
 }
 
@@ -183,6 +185,7 @@ void LobbyClient::SendServerListRequest()
  */
 void LobbyClient::SendPlayerListRequest()
 {
+    assert(state == CS_LOBBY);
     send_queue.push(new LobbyMessage_PlayerList(1));
 }
 
@@ -191,6 +194,7 @@ void LobbyClient::SendPlayerListRequest()
  */
 void LobbyClient::SendRankingListRequest()
 {
+    assert(state == CS_LOBBY);
     send_queue.push(new LobbyMessage_RankingList(1));
 }
 
@@ -201,6 +205,7 @@ void LobbyClient::SendRankingListRequest()
  */
 void LobbyClient::SendServerInfoRequest(unsigned int id)
 {
+    assert(state == CS_LOBBY);
     if(id == 0)
         return;
 
@@ -212,7 +217,25 @@ void LobbyClient::SendServerInfoRequest(unsigned int id)
  */
 void LobbyClient::SendServerJoinRequest()
 {
+    if(state == CS_INGAME)
+    {
+        // Currently host gets autojoined. TODO: Change protocol
+        assert(isHost);
+        return;
+    }
+    assert(state == CS_LOBBY);
     send_queue.push(new LobbyMessage_Server_Join());
+    state = CS_INGAME;
+}
+
+void LobbyClient::SendLeaveServer()
+{
+    // Don't send if we are not ingame or we will be kicked
+    if(state == CS_INGAME){
+        // We don't have a dedicated message, but sending a delete request will also reset our state
+        send_queue.push(new LobbyMessage_Server_Delete());
+        state = CS_LOBBY;
+    }
 }
 
 /**
@@ -220,6 +243,7 @@ void LobbyClient::SendServerJoinRequest()
  */
 void LobbyClient::SendRankingInfoRequest(const std::string& name)
 {
+    assert(IsLoggedIn());
     send_queue.push(new LobbyMessage_Lobby_Ranking_Info(name));
 }
 
@@ -230,6 +254,7 @@ void LobbyClient::SendRankingInfoRequest(const std::string& name)
  */
 void LobbyClient::SendChat(const std::string& text)
 {
+    assert(state == CS_LOBBY || state == CS_INGAME);
     send_queue.push(new LobbyMessage_Chat(text));
 }
 
@@ -240,14 +265,15 @@ void LobbyClient::SendChat(const std::string& text)
  */
 void LobbyClient::AddServer(const std::string& name, const std::string& map, bool has_password, unsigned short port)
 {
-    server_.clear();
-    server_.setName(name);
-    server_.setVersion(GetWindowVersion());
-    server_.setPort(port);
-    server_.setMap(map);
-    server_.setPassword(has_password);
+    assert(state == CS_LOBBY);
+    LobbyServerInfo server;
+    server.setName(name);
+    server.setVersion(GetWindowVersion());
+    server.setPort(port);
+    server.setMap(map);
+    server.setPassword(has_password);
 
-    send_queue.push(new LobbyMessage_Server_Add(server_));
+    send_queue.push(new LobbyMessage_Server_Add(server));
 
     LOG.write("LobbyClient: GameServer %s wird erstellt ...\n") % name;
 }
@@ -257,9 +283,12 @@ void LobbyClient::AddServer(const std::string& name, const std::string& map, boo
  */
 void LobbyClient::DeleteServer()
 {
-    send_queue.push(new LobbyMessage_Server_Delete());
-
-    server_.clear();
+    if(state == CS_INGAME && isHost){
+        send_queue.push(new LobbyMessage_Server_Delete());
+        isHost = false;
+        // TODO: current protocol says we are not ingame anymore
+        state = CS_LOBBY;
+    }
 }
 
 /**
@@ -269,8 +298,7 @@ void LobbyClient::DeleteServer()
  */
 void LobbyClient::UpdateServerMap(const std::string& map)
 {
-    server_.setMap(map);
-
+    assert(state == CS_INGAME && isHost);
     send_queue.push(new LobbyMessage_Server_Update_Map(map));
 }
 
@@ -282,9 +310,7 @@ void LobbyClient::UpdateServerMap(const std::string& map)
  */
 void LobbyClient::UpdateServerPlayerCount(unsigned int curplayer, unsigned int maxplayer)
 {
-    server_.setCurPlayers(curplayer);
-    server_.setMaxPlayers(maxplayer);
-
+    assert(state == CS_INGAME && isHost);
     send_queue.push(new LobbyMessage_Server_Update_Player(curplayer, maxplayer));
 }
 
@@ -295,6 +321,7 @@ void LobbyClient::UpdateServerPlayerCount(unsigned int curplayer, unsigned int m
  */
 bool LobbyClient::Connect(const std::string& server, const unsigned int port, const bool use_ipv6)
 {
+    assert(state == CS_STOPPED);
     // Verbinden
     if(!socket.Connect(server, port, use_ipv6))
     {
@@ -304,8 +331,8 @@ bool LobbyClient::Connect(const std::string& server, const unsigned int port, co
 
     state = CS_CONNECT;
 
-    if(parent)
-        parent->LC_Status_Waiting();
+    if(listener)
+        listener->LC_Status_Waiting();
 
     return true;
 }
@@ -327,27 +354,24 @@ void LobbyClient::OnNMSLobbyID(unsigned int  /*id*/, unsigned playerId)
 {
     if(playerId == 0xFFFFFFFF)
     {
-        if(parent)
-            parent->LC_Status_Error(_("This Server is full!"));
+        if(listener)
+            listener->LC_Status_Error(_("This Server is full!"));
         ServerLost(false);
 
         return;
     }
 
-    switch(todo)
+    switch(todoAfterConnect)
     {
         case TD_LOGIN:
-        {
             send_queue.push(new LobbyMessage_Login(userdata.user, userdata.pass, GetWindowVersion()));
-        } break;
+            break;
         case TD_REGISTER:
-        {
             send_queue.push(new LobbyMessage_Register(userdata.user, userdata.pass, userdata.email));
-        } break;
+            break;
         default:
-        {
             ServerLost();
-        } break;
+            break;
     }
 }
 
@@ -358,9 +382,8 @@ void LobbyClient::OnNMSLobbyID(unsigned int  /*id*/, unsigned playerId)
  */
 void LobbyClient::OnNMSLobbyLoginError(unsigned int  /*id*/, const std::string& error)
 {
-    this->error = error;
-    if(parent)
-        parent->LC_Status_Error(this->error);
+    if(listener)
+        listener->LC_Status_Error(error);
 
     ServerLost(false);
 }
@@ -372,11 +395,10 @@ void LobbyClient::OnNMSLobbyLoginError(unsigned int  /*id*/, const std::string& 
  */
 void LobbyClient::OnNMSLobbyLoginDone(unsigned int  /*id*/, const std::string& email)
 {
-    userdata.email = email;
-    if(parent)
-        parent->LC_LoggedIn(userdata.email);
-
     state = CS_LOBBY;
+    userdata.email = email;
+    if(listener)
+        listener->LC_LoggedIn(userdata.email);
 }
 
 /**
@@ -386,9 +408,8 @@ void LobbyClient::OnNMSLobbyLoginDone(unsigned int  /*id*/, const std::string& e
  */
 void LobbyClient::OnNMSLobbyRegisterError(unsigned int  /*id*/, const std::string& error) //-V524
 {
-    this->error = error;
-    if(parent)
-        parent->LC_Status_Error(this->error);
+    if(listener)
+        listener->LC_Status_Error(error);
 
     ServerLost(false);
 }
@@ -398,8 +419,8 @@ void LobbyClient::OnNMSLobbyRegisterError(unsigned int  /*id*/, const std::strin
  */
 void LobbyClient::OnNMSLobbyRegisterDone(unsigned int  /*id*/)
 {
-    if(parent)
-        parent->LC_Registered();
+    if(listener)
+        listener->LC_Registered();
 
     Stop();
 }
@@ -411,9 +432,9 @@ void LobbyClient::OnNMSLobbyRegisterDone(unsigned int  /*id*/)
  */
 void LobbyClient::OnNMSLobbyServerList(unsigned int  /*id*/, const LobbyServerList& list)
 {
-    serverlist = list;
+    serverList = list;
 
-    refreshserverlist = true;
+    receivedNewServerList = true;
 }
 
 /**
@@ -423,10 +444,10 @@ void LobbyClient::OnNMSLobbyServerList(unsigned int  /*id*/, const LobbyServerLi
  */
 void LobbyClient::OnNMSLobbyPlayerList(unsigned int  /*id*/, const LobbyPlayerList& onlinePlayers, const LobbyPlayerList& ingamePlayers)
 {
-    playerlist = onlinePlayers;
+    playerList = onlinePlayers;
     for(LobbyPlayerList::const_iterator it = ingamePlayers.begin(); it != ingamePlayers.end(); ++it)
-        playerlist.push_back(*it);
-    refreshplayerlist = true;
+        playerList.push_back(*it);
+    receivedNewPlayerList = true;
 }
 
 /**
@@ -436,9 +457,9 @@ void LobbyClient::OnNMSLobbyPlayerList(unsigned int  /*id*/, const LobbyPlayerLi
  */
 void LobbyClient::OnNMSLobbyRankingList(unsigned int  /*id*/, const LobbyPlayerList& list)
 {
-    rankinglist = list;
+    rankingList = list;
 
-    refreshrankinglist = true;
+    receivedNewRankingList = true;
 }
 
 /**
@@ -448,9 +469,9 @@ void LobbyClient::OnNMSLobbyRankingList(unsigned int  /*id*/, const LobbyPlayerL
  */
 void LobbyClient::OnNMSLobbyServerInfo(unsigned int  /*id*/, const LobbyServerInfo& info)
 {
-    serverinfo = info;
+    serverInfo = info;
 
-    refreshserverinfo = true;
+    receivedNewServerInfo = true;
 }
 
 /**
@@ -461,8 +482,8 @@ void LobbyClient::OnNMSLobbyServerInfo(unsigned int  /*id*/, const LobbyServerIn
  */
 void LobbyClient::OnNMSLobbyChat(unsigned int  /*id*/, const std::string& player, const std::string& text)
 {
-    if(parent)
-        parent->LC_Chat(player, text);
+    if(listener)
+        listener->LC_Chat(player, text);
 }
 
 /**
@@ -472,9 +493,8 @@ void LobbyClient::OnNMSLobbyChat(unsigned int  /*id*/, const std::string& player
  */
 void LobbyClient::OnNMSLobbyServerAddFailed(unsigned int  /*id*/, const std::string& error)
 {
-    this->error = error;
-    if(parent)
-        parent->LC_Status_Error(this->error);
+    if(listener)
+        listener->LC_Status_Error(error);
 }
 
 /**
@@ -484,13 +504,14 @@ void LobbyClient::OnNMSLobbyServerAddFailed(unsigned int  /*id*/, const std::str
  */
 void LobbyClient::OnNMSLobbyServerAdd(unsigned int  /*id*/, const LobbyServerInfo& info)
 {
-    server_ = info;
+    LOG.write(_("GameServer %s sucessfully created!\n")) % info.getName();
 
-    LOG.write("LobbyClient: GameServer %s erfolgreich erstellt!\n") % server_.getName();
+    state = CS_INGAME;
+    isHost = true;
 
     // Server kann jetzt gestartet werden
-    if(parent)
-        parent->LC_Created();
+    if(listener)
+        listener->LC_Created();
 }
 
 /**
@@ -500,8 +521,8 @@ void LobbyClient::OnNMSLobbyServerAdd(unsigned int  /*id*/, const LobbyServerInf
  */
 void LobbyClient::OnNMSLobbyRankingInfo(unsigned int  /*id*/, const LobbyPlayerInfo& player)
 {
-    if(parent)
-        parent->LC_RankingInfo(player);
+    if(listener)
+        listener->LC_RankingInfo(player);
 }
 
 /**
@@ -518,10 +539,10 @@ void LobbyClient::OnNMSDeadMsg(unsigned int  /*id*/)
 void LobbyClient::ServerLost(bool notifyParent)
 {
     if(state != CS_STOPPED)
-        LOG.write("lobby client forced to stop\n");
+        LOG.write(_("Lobby client forced to stop\n"));
 
     Stop();
 
-    if(parent && notifyParent)
-        parent->LC_Status_ConnectionLost();
+    if(listener && notifyParent)
+        listener->LC_Status_ConnectionLost();
 }
