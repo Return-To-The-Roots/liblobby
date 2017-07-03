@@ -17,7 +17,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Header
-#include "main.h" // IWYU pragma: keep
+#include "libLobbyDefines.h" // IWYU pragma: keep
 #include "LobbyServer.h"
 
 #include "MySQL.h"
