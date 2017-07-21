@@ -264,7 +264,7 @@ bool LobbyServer::ProcessMessages()
  *
  *  @author FloSoft
  */
-void LobbyServer::OnNMSDead(unsigned int id)
+void LobbyServer::OnNMSDead(unsigned id)
 {
     LobbyPlayerMapIterator it = players.find(id);
     if(it != players.end())
@@ -280,7 +280,7 @@ void LobbyServer::OnNMSDead(unsigned int id)
  *
  *  @author FloSoft
  */
-void LobbyServer::OnNMSLobbyLogin(unsigned int id, const unsigned int revision, const std::string& user, const std::string& pass, const std::string& version)
+void LobbyServer::OnNMSLobbyLogin(unsigned id, const unsigned revision, const std::string& user, const std::string& pass, const std::string& version)
 {
     LobbyPlayer& player = players[id];
 
@@ -328,7 +328,7 @@ void LobbyServer::OnNMSLobbyLogin(unsigned int id, const unsigned int revision, 
  *
  *  @author FloSoft
  */
-void LobbyServer::OnNMSLobbyRegister(unsigned int id, const unsigned int revision, const std::string& user, const std::string& pass, const std::string& email)
+void LobbyServer::OnNMSLobbyRegister(unsigned id, const unsigned revision, const std::string& user, const std::string& pass, const std::string& email)
 {
     LobbyPlayer& player = players[id];
 
@@ -363,7 +363,7 @@ void LobbyServer::OnNMSLobbyRegister(unsigned int id, const unsigned int revisio
  *
  *  @author FloSoft
  */
-void LobbyServer::OnNMSLobbyPong(unsigned int id)
+void LobbyServer::OnNMSLobbyPong(unsigned id)
 {
     LobbyPlayer& player = players[id];
 
@@ -376,7 +376,7 @@ void LobbyServer::OnNMSLobbyPong(unsigned int id)
  *
  *  @author FloSoft
  */
-void LobbyServer::OnNMSLobbyChat(unsigned int id, const std::string& to, const std::string& text)
+void LobbyServer::OnNMSLobbyChat(unsigned id, const std::string& to, const std::string& text)
 {
     if(text.empty())
         return;
@@ -449,7 +449,7 @@ void LobbyServer::OnNMSLobbyChat(unsigned int id, const std::string& to, const s
  *
  *  @author FloSoft
  */
-void LobbyServer::OnNMSLobbyServerList(unsigned int id)
+void LobbyServer::OnNMSLobbyServerList(unsigned id)
 {
     SendServerList(id);
 }
@@ -460,7 +460,7 @@ void LobbyServer::OnNMSLobbyServerList(unsigned int id)
  *
  *  @author FloSoft
  */
-void LobbyServer::OnNMSLobbyPlayerList(unsigned int id)
+void LobbyServer::OnNMSLobbyPlayerList(unsigned id)
 {
     SendPlayerList(id);
 }
@@ -471,7 +471,7 @@ void LobbyServer::OnNMSLobbyPlayerList(unsigned int id)
  *
  *  @author FloSoft
  */
-void LobbyServer::OnNMSLobbyRankingList(unsigned int id)
+void LobbyServer::OnNMSLobbyRankingList(unsigned id)
 {
     SendRankingList(id);
 }
@@ -482,7 +482,7 @@ void LobbyServer::OnNMSLobbyRankingList(unsigned int id)
  *
  *  @author FloSoft
  */
-void LobbyServer::OnNMSLobbyServerInfo(unsigned int id, const unsigned int& server)
+void LobbyServer::OnNMSLobbyServerInfo(unsigned id, const unsigned& server)
 {
     LobbyPlayer& player = players[id];
 
@@ -497,7 +497,7 @@ void LobbyServer::OnNMSLobbyServerInfo(unsigned int id, const unsigned int& serv
  *
  *  @author FloSoft
  */
-void LobbyServer::OnNMSLobbyServerAdd(unsigned int id, const LobbyServerInfo& info)
+void LobbyServer::OnNMSLobbyServerAdd(unsigned id, const LobbyServerInfo& info)
 {
     LobbyPlayer& player = players[id];
 
@@ -511,7 +511,7 @@ void LobbyServer::OnNMSLobbyServerAdd(unsigned int id, const LobbyServerInfo& in
  *
  *  @author FloSoft
  */
-void LobbyServer::OnNMSLobbyServerUpdatePlayer(unsigned int id, const unsigned int curplayer, const unsigned int maxplayer)
+void LobbyServer::OnNMSLobbyServerUpdatePlayer(unsigned id, const unsigned curplayer, const unsigned maxplayer)
 {
     LobbyPlayer& player = players[id];
 
@@ -524,7 +524,7 @@ void LobbyServer::OnNMSLobbyServerUpdatePlayer(unsigned int id, const unsigned i
  *
  *  @author FloSoft
  */
-void LobbyServer::OnNMSLobbyServerUpdateMap(unsigned int id, const std::string& map)
+void LobbyServer::OnNMSLobbyServerUpdateMap(unsigned id, const std::string& map)
 {
     LobbyPlayer& player = players[id];
 
@@ -548,7 +548,7 @@ void LobbyServer::OnNMSLobbyServerUpdateMap(unsigned int id, const std::string& 
  *
  *  @author FloSoft
  */
-void LobbyServer::OnNMSLobbyServerDelete(unsigned int id)
+void LobbyServer::OnNMSLobbyServerDelete(unsigned id)
 {
     LobbyPlayer& player = players[id];
 
@@ -566,7 +566,7 @@ void LobbyServer::OnNMSLobbyServerDelete(unsigned int id)
  *
  *  @author FloSoft
  */
-void LobbyServer::OnNMSLobbyServerJoin(unsigned int id)
+void LobbyServer::OnNMSLobbyServerJoin(unsigned id)
 {
     LobbyPlayer& player = players[id];
 
@@ -641,7 +641,7 @@ void LobbyServer::Disconnect(LobbyPlayer& p)
  *
  *  @author FloSoft
  */
-void LobbyServer::SendServerList(unsigned int id)
+void LobbyServer::SendServerList(unsigned id)
 {
     LobbyServerList list;
 
@@ -662,11 +662,11 @@ void LobbyServer::SendServerList(unsigned int id)
  *
  *  @author FloSoft
  */
-void LobbyServer::SendPlayerList(unsigned int id)
+void LobbyServer::SendPlayerList(unsigned id)
 {
     LobbyPlayerList list;
 
-    unsigned int count = 0;
+    unsigned count = 0;
     for(LobbyPlayerMapIterator it = players.begin(); it != players.end(); ++it)
     {
         LobbyPlayer& p = it->second;
@@ -698,7 +698,7 @@ void LobbyServer::SendPlayerList(unsigned int id)
  *
  *  @author FloSoft
  */
-void LobbyServer::SendRankingList(unsigned int id)
+void LobbyServer::SendRankingList(unsigned id)
 {
     LobbyPlayerList list;
 
@@ -753,7 +753,7 @@ bool LobbyServer::CheckProtocolVersion(unsigned userVersion, const std::string& 
  *
  *  @author FloSoft
  */
-void LobbyServer::OnNMSLobbyRankingInfo(unsigned int id, const LobbyPlayerInfo& player)
+void LobbyServer::OnNMSLobbyRankingInfo(unsigned id, const LobbyPlayerInfo& player)
 {
     LobbyPlayerInfo p = player;
 

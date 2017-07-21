@@ -128,7 +128,7 @@ bool LobbyPlayer::checkTimeout(void)
     return false;
 }
 
-void LobbyPlayer::attach(const Socket& socket, const unsigned int& playerid)
+void LobbyPlayer::attach(const Socket& socket, const unsigned& playerid)
 {
     detach();
 
@@ -257,7 +257,7 @@ void LobbyPlayer::NoHost(void)
     serverid_ = 0;
 }
 
-bool LobbyPlayer::updateHost(const unsigned int curplayer, const unsigned int maxplayer)
+bool LobbyPlayer::updateHost(const unsigned curplayer, const unsigned maxplayer)
 {
     if(isHost())
         return MYSQLCLIENT.UpdateServerPC(getServerId(), curplayer, maxplayer);

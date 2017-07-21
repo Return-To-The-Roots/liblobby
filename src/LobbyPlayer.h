@@ -43,7 +43,7 @@ class LobbyPlayer : public LobbyPlayerInfo
         bool checkTimeout(void);
         void gotPing(void);
 
-        void attach(const Socket& socket, const unsigned int& playerid);
+        void attach(const Socket& socket, const unsigned& playerid);
         void detach(void);
         void occupy(const std::string& user, const std::string& email, const std::string& version);
         std::string getPeerIP() { return socket.GetPeerIP(); }
@@ -62,11 +62,11 @@ class LobbyPlayer : public LobbyPlayerInfo
         bool Send(LobbyMessage* m = NULL, bool flush = false);
         void Run(LobbyMessageInterface* callback);
 
-        unsigned int getServerId(void) { return serverid_; }
+        unsigned getServerId(void) { return serverid_; }
 
         bool Host(LobbyServerInfo info);
         void NoHost(void);
-        bool updateHost(const unsigned int curplayer, const unsigned int maxplayer);
+        bool updateHost(const unsigned curplayer, const unsigned maxplayer);
         bool updateHost(const std::string& map);
 
         void makeClient();
@@ -93,7 +93,7 @@ class LobbyPlayer : public LobbyPlayerInfo
         unser_time_t connectiontime;
         unsigned short ping;
 
-        unsigned int serverid_;
+        unsigned serverid_;
 
         bool client_;
         bool host_;

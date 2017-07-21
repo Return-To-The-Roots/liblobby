@@ -33,33 +33,33 @@ class LobbyPlayerInfo
         void serialize(Serializer& ser) const;
         void deserialize(Serializer& ser);
 
-        unsigned int getId() const { return playerId_; }
+        unsigned getId() const { return playerId_; }
         std::string getName() const { return name_; }
         std::string getEmail() const { return email_; }
         std::string getVersion() const { return version_; }
         int getPunkte() const { return punkte_; }
-        unsigned int getGewonnen() const { return gewonnen_; }
-        unsigned int getVerloren() const { return verloren_; }
+        unsigned getGewonnen() const { return gewonnen_; }
+        unsigned getVerloren() const { return verloren_; }
 
-        void setId(const unsigned int playerId) { this->playerId_ = playerId; }
+        void setId(const unsigned playerId) { this->playerId_ = playerId; }
         void setName(const std::string& name) { this->name_ = name; }
         void setEmail(const std::string& email) { this->email_ = email; }
         void setVersion(const std::string& version) { this->version_ = version; }
-        void setPunkte(const unsigned int punkte) { this->punkte_ = punkte; }
-        void setGewonnen(const unsigned int gewonnen) { this->gewonnen_ = gewonnen; }
-        void setVerloren(const unsigned int verloren) { this->verloren_ = verloren; }
+        void setPunkte(const unsigned punkte) { this->punkte_ = punkte; }
+        void setGewonnen(const unsigned gewonnen) { this->gewonnen_ = gewonnen; }
+        void setVerloren(const unsigned verloren) { this->verloren_ = verloren; }
 
         /// Is the player in a game (not synchronized ATM)
         bool isIngame;
 
     protected:
-        unsigned int playerId_;
+        unsigned playerId_;
         std::string name_;
         std::string email_;
         std::string version_;
         int punkte_;
-        unsigned int gewonnen_;
-        unsigned int verloren_;
+        unsigned gewonnen_;
+        unsigned verloren_;
 };
 
 #endif // LOBBYPLAYERINFO_H_INCLUDED

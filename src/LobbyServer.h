@@ -30,8 +30,8 @@
 /// Der LobbyServer
 class LobbyServer : public Singleton<LobbyServer, SingletonPolicies::WithLongevity>, public LobbyMessageInterface
 {
-        typedef std::map<unsigned int, LobbyPlayer> LobbyPlayerMap;
-        typedef std::map<unsigned int, LobbyPlayer>::iterator LobbyPlayerMapIterator;
+        typedef std::map<unsigned, LobbyPlayer> LobbyPlayerMap;
+        typedef std::map<unsigned, LobbyPlayer>::iterator LobbyPlayerMapIterator;
 
     public:
         static const unsigned Longevity = 1;
@@ -57,38 +57,38 @@ class LobbyServer : public Singleton<LobbyServer, SingletonPolicies::WithLongevi
         bool ProcessMessages();
 
         /// verarbeitet die Todes-Nachricht eines Clients.
-        virtual void OnNMSDead(unsigned int id);
+        virtual void OnNMSDead(unsigned id);
 
         /// Lobby-Login-Nachricht.
-        virtual void OnNMSLobbyLogin(unsigned int id, const unsigned int revision, const std::string& user, const std::string& pass, const std::string& version);
+        virtual void OnNMSLobbyLogin(unsigned id, const unsigned revision, const std::string& user, const std::string& pass, const std::string& version);
         /// Lobby-Register-Nachricht.
-        virtual void OnNMSLobbyRegister(unsigned int id, const unsigned int revision, const std::string& user, const std::string& pass, const std::string& email);
+        virtual void OnNMSLobbyRegister(unsigned id, const unsigned revision, const std::string& user, const std::string& pass, const std::string& email);
         /// Chat-Nachricht.
-        virtual void OnNMSLobbyChat(unsigned int id, const std::string& player, const std::string& text);
+        virtual void OnNMSLobbyChat(unsigned id, const std::string& player, const std::string& text);
         /// Pong-Nachricht.
-        virtual void OnNMSLobbyPong(unsigned int id);
+        virtual void OnNMSLobbyPong(unsigned id);
 
         /// ServerList-Nachricht.
-        virtual void OnNMSLobbyServerList(unsigned int id);
+        virtual void OnNMSLobbyServerList(unsigned id);
         /// PlayerList-Nachricht.
-        virtual void OnNMSLobbyPlayerList(unsigned int id);
+        virtual void OnNMSLobbyPlayerList(unsigned id);
         /// RankingList-Nachricht.
-        virtual void OnNMSLobbyRankingList(unsigned int id);
+        virtual void OnNMSLobbyRankingList(unsigned id);
         /// ServerInfo-Nachricht.
-        virtual void OnNMSLobbyServerInfo(unsigned int id, const unsigned int& server);
+        virtual void OnNMSLobbyServerInfo(unsigned id, const unsigned& server);
 
         /// Lobby-Server-Add-Done-Nachricht.
-        virtual void OnNMSLobbyServerAdd(unsigned int id, const LobbyServerInfo& info);
+        virtual void OnNMSLobbyServerAdd(unsigned id, const LobbyServerInfo& info);
         /// Lobby-Server-Update-Player-Nachricht.
-        virtual void OnNMSLobbyServerUpdatePlayer(unsigned int id, const unsigned int curplayer, const unsigned int maxplayer);
+        virtual void OnNMSLobbyServerUpdatePlayer(unsigned id, const unsigned curplayer, const unsigned maxplayer);
         /// Lobby-Server-Update-Map-Nachricht.
-        virtual void OnNMSLobbyServerUpdateMap(unsigned int id, const std::string& map);
+        virtual void OnNMSLobbyServerUpdateMap(unsigned id, const std::string& map);
         /// Lobby-Server-Delete-Nachricht.
-        virtual void OnNMSLobbyServerDelete(unsigned int id);
+        virtual void OnNMSLobbyServerDelete(unsigned id);
         /// Lobby-Server-Join-Nachricht.
-        virtual void OnNMSLobbyServerJoin(unsigned int id);
+        virtual void OnNMSLobbyServerJoin(unsigned id);
         /// Lobby-Ranking-Info Nachricht.
-        virtual void OnNMSLobbyRankingInfo(unsigned int id, const LobbyPlayerInfo& player);
+        virtual void OnNMSLobbyRankingInfo(unsigned id, const LobbyPlayerInfo& player);
 
     private:
         /// schickt eine Nachricht an alle Clients.
@@ -96,11 +96,11 @@ class LobbyServer : public Singleton<LobbyServer, SingletonPolicies::WithLongevi
         /// trennt die Verbindung zu einem Client.
         void Disconnect(LobbyPlayer& p);
         /// verschickt die Serverliste an einen Client.
-        void SendServerList(unsigned int client);
+        void SendServerList(unsigned client);
         /// verschickt die Playerliste an einen Client.
-        void SendPlayerList(unsigned int client);
+        void SendPlayerList(unsigned client);
         /// verschickt die Rankingliste an einen Client.
-        void SendRankingList(unsigned int client);
+        void SendRankingList(unsigned client);
 
     private:
         /// Return the player with the given name or NULL if not found
@@ -110,7 +110,7 @@ class LobbyServer : public Singleton<LobbyServer, SingletonPolicies::WithLongevi
 
         bool stop;
         LobbyPlayerMap players;
-        std::vector<unsigned int> players_kill;
+        std::vector<unsigned> players_kill;
 
         Socket serverSock_;
 };

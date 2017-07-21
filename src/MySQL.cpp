@@ -209,7 +209,7 @@ bool MySQL::GetServerList(LobbyServerList* List)
 
     pResult = mysql_store_result(m_pMySQL);
 
-    unsigned int count = (unsigned int)mysql_num_rows(pResult);
+    unsigned count = (unsigned)mysql_num_rows(pResult);
 
     if(count == 0)
     {
@@ -217,7 +217,7 @@ bool MySQL::GetServerList(LobbyServerList* List)
         return true;
     }
 
-    for(unsigned int i = 0; i < count; i++)
+    for(unsigned i = 0; i < count; i++)
     {
         Row = mysql_fetch_row(pResult);
 
@@ -241,7 +241,7 @@ bool MySQL::GetServerList(LobbyServerList* List)
     return true;
 }
 
-bool MySQL::GetServerInfo(unsigned int id, LobbyServerInfo* Info)
+bool MySQL::GetServerInfo(unsigned id, LobbyServerInfo* Info)
 {
     MYSQL_RES*   pResult;
     MYSQL_ROW   Row;
@@ -297,7 +297,7 @@ bool MySQL::GetRankingList(LobbyPlayerList* List)
 
     pResult = mysql_store_result(m_pMySQL);
 
-    unsigned int count = (unsigned int)mysql_num_rows(pResult);
+    unsigned count = (unsigned)mysql_num_rows(pResult);
 
     if(count == 0)
     {
@@ -305,7 +305,7 @@ bool MySQL::GetRankingList(LobbyPlayerList* List)
         return true;
     }
 
-    for(unsigned int i = 0; i < count; i++)
+    for(unsigned i = 0; i < count; i++)
     {
         Row = mysql_fetch_row(pResult);
 
@@ -428,13 +428,13 @@ bool MySQL::AddServer(LobbyServerInfo* Info)
     if(!DoQuery(query))
         return false;
 
-    Info->setId((unsigned int)mysql_insert_id(m_pMySQL));
+    Info->setId((unsigned)mysql_insert_id(m_pMySQL));
 
     LOG.write("Neuer Server erstellt: %d: %s!\n") % Info->getId() % Info->getName();
     return true;
 }
 
-bool MySQL::DeleteServer(unsigned int id)
+bool MySQL::DeleteServer(unsigned id)
 {
     LobbyServerInfo Info;
     if(!GetServerInfo(id, &Info))
@@ -450,7 +450,7 @@ bool MySQL::DeleteServer(unsigned int id)
     return true;
 }
 
-bool MySQL::UpdateServer(unsigned int id, const std::string& map)
+bool MySQL::UpdateServer(unsigned id, const std::string& map)
 {
     LobbyServerInfo Info;
     if(!GetServerInfo(id, &Info))
@@ -469,7 +469,7 @@ bool MySQL::UpdateServer(unsigned int id, const std::string& map)
     return true;
 }
 
-bool MySQL::UpdateServerPC(unsigned int id, unsigned int curplayer, unsigned int maxplayer)
+bool MySQL::UpdateServerPC(unsigned id, unsigned curplayer, unsigned maxplayer)
 {
     LobbyServerInfo Info;
     if(!GetServerInfo(id, &Info))
@@ -485,7 +485,7 @@ bool MySQL::UpdateServerPC(unsigned int id, unsigned int curplayer, unsigned int
     return true;
 }
 
-bool MySQL::UpdateServerPing(unsigned int id, unsigned int ping)
+bool MySQL::UpdateServerPing(unsigned id, unsigned ping)
 {
     LobbyServerInfo Info;
     if(!GetServerInfo(id, &Info))

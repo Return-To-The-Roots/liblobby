@@ -136,7 +136,7 @@ void LobbyClient::Stop()
  *  @param[in] user Benutzername
  *  @param[in] pass Passwort
  */
-bool LobbyClient::Login(const std::string& server, const unsigned int port, const std::string& user, const std::string& pass, const bool use_ipv6)
+bool LobbyClient::Login(const std::string& server, const unsigned port, const std::string& user, const std::string& pass, const bool use_ipv6)
 {
     // aufräumen
     Stop();
@@ -156,7 +156,7 @@ bool LobbyClient::Login(const std::string& server, const unsigned int port, cons
  *  @param[in] user Benutzername
  *  @param[in] pass Passwort
  */
-bool LobbyClient::Register(const std::string& server, const unsigned int port, const std::string& user, const std::string& pass, const std::string& email, const bool use_ipv6)
+bool LobbyClient::Register(const std::string& server, const unsigned port, const std::string& user, const std::string& pass, const std::string& email, const bool use_ipv6)
 {
     // aufräumen
     Stop();
@@ -203,7 +203,7 @@ void LobbyClient::SendRankingListRequest()
  *
  *  @param[in] id Server-ID
  */
-void LobbyClient::SendServerInfoRequest(unsigned int id)
+void LobbyClient::SendServerInfoRequest(unsigned id)
 {
     assert(state == CS_LOBBY);
     if(id == 0)
@@ -308,7 +308,7 @@ void LobbyClient::UpdateServerMap(const std::string& map)
  *  @param[in] curplayer Aktuelle Anzahl Spieler
  *  @param[in] maxplayer Maximale Anzahl Spieler
  */
-void LobbyClient::UpdateServerPlayerCount(unsigned int curplayer, unsigned int maxplayer)
+void LobbyClient::UpdateServerPlayerCount(unsigned curplayer, unsigned maxplayer)
 {
     assert(state == CS_INGAME && isHost);
     send_queue.push(new LobbyMessage_Server_Update_Player(curplayer, maxplayer));
@@ -319,7 +319,7 @@ void LobbyClient::UpdateServerPlayerCount(unsigned int curplayer, unsigned int m
  *
  *  @return @p true bei Erfolg, @p false bei Fehler
  */
-bool LobbyClient::Connect(const std::string& server, const unsigned int port, const bool use_ipv6)
+bool LobbyClient::Connect(const std::string& server, const unsigned port, const bool use_ipv6)
 {
     assert(state == CS_STOPPED);
     // Verbinden
@@ -340,7 +340,7 @@ bool LobbyClient::Connect(const std::string& server, const unsigned int port, co
 /**
  *  Ping-Nachricht.
  */
-void LobbyClient::OnNMSLobbyPing(unsigned int  /*id*/)
+void LobbyClient::OnNMSLobbyPing(unsigned  /*id*/)
 {
     send_queue.push(new LobbyMessage_Pong(1));
 }
@@ -350,7 +350,7 @@ void LobbyClient::OnNMSLobbyPing(unsigned int  /*id*/)
  *
  *  @param[in] playerId Die empfangene Spieler-ID
  */
-void LobbyClient::OnNMSLobbyID(unsigned int  /*id*/, unsigned playerId)
+void LobbyClient::OnNMSLobbyID(unsigned  /*id*/, unsigned playerId)
 {
     if(playerId == 0xFFFFFFFF)
     {
@@ -380,7 +380,7 @@ void LobbyClient::OnNMSLobbyID(unsigned int  /*id*/, unsigned playerId)
  *
  *  @param[in] error Die empfangene Fehlermeldung
  */
-void LobbyClient::OnNMSLobbyLoginError(unsigned int  /*id*/, const std::string& error)
+void LobbyClient::OnNMSLobbyLoginError(unsigned  /*id*/, const std::string& error)
 {
     if(listener)
         listener->LC_Status_Error(error);
@@ -393,7 +393,7 @@ void LobbyClient::OnNMSLobbyLoginError(unsigned int  /*id*/, const std::string& 
  *
  *  @param[in] email Die empfangene Emailadresse des Accounts
  */
-void LobbyClient::OnNMSLobbyLoginDone(unsigned int  /*id*/, const std::string& email)
+void LobbyClient::OnNMSLobbyLoginDone(unsigned  /*id*/, const std::string& email)
 {
     state = CS_LOBBY;
     userdata.email = email;
@@ -406,7 +406,7 @@ void LobbyClient::OnNMSLobbyLoginDone(unsigned int  /*id*/, const std::string& e
  *
  *  @param[in] error Die empfangene Fehlermeldung
  */
-void LobbyClient::OnNMSLobbyRegisterError(unsigned int  /*id*/, const std::string& error) //-V524
+void LobbyClient::OnNMSLobbyRegisterError(unsigned  /*id*/, const std::string& error) //-V524
 {
     if(listener)
         listener->LC_Status_Error(error);
@@ -417,7 +417,7 @@ void LobbyClient::OnNMSLobbyRegisterError(unsigned int  /*id*/, const std::strin
 /**
  *  Lobby-Register-Done-Nachricht.
  */
-void LobbyClient::OnNMSLobbyRegisterDone(unsigned int  /*id*/)
+void LobbyClient::OnNMSLobbyRegisterDone(unsigned  /*id*/)
 {
     if(listener)
         listener->LC_Registered();
@@ -430,7 +430,7 @@ void LobbyClient::OnNMSLobbyRegisterDone(unsigned int  /*id*/)
  *
  *  @param[in] error Die empfangene Serverliste
  */
-void LobbyClient::OnNMSLobbyServerList(unsigned int  /*id*/, const LobbyServerList& list)
+void LobbyClient::OnNMSLobbyServerList(unsigned  /*id*/, const LobbyServerList& list)
 {
     serverList = list;
 
@@ -442,7 +442,7 @@ void LobbyClient::OnNMSLobbyServerList(unsigned int  /*id*/, const LobbyServerLi
  *
  *  @param[in] error Die empfangene Spielerliste
  */
-void LobbyClient::OnNMSLobbyPlayerList(unsigned int  /*id*/, const LobbyPlayerList& onlinePlayers, const LobbyPlayerList& ingamePlayers)
+void LobbyClient::OnNMSLobbyPlayerList(unsigned  /*id*/, const LobbyPlayerList& onlinePlayers, const LobbyPlayerList& ingamePlayers)
 {
     playerList = onlinePlayers;
     for(LobbyPlayerList::const_iterator it = ingamePlayers.begin(); it != ingamePlayers.end(); ++it)
@@ -455,7 +455,7 @@ void LobbyClient::OnNMSLobbyPlayerList(unsigned int  /*id*/, const LobbyPlayerLi
  *
  *  @param[in] error Die empfangene Spielerliste (Top 10)
  */
-void LobbyClient::OnNMSLobbyRankingList(unsigned int  /*id*/, const LobbyPlayerList& list)
+void LobbyClient::OnNMSLobbyRankingList(unsigned  /*id*/, const LobbyPlayerList& list)
 {
     rankingList = list;
 
@@ -467,7 +467,7 @@ void LobbyClient::OnNMSLobbyRankingList(unsigned int  /*id*/, const LobbyPlayerL
  *
  *  @param[in] error Das empfangene ServerInfo
  */
-void LobbyClient::OnNMSLobbyServerInfo(unsigned int  /*id*/, const LobbyServerInfo& info)
+void LobbyClient::OnNMSLobbyServerInfo(unsigned  /*id*/, const LobbyServerInfo& info)
 {
     serverInfo = info;
 
@@ -480,7 +480,7 @@ void LobbyClient::OnNMSLobbyServerInfo(unsigned int  /*id*/, const LobbyServerIn
  *  @param[in] player Der empfangene Spielername
  *  @param[in] text   Der empfangene Text
  */
-void LobbyClient::OnNMSLobbyChat(unsigned int  /*id*/, const std::string& player, const std::string& text)
+void LobbyClient::OnNMSLobbyChat(unsigned  /*id*/, const std::string& player, const std::string& text)
 {
     if(listener)
         listener->LC_Chat(player, text);
@@ -491,7 +491,7 @@ void LobbyClient::OnNMSLobbyChat(unsigned int  /*id*/, const std::string& player
  *
  *  @param[in] error Die empfangene Fehlermeldung
  */
-void LobbyClient::OnNMSLobbyServerAddFailed(unsigned int  /*id*/, const std::string& error)
+void LobbyClient::OnNMSLobbyServerAddFailed(unsigned  /*id*/, const std::string& error)
 {
     if(listener)
         listener->LC_Status_Error(error);
@@ -502,7 +502,7 @@ void LobbyClient::OnNMSLobbyServerAddFailed(unsigned int  /*id*/, const std::str
  *
  *  @param[in] info Das empfangene ServerInfo
  */
-void LobbyClient::OnNMSLobbyServerAdd(unsigned int  /*id*/, const LobbyServerInfo& info)
+void LobbyClient::OnNMSLobbyServerAdd(unsigned  /*id*/, const LobbyServerInfo& info)
 {
     LOG.write(_("GameServer %s sucessfully created!\n")) % info.getName();
 
@@ -519,7 +519,7 @@ void LobbyClient::OnNMSLobbyServerAdd(unsigned int  /*id*/, const LobbyServerInf
  *
  *  @param[in] email Die empfangene PlayerInfo des angefragten Spielers.
  */
-void LobbyClient::OnNMSLobbyRankingInfo(unsigned int  /*id*/, const LobbyPlayerInfo& player)
+void LobbyClient::OnNMSLobbyRankingInfo(unsigned  /*id*/, const LobbyPlayerInfo& player)
 {
     if(listener)
         listener->LC_RankingInfo(player);
@@ -528,7 +528,7 @@ void LobbyClient::OnNMSLobbyRankingInfo(unsigned int  /*id*/, const LobbyPlayerI
 /**
  *  Dead-Nachricht.
  */
-void LobbyClient::OnNMSDeadMsg(unsigned int  /*id*/)
+void LobbyClient::OnNMSDeadMsg(unsigned  /*id*/)
 {
     ServerLost();
 }

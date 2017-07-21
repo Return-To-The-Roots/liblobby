@@ -19,7 +19,7 @@
 
 #pragma once
 
-const unsigned int LOBBYPROTOCOL_VERSION = 0xFF0006FF;
+const unsigned LOBBYPROTOCOL_VERSION = 0xFF0006FF;
 
 enum
 {

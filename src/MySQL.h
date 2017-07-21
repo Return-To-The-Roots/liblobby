@@ -41,15 +41,15 @@ class MySQL : public Singleton<MySQL, SingletonPolicies::WithLongevity>
         bool LoginUser(const std::string& user, const std::string& pass, std::string& email, const std::string& ip);
         bool RegisterUser(const std::string& user, const std::string& pass, const std::string& email);
         bool GetServerList(LobbyServerList* List);
-        bool GetServerInfo(unsigned int id, LobbyServerInfo* Info);
+        bool GetServerInfo(unsigned id, LobbyServerInfo* Info);
         bool GetRankingList(LobbyPlayerList* List);
         bool GetRankingInfo(LobbyPlayerInfo& player);
 
         bool AddServer(LobbyServerInfo* Info);
-        bool DeleteServer(unsigned int id);
-        bool UpdateServer(unsigned int id, const std::string& map);
-        bool UpdateServerPC(unsigned int id, unsigned int curplayer, unsigned int maxplayer);
-        bool UpdateServerPing(unsigned int id, unsigned int ping);
+        bool DeleteServer(unsigned id);
+        bool UpdateServer(unsigned id, const std::string& map);
+        bool UpdateServerPC(unsigned id, unsigned curplayer, unsigned maxplayer);
+        bool UpdateServerPing(unsigned id, unsigned ping);
 
         bool SetBan(const std::string& user, bool banned);
     private:

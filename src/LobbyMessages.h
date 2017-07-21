@@ -63,7 +63,7 @@ class LobbyMessage_Login : public LobbyMessage
             if(rev[0] != 0xFF || rev[3] != 0xFF)
                 revision = 0;
             else
-                revision = htonl(*((unsigned int*)rev));
+                revision = htonl(*((unsigned*)rev));
 
             if(revision == LOBBYPROTOCOL_VERSION)
             {
@@ -73,7 +73,7 @@ class LobbyMessage_Login : public LobbyMessage
             }
         }
 
-        void run(MessageInterface* callback, unsigned int id) override
+        void run(MessageInterface* callback, unsigned id) override
         {
             LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
             LOG.writeToFile("<<< NMS_LOBBY_LOGIN(%d, %s, %s, %s)\n") % revision % user % "********" % version;
@@ -107,7 +107,7 @@ class LobbyMessage_Login_Done : public LobbyMessage
             email = ser.PopString();
         }
 
-        void run(MessageInterface* callback, unsigned int id) override
+        void run(MessageInterface* callback, unsigned id) override
         {
             LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
             LOG.writeToFile("<<< NMS_LOBBY_LOGIN_DONE(%s)\n") % email;
@@ -141,7 +141,7 @@ class LobbyMessage_Login_Error : public LobbyMessage
             error = ser.PopString();
         }
 
-        void run(MessageInterface* callback, unsigned int id) override
+        void run(MessageInterface* callback, unsigned id) override
         {
             LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
             LOG.writeToFile("<<< NMS_LOBBY_LOGIN_ERROR(%s)\n") % error;
@@ -172,7 +172,7 @@ class LobbyMessage_Login_Error06 : public LobbyMessage
             LobbyMessage::Deserialize(ser);
         }
 
-        void run(MessageInterface*  /*callback*/, unsigned int  /*id*/) override {}
+        void run(MessageInterface*  /*callback*/, unsigned  /*id*/) override {}
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -180,7 +180,7 @@ class LobbyMessage_Login_Error06 : public LobbyMessage
 class LobbyMessage_Register : public LobbyMessage
 {
     private:
-        unsigned int revision;
+        unsigned revision;
         std::string user;
         std::string pass;
         std::string email;
@@ -212,7 +212,7 @@ class LobbyMessage_Register : public LobbyMessage
             if(rev[0] != 0xFF || rev[3] != 0xFF)
                 revision = 0;
             else
-                revision = htonl(*((unsigned int*)rev));
+                revision = htonl(*((unsigned*)rev));
 
             if(revision == LOBBYPROTOCOL_VERSION)
             {
@@ -222,7 +222,7 @@ class LobbyMessage_Register : public LobbyMessage
             }
         }
 
-        void run(MessageInterface* callback, unsigned int id) override
+        void run(MessageInterface* callback, unsigned id) override
         {
             LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
             LOG.writeToFile("<<< NMS_LOBBY_REGISTER(%d, %s, %s, %s)\n") % revision % user % "********" % email;
@@ -241,7 +241,7 @@ class LobbyMessage_Register_Done : public LobbyMessage
             LOG.writeToFile(">>> NMS_LOBBY_REGISTER_DONE\n");
         }
 
-        void run(MessageInterface* callback, unsigned int id) override
+        void run(MessageInterface* callback, unsigned id) override
         {
             LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
 
@@ -276,7 +276,7 @@ class LobbyMessage_Register_Error : public LobbyMessage
             error = ser.PopString();
         }
 
-        void run(MessageInterface* callback, unsigned int id) override
+        void run(MessageInterface* callback, unsigned id) override
         {
             LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
             LOG.writeToFile("<<< NMS_LOBBY_REGISTER_ERROR(%s)\n") % error;
@@ -307,7 +307,7 @@ class LobbyMessage_Register_Error06 : public LobbyMessage
             LobbyMessage::Deserialize(ser);
         }
 
-        void run(MessageInterface*  /*callback*/, unsigned int  /*id*/) override {}
+        void run(MessageInterface*  /*callback*/, unsigned  /*id*/) override {}
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -327,7 +327,7 @@ class LobbyMessage_ServerList : public LobbyMessage
         LobbyMessage_ServerList(const LobbyServerList& list): LobbyMessage(NMS_LOBBY_SERVERLIST), isRequest(false), list(list)
         {
             LOG.writeToFile(">>> NMS_LOBBY_SERVERLIST(%d)\n") % list.getCount();
-            for(unsigned int i = 0; i < list.getCount(); ++i)
+            for(unsigned i = 0; i < list.getCount(); ++i)
             {
                 const LobbyServerInfo* server = list.getElement(i);
                 LOG.writeToFile("    %d: %d %s %s:%d %s %d %s %d %d\n") % i % server->getId() % server->getName() % server->getHost() % server->getPort() % server->getVersion() % server->getPing() % server->getMap() % server->getCurPlayers() % server->getMaxPlayers();
@@ -352,7 +352,7 @@ class LobbyMessage_ServerList : public LobbyMessage
                 isRequest = true;
         }
 
-        void run(MessageInterface* callback, unsigned int id) override
+        void run(MessageInterface* callback, unsigned id) override
         {
             LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
 
@@ -363,7 +363,7 @@ class LobbyMessage_ServerList : public LobbyMessage
             }else
             {
                 LOG.writeToFile("<<< NMS_LOBBY_SERVERLIST(%d)\n") % list.getCount();
-                for(unsigned int i = 0; i < list.getCount(); ++i)
+                for(unsigned i = 0; i < list.getCount(); ++i)
                 {
                     const LobbyServerInfo* server = list.getElement(i);
                     LOG.writeToFile("    %d: %d %s %s:%d %s %d %s %d %d\n") % i % server->getId() % server->getName() % server->getHost() % server->getPort() % server->getVersion() % server->getPing() % server->getMap() % server->getCurPlayers() % server->getMaxPlayers();
@@ -380,11 +380,11 @@ class LobbyMessage_ServerInfo : public LobbyMessage
     private:
         bool isRequest;
         LobbyServerInfo info;
-        unsigned int server;
+        unsigned server;
 
     public:
         LobbyMessage_ServerInfo(): LobbyMessage(NMS_LOBBY_SERVERINFO) {} //-V730
-        LobbyMessage_ServerInfo(const unsigned int server): LobbyMessage(NMS_LOBBY_SERVERINFO), isRequest(true), server(server)
+        LobbyMessage_ServerInfo(const unsigned server): LobbyMessage(NMS_LOBBY_SERVERINFO), isRequest(true), server(server)
         {
             LOG.writeToFile(">>> NMS_LOBBY_SERVERINFO(%d)\n") % server;
         }
@@ -413,7 +413,7 @@ class LobbyMessage_ServerInfo : public LobbyMessage
                 info = LobbyServerInfo(0, ser);
         }
 
-        void run(MessageInterface* callback, unsigned int id) override
+        void run(MessageInterface* callback, unsigned id) override
         {
             LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
 
@@ -449,7 +449,7 @@ class LobbyMessage_RankingList : public LobbyMessage
         {
             LOG.writeToFile(">>> NMS_LOBBY_RANKINGLIST(%d)\n") % list.getCount();
 
-            for(unsigned int i = 0; i < list.getCount(); ++i)
+            for(unsigned i = 0; i < list.getCount(); ++i)
             {
                 const LobbyPlayerInfo* player = list.getElement(i);
                 LOG.writeToFile("    %d: %d %s %s %d %d %d\n") % i % player->getId() % player->getName() % player->getVersion() % player->getPunkte() % player->getGewonnen() % player->getVerloren();
@@ -471,7 +471,7 @@ class LobbyMessage_RankingList : public LobbyMessage
                 list.deserialize(ser);
         }
 
-        void run(MessageInterface* callback, unsigned int id) override
+        void run(MessageInterface* callback, unsigned id) override
         {
             LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
 
@@ -483,7 +483,7 @@ class LobbyMessage_RankingList : public LobbyMessage
             else // Antwort
             {
                 LOG.writeToFile("<<< NMS_LOBBY_RANKINGLIST(%d)\n") % list.getCount();
-                for(unsigned int i = 0; i < list.getCount(); ++i)
+                for(unsigned i = 0; i < list.getCount(); ++i)
                 {
                     const LobbyPlayerInfo* player = list.getElement(i);
                     LOG.writeToFile("    %d: %d %s %s %d %d %d\n") % i % player->getId() % player->getName() % player->getVersion() % player->getPunkte() % player->getGewonnen() % player->getVerloren();
@@ -513,7 +513,7 @@ class LobbyMessage_PlayerList : public LobbyMessage
         {
             LOG.writeToFile(">>> NMS_LOBBY_PLAYERLIST(%d)\n") % list.getCount();
 
-            for(unsigned int i = 0; i < list.getCount(); ++i)
+            for(unsigned i = 0; i < list.getCount(); ++i)
             {
                 const LobbyPlayerInfo* player = list.getElement(i);
                 LOG.writeToFile("    %d: %d %s %s %d %d %d\n") % i % player->getId() % player->getName() % player->getVersion() % player->getPunkte() % player->getGewonnen() % player->getVerloren();
@@ -545,7 +545,7 @@ class LobbyMessage_PlayerList : public LobbyMessage
             }
         }
 
-        void run(MessageInterface* callback, unsigned int id) override
+        void run(MessageInterface* callback, unsigned id) override
         {
             LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
 
@@ -557,7 +557,7 @@ class LobbyMessage_PlayerList : public LobbyMessage
             else // Antwort
             {
                 LOG.writeToFile("<<< NMS_LOBBY_PLAYERLIST(%d)\n") % list.getCount();
-                for(unsigned int i = 0; i < list.getCount(); ++i)
+                for(unsigned i = 0; i < list.getCount(); ++i)
                 {
                     const LobbyPlayerInfo* player = list.getElement(i);
                     LOG.writeToFile("    %d: %d %s %s %d %d %d\n") % i % player->getId() % player->getName() % player->getVersion() % player->getPunkte() % player->getGewonnen() % player->getVerloren();
@@ -573,11 +573,11 @@ class LobbyMessage_PlayerList : public LobbyMessage
 class LobbyMessage_Id : public LobbyMessage
 {
     private:
-        unsigned int playerId;
+        unsigned playerId;
 
     public:
         LobbyMessage_Id(): LobbyMessage(NMS_LOBBY_ID) {} //-V730
-        LobbyMessage_Id(const unsigned int playerId): LobbyMessage(NMS_LOBBY_ID), playerId(playerId)
+        LobbyMessage_Id(const unsigned playerId): LobbyMessage(NMS_LOBBY_ID), playerId(playerId)
         {
             LOG.writeToFile(">>> NMS_LOBBY_ID(%d)\n") % playerId;
         }
@@ -594,7 +594,7 @@ class LobbyMessage_Id : public LobbyMessage
             playerId = ser.PopUnsignedInt();
         }
 
-        void run(MessageInterface* callback, unsigned int id) override
+        void run(MessageInterface* callback, unsigned id) override
         {
             LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
             LOG.writeToFile("<<< NMS_LOBBY_ID(%d)\n") % playerId;
@@ -636,7 +636,7 @@ class LobbyMessage_Chat : public LobbyMessage
             text = ser.PopString();
         }
 
-        void run(MessageInterface* callback, unsigned int id) override
+        void run(MessageInterface* callback, unsigned id) override
         {
             LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
             LOG.writeToFile("<<< NMS_LOBBY_CHAT(%s, %s)\n") % player % text;
@@ -654,7 +654,7 @@ class LobbyMessage_Ping : public LobbyMessage
         {
             //LOG.writeToFile(">>> NMS_LOBBY_PING\n");
         }
-        void run(MessageInterface* callback, unsigned int id) override
+        void run(MessageInterface* callback, unsigned id) override
         {
             LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
 
@@ -673,7 +673,7 @@ class LobbyMessage_Pong : public LobbyMessage
         {
             //LOG.writeToFile(">>> NMS_LOBBY_PONG\n");
         }
-        void run(MessageInterface* callback, unsigned int id) override
+        void run(MessageInterface* callback, unsigned id) override
         {
             LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
 
@@ -709,7 +709,7 @@ class LobbyMessage_Server_Add : public LobbyMessage
             info = LobbyServerInfo(0, ser);
         }
 
-        void run(MessageInterface* callback, unsigned int id) override
+        void run(MessageInterface* callback, unsigned id) override
         {
             LOG.writeToFile("<<< NMS_LOBBY_SERVER_ADD\n");
             LOG.writeToFile("    %d %s %s:%d %s %d %s %d %d\n") % info.getId() % info.getName() % info.getHost() % info.getPort() % info.getVersion() % info.getPing() % info.getMap() % info.getCurPlayers() % info.getMaxPlayers();
@@ -745,7 +745,7 @@ class LobbyMessage_Server_Add_Failed : public LobbyMessage
             error = ser.PopString();
         }
 
-        void run(MessageInterface* callback, unsigned int id) override
+        void run(MessageInterface* callback, unsigned id) override
         {
             LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
 
@@ -764,7 +764,7 @@ class LobbyMessage_Server_Delete : public LobbyMessage
         {
             LOG.writeToFile(">>> NMS_LOBBY_SERVER_DELETE\n");
         }
-        void run(MessageInterface* callback, unsigned int id) override
+        void run(MessageInterface* callback, unsigned id) override
         {
             LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
 
@@ -778,12 +778,12 @@ class LobbyMessage_Server_Delete : public LobbyMessage
 class LobbyMessage_Server_Update_Player : public LobbyMessage
 {
     private:
-        unsigned int curplayer;
-        unsigned int maxplayer;
+        unsigned curplayer;
+        unsigned maxplayer;
 
     public:
         LobbyMessage_Server_Update_Player(): LobbyMessage(NMS_LOBBY_SERVER_UPDATE_PLAYER) { } //-V730
-        LobbyMessage_Server_Update_Player(const unsigned int curplayer, const unsigned int maxplayer):
+        LobbyMessage_Server_Update_Player(const unsigned curplayer, const unsigned maxplayer):
             LobbyMessage(NMS_LOBBY_SERVER_UPDATE_PLAYER), curplayer(curplayer), maxplayer(maxplayer)
         {
             LOG.writeToFile(">>> NMS_LOBBY_SERVER_UPDATE_PLAYER(%d,%d)\n") % curplayer % maxplayer;
@@ -803,7 +803,7 @@ class LobbyMessage_Server_Update_Player : public LobbyMessage
             maxplayer = ser.PopUnsignedInt();
         }
 
-        void run(MessageInterface* callback, unsigned int id) override
+        void run(MessageInterface* callback, unsigned id) override
         {
             LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
             LOG.writeToFile("<<< NMS_LOBBY_SERVER_UPDATE_PLAYER(%d,%d)\n") % curplayer % maxplayer;
@@ -837,7 +837,7 @@ class LobbyMessage_Server_Update_Map : public LobbyMessage
             map = ser.PopString();
         }
 
-        void run(MessageInterface* callback, unsigned int id) override
+        void run(MessageInterface* callback, unsigned id) override
         {
             LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
 
@@ -856,7 +856,7 @@ class LobbyMessage_Server_Join : public LobbyMessage
         {
             LOG.writeToFile(">>> NMS_LOBBY_SERVER_JOIN\n");
         }
-        void run(MessageInterface* callback, unsigned int id) override
+        void run(MessageInterface* callback, unsigned id) override
         {
             LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
 
@@ -907,7 +907,7 @@ class LobbyMessage_Lobby_Ranking_Info : public LobbyMessage
                 player.deserialize(ser);
         }
 
-        void run(MessageInterface* callback, unsigned int id) override
+        void run(MessageInterface* callback, unsigned id) override
         {
             LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
             LOG.writeToFile("<<< NMS_LOBBY_RANKING_INFO(%s)\n") % player.getName();
