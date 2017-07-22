@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "MessageInterface.h"
+#include "libutil/src/MessageInterface.h"
 #include <string>
 
 class LobbyServerList;

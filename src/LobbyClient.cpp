@@ -17,14 +17,14 @@
 
 #include "libLobbyDefines.h" // IWYU pragma: keep
 #include "LobbyClient.h"
-#include "Messages.h"
+#include "libutil/src/Messages.h"
 #include "LobbyInterface.h"
 #include "LobbyMessage.h"
 #include "LobbyMessages.h"
-#include "Log.h"
-#include "Message.h"
-#include "SocketSet.h"
-#include "mygettext.h"
+#include "libutil/src/Log.h"
+#include "libutil/src/Message.h"
+#include "libutil/src/SocketSet.h"
+#include "mygettext/src/mygettext.h"
 #include <build_version.h>
 
 #include <cstddef>

@@ -21,7 +21,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Eigene Header
-#include "Singleton.h"
+#include "libutil/src/Singleton.h"
 
 #include "LobbyMessageInterface.h"
 
@@ -29,8 +29,8 @@
 #include "LobbyServerInfo.h"
 #include "LobbyPlayerList.h"
 
-#include "MessageQueue.h"
-#include "Socket.h"
+#include "libutil/src/MessageQueue.h"
+#include "libutil/src/Socket.h"
 #include <string>
 
 class LobbyInterface;

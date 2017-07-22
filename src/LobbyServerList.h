@@ -20,7 +20,7 @@
 #pragma once
 
 #include "LobbyServerInfo.h"
-#include "SerializableArray.h"
+#include "libutil/src/SerializableArray.h"
 
 class LobbyServerList : public SerializableArray<LobbyServerInfo>
 {

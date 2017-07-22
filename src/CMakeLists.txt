@@ -15,11 +15,7 @@ SET(SOURCES_LOBBY_S ${SOURCES_LOBBY} LobbyServer.cpp LobbyServer.h  LobbyPlayer.
 
 ################################################################################
 
-INCLUDE_DIRECTORIES("../../"
-                    "${PROJECT_SOURCE_DIR}/libutil/src/"
-                    "${PROJECT_SOURCE_DIR}/mygettext/src/"
-					${Boost_INCLUDE_DIR}
-                   )
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR} ${Boost_INCLUDE_DIR})
 
 ################################################################################
 
