@@ -25,7 +25,7 @@
 #include "libutil/src/Message.h"
 #include "libutil/src/SocketSet.h"
 #include "mygettext/src/mygettext.h"
-#include <build_version.h>
+#include "build_version.h"
 
 #include <cstddef>
 
@@ -268,7 +268,7 @@ void LobbyClient::AddServer(const std::string& name, const std::string& map, boo
     assert(state == CS_LOBBY);
     LobbyServerInfo server;
     server.setName(name);
-    server.setVersion(GetWindowVersion());
+    server.setVersion(RTTR_Version::GetWindowVersion());
     server.setPort(port);
     server.setMap(map);
     server.setPassword(has_password);
@@ -364,7 +364,7 @@ void LobbyClient::OnNMSLobbyID(unsigned  /*id*/, unsigned playerId)
     switch(todoAfterConnect)
     {
         case TD_LOGIN:
-            send_queue.push(new LobbyMessage_Login(userdata.user, userdata.pass, GetWindowVersion()));
+            send_queue.push(new LobbyMessage_Login(userdata.user, userdata.pass, RTTR_Version::GetWindowVersion()));
             break;
         case TD_REGISTER:
             send_queue.push(new LobbyMessage_Register(userdata.user, userdata.pass, userdata.email));
