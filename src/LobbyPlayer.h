@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "MessageQueue.h"
+#include "libutil/src/MessageQueue.h"
 #include "LobbyPlayerInfo.h"
 #include "LobbyMessages.h"
 #include "libutil/src/Socket.h"

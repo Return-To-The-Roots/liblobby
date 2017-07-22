@@ -11,7 +11,7 @@
 set(_PROGRAMFILESx86 "PROGRAMFILES(x86)")
 
 find_path(MYSQL_INCLUDE_DIR
-	NAMES "mysql/mysql.h"
+	NAMES "mysql.h"
 	PATHS "$ENV{PROGRAMFILES}/MySQL/*/include"
 		  "$ENV{${_PROGRAMFILESx86}}/MySQL/*/include"
 		  "$ENV{SYSTEMDRIVE}/MySQL/*/include"
@@ -22,14 +22,14 @@ find_library(MYSQL_LIBRARY_RELEASE
 	PATHS "$ENV{PROGRAMFILES}/MySQL/*/lib"
 		  "$ENV{${_PROGRAMFILESx86}}/MySQL/*/lib"
 		  "$ENV{SYSTEMDRIVE}/MySQL/*/lib"
-	PATH_SUFFIXES "lib")
+	PATH_SUFFIXES "lib" "vs14" "vs12")
 	
 find_library(MYSQL_LIBRARY_DEBUG
 	NAMES "mysqlclientd"
 	PATHS "$ENV{PROGRAMFILES}/MySQL/*/lib"
 		  "$ENV{${_PROGRAMFILESx86}}/MySQL/*/lib"
 		  "$ENV{SYSTEMDRIVE}/MySQL/*/lib"
-	PATH_SUFFIXES "lib")
+	PATH_SUFFIXES "lib" "vs14" "vs12")
 	
 include(SelectLibraryConfigurations)
 SELECT_LIBRARY_CONFIGURATIONS(MYSQL)

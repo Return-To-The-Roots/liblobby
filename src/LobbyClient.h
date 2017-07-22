@@ -78,7 +78,7 @@ class LobbyClient : public Singleton<LobbyClient, SingletonPolicies::WithLongevi
         void SendChat(const std::string& text);
 
         /// fügt einen Server zur Lobby hinzu.
-        void AddServer(const std::string& name, const std::string& map, bool has_password, unsigned short port);
+        void AddServer(const std::string& name, const std::string& programVersion, const std::string& map, bool has_password, unsigned short port);
         /// entfernt den einem zugehörigen Server von der Lobby.
         void DeleteServer();
         /// aktualisiert den Kartennamen des zugehörigen Servers in der Lobby.
@@ -176,6 +176,7 @@ class LobbyClient : public Singleton<LobbyClient, SingletonPolicies::WithLongevi
             std::string user;
             std::string pass;
             std::string email;
+            std::string programVersion;
         } userdata;
 
 

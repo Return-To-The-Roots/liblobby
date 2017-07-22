@@ -19,9 +19,9 @@
 
 #pragma once
 
-#include <mysql/mysql.h>
+#include <mysql.h>
 
-#include "Singleton.h"
+#include "libutil/src/Singleton.h"
 
 #include "LobbyServerList.h"
 #include "LobbyServerInfo.h"

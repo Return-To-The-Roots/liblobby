@@ -210,11 +210,11 @@ void LobbyPlayer::occupy(const std::string& user, const std::string& email, cons
     setEmail(email);
     setVersion(version);
 
-    Send(new LobbyMessage_Chat("Hinweis", GetWindowTitle()));
+    Send(new LobbyMessage_Chat("Hinweis", RTTR_Version::GetTitle()));
 
     std::stringstream text;
     text.str("");
-    text << "Serverversion: " << GetWindowVersion() << "-r" << GetWindowRevision();
+    text << "Serverversion: " << RTTR_Version::GetVersion() << "-r" << RTTR_Version::GetRevision();
     Send(new LobbyMessage_Chat("Hinweis", text.str()));
 }
 
