@@ -18,7 +18,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Header
 #include "libLobbyDefines.h" // IWYU pragma: keep
-#include <build_version.h>
+#include "RTTR_Version.h"
 #include "LobbyPlayer.h"
 
 #include "MySQL.h"
