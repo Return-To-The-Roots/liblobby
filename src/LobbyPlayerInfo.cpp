@@ -24,7 +24,7 @@ LobbyPlayerInfo::LobbyPlayerInfo()
     clear();
 }
 
-LobbyPlayerInfo::LobbyPlayerInfo(const unsigned  /*playerId*/, Serializer& ser)
+LobbyPlayerInfo::LobbyPlayerInfo(const unsigned /*playerId*/, Serializer& ser)
 {
     deserialize(ser);
     isIngame = false;

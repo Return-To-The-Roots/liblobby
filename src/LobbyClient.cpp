@@ -17,23 +17,22 @@
 
 #include "libLobbyDefines.h" // IWYU pragma: keep
 #include "LobbyClient.h"
-#include "libutil/Messages.h"
 #include "LobbyInterface.h"
 #include "LobbyMessage.h"
 #include "LobbyMessages.h"
+#include "mygettext/mygettext.h"
 #include "libutil/Log.h"
 #include "libutil/Message.h"
+#include "libutil/Messages.h"
 #include "libutil/SocketSet.h"
-#include "mygettext/mygettext.h"
-
 #include <cstddef>
 
 class LobbyPlayerInfo;
 
 LobbyClient::LobbyClient()
     : receivedNewServerList(false), receivedNewServerInfo(false), receivedNewRankingList(false), receivedNewPlayerList(false),
-      listener(NULL), recv_queue(&LobbyMessage::create_lobby), send_queue(&LobbyMessage::create_lobby),
-      state(CS_STOPPED), todoAfterConnect(TD_NOTHING), isHost(false)
+      listener(NULL), recv_queue(&LobbyMessage::create_lobby), send_queue(&LobbyMessage::create_lobby), state(CS_STOPPED),
+      todoAfterConnect(TD_NOTHING), isHost(false)
 {
 }
 
@@ -135,7 +134,8 @@ void LobbyClient::Stop()
  *  @param[in] user Benutzername
  *  @param[in] pass Passwort
  */
-bool LobbyClient::Login(const std::string& server, const unsigned port, const std::string& user, const std::string& pass, const bool use_ipv6)
+bool LobbyClient::Login(const std::string& server, const unsigned port, const std::string& user, const std::string& pass,
+                        const bool use_ipv6)
 {
     // aufräumen
     Stop();
@@ -143,10 +143,10 @@ bool LobbyClient::Login(const std::string& server, const unsigned port, const st
     todoAfterConnect = TD_LOGIN;
 
     userdata.user = user;
-    userdata.pass =  pass;
+    userdata.pass = pass;
 
     // verbinden
-    return Connect( server, port, use_ipv6 );
+    return Connect(server, port, use_ipv6);
 }
 
 /**
@@ -155,7 +155,8 @@ bool LobbyClient::Login(const std::string& server, const unsigned port, const st
  *  @param[in] user Benutzername
  *  @param[in] pass Passwort
  */
-bool LobbyClient::Register(const std::string& server, const unsigned port, const std::string& user, const std::string& pass, const std::string& email, const bool use_ipv6)
+bool LobbyClient::Register(const std::string& server, const unsigned port, const std::string& user, const std::string& pass,
+                           const std::string& email, const bool use_ipv6)
 {
     // aufräumen
     Stop();
@@ -167,7 +168,7 @@ bool LobbyClient::Register(const std::string& server, const unsigned port, const
     userdata.email = email;
 
     // verbinden
-    return Connect( server, port, use_ipv6 );
+    return Connect(server, port, use_ipv6);
 }
 
 /**
@@ -230,7 +231,8 @@ void LobbyClient::SendServerJoinRequest()
 void LobbyClient::SendLeaveServer()
 {
     // Don't send if we are not ingame or we will be kicked
-    if(state == CS_INGAME){
+    if(state == CS_INGAME)
+    {
         // We don't have a dedicated message, but sending a delete request will also reset our state
         send_queue.push(new LobbyMessage_Server_Delete());
         state = CS_LOBBY;
@@ -262,7 +264,8 @@ void LobbyClient::SendChat(const std::string& text)
  *
  *  @param[in] name Name des Servers.
  */
-void LobbyClient::AddServer(const std::string& name, const std::string& programVersion, const std::string& map, bool has_password, unsigned short port)
+void LobbyClient::AddServer(const std::string& name, const std::string& programVersion, const std::string& map, bool has_password,
+                            unsigned short port)
 {
     assert(state == CS_LOBBY);
     LobbyServerInfo server;
@@ -282,7 +285,8 @@ void LobbyClient::AddServer(const std::string& name, const std::string& programV
  */
 void LobbyClient::DeleteServer()
 {
-    if(state == CS_INGAME && isHost){
+    if(state == CS_INGAME && isHost)
+    {
         send_queue.push(new LobbyMessage_Server_Delete());
         isHost = false;
         // TODO: current protocol says we are not ingame anymore
@@ -339,7 +343,7 @@ bool LobbyClient::Connect(const std::string& server, const unsigned port, const 
 /**
  *  Ping-Nachricht.
  */
-void LobbyClient::OnNMSLobbyPing(unsigned  /*id*/)
+void LobbyClient::OnNMSLobbyPing(unsigned /*id*/)
 {
     send_queue.push(new LobbyMessage_Pong(1));
 }
@@ -349,7 +353,7 @@ void LobbyClient::OnNMSLobbyPing(unsigned  /*id*/)
  *
  *  @param[in] playerId Die empfangene Spieler-ID
  */
-void LobbyClient::OnNMSLobbyID(unsigned  /*id*/, unsigned playerId)
+void LobbyClient::OnNMSLobbyID(unsigned /*id*/, unsigned playerId)
 {
     if(playerId == 0xFFFFFFFF)
     {
@@ -362,15 +366,9 @@ void LobbyClient::OnNMSLobbyID(unsigned  /*id*/, unsigned playerId)
 
     switch(todoAfterConnect)
     {
-        case TD_LOGIN:
-            send_queue.push(new LobbyMessage_Login(userdata.user, userdata.pass, userdata.programVersion));
-            break;
-        case TD_REGISTER:
-            send_queue.push(new LobbyMessage_Register(userdata.user, userdata.pass, userdata.email));
-            break;
-        default:
-            ServerLost();
-            break;
+        case TD_LOGIN: send_queue.push(new LobbyMessage_Login(userdata.user, userdata.pass, userdata.programVersion)); break;
+        case TD_REGISTER: send_queue.push(new LobbyMessage_Register(userdata.user, userdata.pass, userdata.email)); break;
+        default: ServerLost(); break;
     }
 }
 
@@ -379,7 +377,7 @@ void LobbyClient::OnNMSLobbyID(unsigned  /*id*/, unsigned playerId)
  *
  *  @param[in] error Die empfangene Fehlermeldung
  */
-void LobbyClient::OnNMSLobbyLoginError(unsigned  /*id*/, const std::string& error)
+void LobbyClient::OnNMSLobbyLoginError(unsigned /*id*/, const std::string& error)
 {
     if(listener)
         listener->LC_Status_Error(error);
@@ -392,7 +390,7 @@ void LobbyClient::OnNMSLobbyLoginError(unsigned  /*id*/, const std::string& erro
  *
  *  @param[in] email Die empfangene Emailadresse des Accounts
  */
-void LobbyClient::OnNMSLobbyLoginDone(unsigned  /*id*/, const std::string& email)
+void LobbyClient::OnNMSLobbyLoginDone(unsigned /*id*/, const std::string& email)
 {
     state = CS_LOBBY;
     userdata.email = email;
@@ -405,7 +403,7 @@ void LobbyClient::OnNMSLobbyLoginDone(unsigned  /*id*/, const std::string& email
  *
  *  @param[in] error Die empfangene Fehlermeldung
  */
-void LobbyClient::OnNMSLobbyRegisterError(unsigned  /*id*/, const std::string& error) //-V524
+void LobbyClient::OnNMSLobbyRegisterError(unsigned /*id*/, const std::string& error) //-V524
 {
     if(listener)
         listener->LC_Status_Error(error);
@@ -416,7 +414,7 @@ void LobbyClient::OnNMSLobbyRegisterError(unsigned  /*id*/, const std::string& e
 /**
  *  Lobby-Register-Done-Nachricht.
  */
-void LobbyClient::OnNMSLobbyRegisterDone(unsigned  /*id*/)
+void LobbyClient::OnNMSLobbyRegisterDone(unsigned /*id*/)
 {
     if(listener)
         listener->LC_Registered();
@@ -429,7 +427,7 @@ void LobbyClient::OnNMSLobbyRegisterDone(unsigned  /*id*/)
  *
  *  @param[in] error Die empfangene Serverliste
  */
-void LobbyClient::OnNMSLobbyServerList(unsigned  /*id*/, const LobbyServerList& list)
+void LobbyClient::OnNMSLobbyServerList(unsigned /*id*/, const LobbyServerList& list)
 {
     serverList = list;
 
@@ -441,7 +439,7 @@ void LobbyClient::OnNMSLobbyServerList(unsigned  /*id*/, const LobbyServerList& 
  *
  *  @param[in] error Die empfangene Spielerliste
  */
-void LobbyClient::OnNMSLobbyPlayerList(unsigned  /*id*/, const LobbyPlayerList& onlinePlayers, const LobbyPlayerList& ingamePlayers)
+void LobbyClient::OnNMSLobbyPlayerList(unsigned /*id*/, const LobbyPlayerList& onlinePlayers, const LobbyPlayerList& ingamePlayers)
 {
     playerList = onlinePlayers;
     for(LobbyPlayerList::const_iterator it = ingamePlayers.begin(); it != ingamePlayers.end(); ++it)
@@ -454,7 +452,7 @@ void LobbyClient::OnNMSLobbyPlayerList(unsigned  /*id*/, const LobbyPlayerList& 
  *
  *  @param[in] error Die empfangene Spielerliste (Top 10)
  */
-void LobbyClient::OnNMSLobbyRankingList(unsigned  /*id*/, const LobbyPlayerList& list)
+void LobbyClient::OnNMSLobbyRankingList(unsigned /*id*/, const LobbyPlayerList& list)
 {
     rankingList = list;
 
@@ -466,7 +464,7 @@ void LobbyClient::OnNMSLobbyRankingList(unsigned  /*id*/, const LobbyPlayerList&
  *
  *  @param[in] error Das empfangene ServerInfo
  */
-void LobbyClient::OnNMSLobbyServerInfo(unsigned  /*id*/, const LobbyServerInfo& info)
+void LobbyClient::OnNMSLobbyServerInfo(unsigned /*id*/, const LobbyServerInfo& info)
 {
     serverInfo = info;
 
@@ -479,7 +477,7 @@ void LobbyClient::OnNMSLobbyServerInfo(unsigned  /*id*/, const LobbyServerInfo& 
  *  @param[in] player Der empfangene Spielername
  *  @param[in] text   Der empfangene Text
  */
-void LobbyClient::OnNMSLobbyChat(unsigned  /*id*/, const std::string& player, const std::string& text)
+void LobbyClient::OnNMSLobbyChat(unsigned /*id*/, const std::string& player, const std::string& text)
 {
     if(listener)
         listener->LC_Chat(player, text);
@@ -490,7 +488,7 @@ void LobbyClient::OnNMSLobbyChat(unsigned  /*id*/, const std::string& player, co
  *
  *  @param[in] error Die empfangene Fehlermeldung
  */
-void LobbyClient::OnNMSLobbyServerAddFailed(unsigned  /*id*/, const std::string& error)
+void LobbyClient::OnNMSLobbyServerAddFailed(unsigned /*id*/, const std::string& error)
 {
     if(listener)
         listener->LC_Status_Error(error);
@@ -501,7 +499,7 @@ void LobbyClient::OnNMSLobbyServerAddFailed(unsigned  /*id*/, const std::string&
  *
  *  @param[in] info Das empfangene ServerInfo
  */
-void LobbyClient::OnNMSLobbyServerAdd(unsigned  /*id*/, const LobbyServerInfo& info)
+void LobbyClient::OnNMSLobbyServerAdd(unsigned /*id*/, const LobbyServerInfo& info)
 {
     LOG.write(_("GameServer %s sucessfully created!\n")) % info.getName();
 
@@ -518,7 +516,7 @@ void LobbyClient::OnNMSLobbyServerAdd(unsigned  /*id*/, const LobbyServerInfo& i
  *
  *  @param[in] email Die empfangene PlayerInfo des angefragten Spielers.
  */
-void LobbyClient::OnNMSLobbyRankingInfo(unsigned  /*id*/, const LobbyPlayerInfo& player)
+void LobbyClient::OnNMSLobbyRankingInfo(unsigned /*id*/, const LobbyPlayerInfo& player)
 {
     if(listener)
         listener->LC_RankingInfo(player);
@@ -527,7 +525,7 @@ void LobbyClient::OnNMSLobbyRankingInfo(unsigned  /*id*/, const LobbyPlayerInfo&
 /**
  *  Dead-Nachricht.
  */
-void LobbyClient::OnNMSDeadMsg(unsigned  /*id*/)
+void LobbyClient::OnNMSDeadMsg(unsigned /*id*/)
 {
     ServerLost();
 }

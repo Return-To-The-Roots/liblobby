@@ -21,12 +21,12 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Eigene Header
-#include "libutil/Singleton.h"
 #include "LobbyMessageInterface.h"
-#include "LobbyServerList.h"
-#include "LobbyServerInfo.h"
 #include "LobbyPlayerList.h"
+#include "LobbyServerInfo.h"
+#include "LobbyServerList.h"
 #include "libutil/MessageQueue.h"
+#include "libutil/Singleton.h"
 #include "libutil/Socket.h"
 #include <string>
 
@@ -36,154 +36,155 @@ class LobbyPlayerInfo;
 /// Lobby-Client-Klasse
 class LobbyClient : public Singleton<LobbyClient, SingletonPolicies::WithLongevity>, public LobbyMessageInterface
 {
-    public:
-        static const unsigned Longevity = 10;
+public:
+    static const unsigned Longevity = 10;
 
-        LobbyClient();
-        ~LobbyClient() override;
+    LobbyClient();
+    ~LobbyClient() override;
 
-        /// setzt das Interface
-        void SetInterface(LobbyInterface* parent) { this->listener = parent; }
+    /// setzt das Interface
+    void SetInterface(LobbyInterface* parent) { this->listener = parent; }
 
-        /// Hauptschleife.
-        void Run();
-        /// trennt die Verbindung mit dem LobbyServer.
-        void Stop();
+    /// Hauptschleife.
+    void Run();
+    /// trennt die Verbindung mit dem LobbyServer.
+    void Stop();
 
-        /// versucht einen Login in den LobbyServer.
-        bool Login(const std::string& server, const unsigned port, const std::string& user, const std::string& pass, const bool use_ipv6);
-        ///  versucht einen Nick auf dem LobbyServer zu registrieren.
-        bool Register(const std::string& server, const unsigned port, const std::string& user, const std::string& pass, const std::string& email, const bool use_ipv6);
+    /// versucht einen Login in den LobbyServer.
+    bool Login(const std::string& server, const unsigned port, const std::string& user, const std::string& pass, const bool use_ipv6);
+    ///  versucht einen Nick auf dem LobbyServer zu registrieren.
+    bool Register(const std::string& server, const unsigned port, const std::string& user, const std::string& pass,
+                  const std::string& email, const bool use_ipv6);
 
-        /// schickt einen Request für die Server-Liste.
-        void SendServerListRequest();
-        /// schickt einen Request für die Player-Liste.
-        void SendPlayerListRequest();
-        /// schickt einen Request für die Top10-Liste.
-        void SendRankingListRequest();
-        /// schickt einen Request für ein Serverinfo.
-        void SendServerInfoRequest(unsigned id);
-        /// schickt einen Request um die Punkte eines bestimmten Spielers auszulesen.
-        void SendRankingInfoRequest(const std::string& name);
+    /// schickt einen Request für die Server-Liste.
+    void SendServerListRequest();
+    /// schickt einen Request für die Player-Liste.
+    void SendPlayerListRequest();
+    /// schickt einen Request für die Top10-Liste.
+    void SendRankingListRequest();
+    /// schickt einen Request für ein Serverinfo.
+    void SendServerInfoRequest(unsigned id);
+    /// schickt einen Request um die Punkte eines bestimmten Spielers auszulesen.
+    void SendRankingInfoRequest(const std::string& name);
 
-        /// schickt einen Request für den Serverjoin.
-        void SendServerJoinRequest();
-        /// Notify that we left a server
-        void SendLeaveServer();
+    /// schickt einen Request für den Serverjoin.
+    void SendServerJoinRequest();
+    /// Notify that we left a server
+    void SendLeaveServer();
 
-        /// verschickt eine Chatnachricht.
-        void SendChat(const std::string& text);
+    /// verschickt eine Chatnachricht.
+    void SendChat(const std::string& text);
 
-        /// fügt einen Server zur Lobby hinzu.
-        void AddServer(const std::string& name, const std::string& programVersion, const std::string& map, bool has_password, unsigned short port);
-        /// entfernt den einem zugehörigen Server von der Lobby.
-        void DeleteServer();
-        /// aktualisiert den Kartennamen des zugehörigen Servers in der Lobby.
-        void UpdateServerMap(const std::string& map);
-        /// aktualisiert die Spielerzahlen des zugehörigen Servers in der Lobby.
-        void UpdateServerPlayerCount(unsigned curplayer, unsigned maxplayer);
+    /// fügt einen Server zur Lobby hinzu.
+    void AddServer(const std::string& name, const std::string& programVersion, const std::string& map, bool has_password,
+                   unsigned short port);
+    /// entfernt den einem zugehörigen Server von der Lobby.
+    void DeleteServer();
+    /// aktualisiert den Kartennamen des zugehörigen Servers in der Lobby.
+    void UpdateServerMap(const std::string& map);
+    /// aktualisiert die Spielerzahlen des zugehörigen Servers in der Lobby.
+    void UpdateServerPlayerCount(unsigned curplayer, unsigned maxplayer);
 
-        /// liefert die Serverliste.
-        const LobbyServerList& GetServerList() const { return serverList; }
-        /// liefert die Spielerliste.
-        const LobbyPlayerList& GetPlayerList() const { return playerList; };
-        /// liefert die Rankingliste.
-        const LobbyPlayerList& GetRankingList() const { return rankingList; }
-        /// liefert Informationen über einen Server
-        const LobbyServerInfo& GetServerInfo() const { return serverInfo; };
-        const std::string GetUser() const { return userdata.user; };
+    /// liefert die Serverliste.
+    const LobbyServerList& GetServerList() const { return serverList; }
+    /// liefert die Spielerliste.
+    const LobbyPlayerList& GetPlayerList() const { return playerList; };
+    /// liefert die Rankingliste.
+    const LobbyPlayerList& GetRankingList() const { return rankingList; }
+    /// liefert Informationen über einen Server
+    const LobbyServerInfo& GetServerInfo() const { return serverInfo; };
+    const std::string GetUser() const { return userdata.user; };
 
-        /// sind wir eingeloggt?
-        bool IsLoggedIn() const { return (state == CS_LOBBY || state == CS_INGAME); }
-        bool IsIngame() const { return state == CS_INGAME; }
+    /// sind wir eingeloggt?
+    bool IsLoggedIn() const { return (state == CS_LOBBY || state == CS_INGAME); }
+    bool IsIngame() const { return state == CS_INGAME; }
 
-        /// Lobby-Login-Error-Nachricht.
-        void OnNMSLobbyLoginError(unsigned id, const std::string& error) override;
-        /// Lobby-Logged-In-Nachricht.
-        void OnNMSLobbyLoginDone(unsigned id, const std::string& email) override;
+    /// Lobby-Login-Error-Nachricht.
+    void OnNMSLobbyLoginError(unsigned id, const std::string& error) override;
+    /// Lobby-Logged-In-Nachricht.
+    void OnNMSLobbyLoginDone(unsigned id, const std::string& email) override;
 
-        /// Lobby-Register-Error-Nachricht.
-        void OnNMSLobbyRegisterError(unsigned id, const std::string& error) override;
-        /// Lobby-Register-Done-Nachricht.
-        void OnNMSLobbyRegisterDone(unsigned id) override;
+    /// Lobby-Register-Error-Nachricht.
+    void OnNMSLobbyRegisterError(unsigned id, const std::string& error) override;
+    /// Lobby-Register-Done-Nachricht.
+    void OnNMSLobbyRegisterDone(unsigned id) override;
 
-        /// Lobby-Player-ID-Nachricht.
-        void OnNMSLobbyID(unsigned id, unsigned playerId) override;
-        /// Chat-Nachricht.
-        void OnNMSLobbyChat(unsigned id, const std::string& player, const std::string& text) override;
+    /// Lobby-Player-ID-Nachricht.
+    void OnNMSLobbyID(unsigned id, unsigned playerId) override;
+    /// Chat-Nachricht.
+    void OnNMSLobbyChat(unsigned id, const std::string& player, const std::string& text) override;
 
-        /// Ping-Nachricht.
-        void OnNMSLobbyPing(unsigned id) override;
+    /// Ping-Nachricht.
+    void OnNMSLobbyPing(unsigned id) override;
 
-        /// ServerList-Nachricht.
-        void OnNMSLobbyServerList(unsigned id, const LobbyServerList& list) override;
-        /// PlayerList-Nachricht.
-        void OnNMSLobbyPlayerList(unsigned id, const LobbyPlayerList& onlinePlayers, const LobbyPlayerList& ingamePlayers) override;
-        /// RankingList-Nachricht.
-        void OnNMSLobbyRankingList(unsigned id, const LobbyPlayerList& list) override;
-        /// ServerInfo-Nachricht.
-        void OnNMSLobbyServerInfo(unsigned id, const LobbyServerInfo& info) override;
+    /// ServerList-Nachricht.
+    void OnNMSLobbyServerList(unsigned id, const LobbyServerList& list) override;
+    /// PlayerList-Nachricht.
+    void OnNMSLobbyPlayerList(unsigned id, const LobbyPlayerList& onlinePlayers, const LobbyPlayerList& ingamePlayers) override;
+    /// RankingList-Nachricht.
+    void OnNMSLobbyRankingList(unsigned id, const LobbyPlayerList& list) override;
+    /// ServerInfo-Nachricht.
+    void OnNMSLobbyServerInfo(unsigned id, const LobbyServerInfo& info) override;
 
-        /// Lobby-Server-Add-Done-Nachricht.
-        void OnNMSLobbyServerAdd(unsigned id, const LobbyServerInfo& info) override;
-        /// Lobby-Server-Add-Failed-Nachricht.
-        void OnNMSLobbyServerAddFailed(unsigned id, const std::string& error) override;
+    /// Lobby-Server-Add-Done-Nachricht.
+    void OnNMSLobbyServerAdd(unsigned id, const LobbyServerInfo& info) override;
+    /// Lobby-Server-Add-Failed-Nachricht.
+    void OnNMSLobbyServerAddFailed(unsigned id, const std::string& error) override;
 
-        /// Lobby-Ranking-Info Nachricht.
-        void OnNMSLobbyRankingInfo(unsigned id, const LobbyPlayerInfo& player) override;
+    /// Lobby-Ranking-Info Nachricht.
+    void OnNMSLobbyRankingInfo(unsigned id, const LobbyPlayerInfo& player) override;
 
-        /// Dead-Nachricht.
-        virtual void OnNMSDeadMsg(unsigned id);
+    /// Dead-Nachricht.
+    virtual void OnNMSDeadMsg(unsigned id);
 
-    protected:
-        /// verbindet mit dem LobbyServer.
-        bool Connect(const std::string& server, const unsigned port, const bool use_ipv6);
-        /// Server verloren.
-        void ServerLost(bool notifyListener = true);
+protected:
+    /// verbindet mit dem LobbyServer.
+    bool Connect(const std::string& server, const unsigned port, const bool use_ipv6);
+    /// Server verloren.
+    void ServerLost(bool notifyListener = true);
 
-    public:
-        bool receivedNewServerList;
-        bool receivedNewServerInfo;
-        bool receivedNewRankingList;
-        bool receivedNewPlayerList;
+public:
+    bool receivedNewServerList;
+    bool receivedNewServerInfo;
+    bool receivedNewRankingList;
+    bool receivedNewPlayerList;
 
-    private:
-        LobbyInterface* listener;
+private:
+    LobbyInterface* listener;
 
-        MessageQueue recv_queue;
-        MessageQueue send_queue;
+    MessageQueue recv_queue;
+    MessageQueue send_queue;
 
-        enum ClientState
-        {
-            CS_STOPPED = 0,
-            CS_CONNECT,
-            CS_LOBBY,
-            CS_INGAME
-        } state;
+    enum ClientState
+    {
+        CS_STOPPED = 0,
+        CS_CONNECT,
+        CS_LOBBY,
+        CS_INGAME
+    } state;
 
-        enum ClientTodo
-        {
-            TD_NOTHING = 0,
-            TD_LOGIN,
-            TD_REGISTER
-        } todoAfterConnect;
+    enum ClientTodo
+    {
+        TD_NOTHING = 0,
+        TD_LOGIN,
+        TD_REGISTER
+    } todoAfterConnect;
 
-        struct UserData
-        {
-            std::string user;
-            std::string pass;
-            std::string email;
-            std::string programVersion;
-        } userdata;
+    struct UserData
+    {
+        std::string user;
+        std::string pass;
+        std::string email;
+        std::string programVersion;
+    } userdata;
 
+    Socket socket;
 
-        Socket socket;
-
-        LobbyServerList serverList;
-        LobbyPlayerList playerList;
-        LobbyPlayerList rankingList;
-        LobbyServerInfo serverInfo;
-        bool isHost;
+    LobbyServerList serverList;
+    LobbyPlayerList playerList;
+    LobbyPlayerList rankingList;
+    LobbyServerInfo serverInfo;
+    bool isHost;
 };
 
 ///////////////////////////////////////////////////////////////////////////////

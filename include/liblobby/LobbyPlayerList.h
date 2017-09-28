@@ -20,6 +20,7 @@
 #pragma once
 
 #include "LobbyPlayerInfo.h"
+#include "libutil/SerializableArray.h"
 
 class LobbyPlayerList : public SerializableArray<LobbyPlayerInfo>
 {

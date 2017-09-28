@@ -29,58 +29,64 @@ class LobbyPlayerInfo;
 
 class LobbyMessageInterface : public MessageInterface
 {
-    public:
-        /// Lobby-Login-Nachricht.
-        virtual void OnNMSLobbyLogin(unsigned id, const unsigned revision, const std::string& user, const std::string& pass, const std::string& version){}
-        /// Lobby-Login-Error-Nachricht.
-        virtual void OnNMSLobbyLoginError(unsigned id, const std::string& error){}
-        /// Lobby-Logged-In-Nachricht.
-        virtual void OnNMSLobbyLoginDone(unsigned id, const std::string& email){}
+public:
+    /// Lobby-Login-Nachricht.
+    virtual void OnNMSLobbyLogin(unsigned id, const unsigned revision, const std::string& user, const std::string& pass,
+                                 const std::string& version)
+    {
+    }
+    /// Lobby-Login-Error-Nachricht.
+    virtual void OnNMSLobbyLoginError(unsigned id, const std::string& error) {}
+    /// Lobby-Logged-In-Nachricht.
+    virtual void OnNMSLobbyLoginDone(unsigned id, const std::string& email) {}
 
-        /// Lobby-Register-Nachricht.
-        virtual void OnNMSLobbyRegister(unsigned id, const unsigned revision, const std::string& user, const std::string& pass, const std::string& email){}
-        /// Lobby-Register-Error-Nachricht.
-        virtual void OnNMSLobbyRegisterError(unsigned id, const std::string& error){}
-        /// Lobby-Register-Done-Nachricht.
-        virtual void OnNMSLobbyRegisterDone(unsigned id){}
+    /// Lobby-Register-Nachricht.
+    virtual void OnNMSLobbyRegister(unsigned id, const unsigned revision, const std::string& user, const std::string& pass,
+                                    const std::string& email)
+    {
+    }
+    /// Lobby-Register-Error-Nachricht.
+    virtual void OnNMSLobbyRegisterError(unsigned id, const std::string& error) {}
+    /// Lobby-Register-Done-Nachricht.
+    virtual void OnNMSLobbyRegisterDone(unsigned id) {}
 
-        /// Lobby-Player-ID-Nachricht.
-        virtual void OnNMSLobbyID(unsigned id, unsigned playerId){}
-        /// Chat-Nachricht.
-        virtual void OnNMSLobbyChat(unsigned id, const std::string& player, const std::string& text){}
+    /// Lobby-Player-ID-Nachricht.
+    virtual void OnNMSLobbyID(unsigned id, unsigned playerId) {}
+    /// Chat-Nachricht.
+    virtual void OnNMSLobbyChat(unsigned id, const std::string& player, const std::string& text) {}
 
-        /// Ping-Nachricht.
-        virtual void OnNMSLobbyPing(unsigned id){}
-        /// Pong-Nachricht.
-        virtual void OnNMSLobbyPong(unsigned id){}
+    /// Ping-Nachricht.
+    virtual void OnNMSLobbyPing(unsigned id) {}
+    /// Pong-Nachricht.
+    virtual void OnNMSLobbyPong(unsigned id) {}
 
-        /// ServerList-Nachricht.
-        virtual void OnNMSLobbyServerList(unsigned id){}
-        virtual void OnNMSLobbyServerList(unsigned id, const LobbyServerList& list){}
-        /// PlayerList-Nachricht.
-        virtual void OnNMSLobbyPlayerList(unsigned id){}
-        virtual void OnNMSLobbyPlayerList(unsigned id, const LobbyPlayerList& onlinePlayers, const LobbyPlayerList& ingamePlayers){}
-        /// RankingList-Nachricht.
-        virtual void OnNMSLobbyRankingList(unsigned id){}
-        virtual void OnNMSLobbyRankingList(unsigned id, const LobbyPlayerList& list){}
-        /// ServerInfo-Nachricht.
-        virtual void OnNMSLobbyServerInfo(unsigned id, const unsigned& server){}
-        virtual void OnNMSLobbyServerInfo(unsigned id, const LobbyServerInfo& info){}
+    /// ServerList-Nachricht.
+    virtual void OnNMSLobbyServerList(unsigned id) {}
+    virtual void OnNMSLobbyServerList(unsigned id, const LobbyServerList& list) {}
+    /// PlayerList-Nachricht.
+    virtual void OnNMSLobbyPlayerList(unsigned id) {}
+    virtual void OnNMSLobbyPlayerList(unsigned id, const LobbyPlayerList& onlinePlayers, const LobbyPlayerList& ingamePlayers) {}
+    /// RankingList-Nachricht.
+    virtual void OnNMSLobbyRankingList(unsigned id) {}
+    virtual void OnNMSLobbyRankingList(unsigned id, const LobbyPlayerList& list) {}
+    /// ServerInfo-Nachricht.
+    virtual void OnNMSLobbyServerInfo(unsigned id, const unsigned& server) {}
+    virtual void OnNMSLobbyServerInfo(unsigned id, const LobbyServerInfo& info) {}
 
-        /// Lobby-Server-Add-Done-Nachricht.
-        virtual void OnNMSLobbyServerAdd(unsigned id, const LobbyServerInfo& info){}
-        /// Lobby-Server-Add-Failed-Nachricht.
-        virtual void OnNMSLobbyServerAddFailed(unsigned id, const std::string& error){}
-        /// Lobby-Server-Update-Player-Nachricht.
-        virtual void OnNMSLobbyServerUpdatePlayer(unsigned id, const unsigned curplayer, const unsigned maxplayer){}
-        /// Lobby-Server-Update-Map-Nachricht.
-        virtual void OnNMSLobbyServerUpdateMap(unsigned id, const std::string& map){}
-        /// Lobby-Server-Delete-Nachricht.
-        virtual void OnNMSLobbyServerDelete(unsigned id){}
-        /// Lobby-Server-Join-Nachricht.
-        virtual void OnNMSLobbyServerJoin(unsigned id){}
-        /// Lobby-Ranking-Info-Nachricht.
-        virtual void OnNMSLobbyRankingInfo(unsigned id, const LobbyPlayerInfo& player){}
+    /// Lobby-Server-Add-Done-Nachricht.
+    virtual void OnNMSLobbyServerAdd(unsigned id, const LobbyServerInfo& info) {}
+    /// Lobby-Server-Add-Failed-Nachricht.
+    virtual void OnNMSLobbyServerAddFailed(unsigned id, const std::string& error) {}
+    /// Lobby-Server-Update-Player-Nachricht.
+    virtual void OnNMSLobbyServerUpdatePlayer(unsigned id, const unsigned curplayer, const unsigned maxplayer) {}
+    /// Lobby-Server-Update-Map-Nachricht.
+    virtual void OnNMSLobbyServerUpdateMap(unsigned id, const std::string& map) {}
+    /// Lobby-Server-Delete-Nachricht.
+    virtual void OnNMSLobbyServerDelete(unsigned id) {}
+    /// Lobby-Server-Join-Nachricht.
+    virtual void OnNMSLobbyServerJoin(unsigned id) {}
+    /// Lobby-Ranking-Info-Nachricht.
+    virtual void OnNMSLobbyRankingInfo(unsigned id, const LobbyPlayerInfo& player) {}
 };
 
-#endif //!LOBBYMESSAGEINTERFACE_H_INCLUDED
+#endif //! LOBBYMESSAGEINTERFACE_H_INCLUDED
