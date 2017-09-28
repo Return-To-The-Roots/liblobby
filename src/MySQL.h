@@ -21,7 +21,7 @@
 
 #include <mysql.h>
 
-#include "libutil/src/Singleton.h"
+#include "libutil/Singleton.h"
 
 #include "LobbyServerList.h"
 #include "LobbyServerInfo.h"

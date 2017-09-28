@@ -17,7 +17,7 @@
 
 #include "libLobbyDefines.h" // IWYU pragma: keep
 #include "LobbyInterface.h"
-#include "mygettext/src/mygettext.h"
+#include "mygettext/mygettext.h"
 
 void LobbyInterface::LC_LoggedIn(const std::string&  /*email*/) { }
 void LobbyInterface::LC_Registered() { }

@@ -17,7 +17,7 @@
 
 #include "libLobbyDefines.h" // IWYU pragma: keep
 #include "LobbyServer.h"
-#include "libutil/src/Socket.h"
+#include "libutil/Socket.h"
 #include <iostream>
 #include <cstdlib>
 

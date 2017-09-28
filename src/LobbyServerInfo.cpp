@@ -17,7 +17,7 @@
 
 #include "libLobbyDefines.h" // IWYU pragma: keep
 #include "LobbyServerInfo.h"
-#include "libutil/src/Serializer.h"
+#include "libutil/Serializer.h"
 
 LobbyServerInfo::LobbyServerInfo()
 {
