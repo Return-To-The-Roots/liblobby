@@ -30,8 +30,7 @@
 class LobbyPlayerInfo;
 
 LobbyClient::LobbyClient()
-    : receivedNewServerList(false), receivedNewServerInfo(false), receivedNewRankingList(false), receivedNewPlayerList(false),
-      listener(NULL), recv_queue(&LobbyMessage::create_lobby), send_queue(&LobbyMessage::create_lobby), state(CS_STOPPED),
+    : listener(NULL), recv_queue(&LobbyMessage::create_lobby), send_queue(&LobbyMessage::create_lobby), state(CS_STOPPED),
       todoAfterConnect(TD_NOTHING), isHost(false)
 {
 }
@@ -120,11 +119,6 @@ void LobbyClient::Stop()
 
     state = CS_STOPPED;
     todoAfterConnect = TD_NOTHING;
-
-    receivedNewServerList = false;
-    receivedNewPlayerList = false;
-    receivedNewRankingList = false;
-    receivedNewServerInfo = false;
     isHost = false;
 }
 
@@ -264,8 +258,7 @@ void LobbyClient::SendChat(const std::string& text)
  *
  *  @param[in] name Name des Servers.
  */
-void LobbyClient::AddServer(const std::string& name, const std::string& programVersion, const std::string& map, bool has_password,
-                            unsigned short port)
+void LobbyClient::AddServer(const std::string& name, const std::string& map, bool has_password, unsigned short port)
 {
     assert(state == CS_LOBBY);
     LobbyServerInfo server;
@@ -366,7 +359,7 @@ void LobbyClient::OnNMSLobbyID(unsigned /*id*/, unsigned playerId)
 
     switch(todoAfterConnect)
     {
-        case TD_LOGIN: send_queue.push(new LobbyMessage_Login(userdata.user, userdata.pass, userdata.programVersion)); break;
+        case TD_LOGIN: send_queue.push(new LobbyMessage_Login(userdata.user, userdata.pass, programVersion)); break;
         case TD_REGISTER: send_queue.push(new LobbyMessage_Register(userdata.user, userdata.pass, userdata.email)); break;
         default: ServerLost(); break;
     }
@@ -430,8 +423,8 @@ void LobbyClient::OnNMSLobbyRegisterDone(unsigned /*id*/)
 void LobbyClient::OnNMSLobbyServerList(unsigned /*id*/, const LobbyServerList& list)
 {
     serverList = list;
-
-    receivedNewServerList = true;
+    if(listener)
+        listener->LC_ServerList(serverList);
 }
 
 /**
@@ -444,7 +437,8 @@ void LobbyClient::OnNMSLobbyPlayerList(unsigned /*id*/, const LobbyPlayerList& o
     playerList = onlinePlayers;
     for(LobbyPlayerList::const_iterator it = ingamePlayers.begin(); it != ingamePlayers.end(); ++it)
         playerList.push_back(*it);
-    receivedNewPlayerList = true;
+    if(listener)
+        listener->LC_PlayerList(playerList);
 }
 
 /**
@@ -455,8 +449,8 @@ void LobbyClient::OnNMSLobbyPlayerList(unsigned /*id*/, const LobbyPlayerList& o
 void LobbyClient::OnNMSLobbyRankingList(unsigned /*id*/, const LobbyPlayerList& list)
 {
     rankingList = list;
-
-    receivedNewRankingList = true;
+    if(listener)
+        listener->LC_RankingList(rankingList);
 }
 
 /**
@@ -467,8 +461,8 @@ void LobbyClient::OnNMSLobbyRankingList(unsigned /*id*/, const LobbyPlayerList& 
 void LobbyClient::OnNMSLobbyServerInfo(unsigned /*id*/, const LobbyServerInfo& info)
 {
     serverInfo = info;
-
-    receivedNewServerInfo = true;
+    if(listener)
+        listener->LC_ServerInfo(serverInfo);
 }
 
 /**

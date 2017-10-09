@@ -42,8 +42,9 @@ public:
     LobbyClient();
     ~LobbyClient() override;
 
+    void SetProgramVersion(const std::string& programVersion) { this->programVersion = programVersion; }
     /// setzt das Interface
-    void SetInterface(LobbyInterface* parent) { this->listener = parent; }
+    void SetInterface(LobbyInterface* listener) { this->listener = listener; }
 
     /// Hauptschleife.
     void Run();
@@ -76,8 +77,7 @@ public:
     void SendChat(const std::string& text);
 
     /// fügt einen Server zur Lobby hinzu.
-    void AddServer(const std::string& name, const std::string& programVersion, const std::string& map, bool has_password,
-                   unsigned short port);
+    void AddServer(const std::string& name, const std::string& map, bool has_password, unsigned short port);
     /// entfernt den einem zugehörigen Server von der Lobby.
     void DeleteServer();
     /// aktualisiert den Kartennamen des zugehörigen Servers in der Lobby.
@@ -143,13 +143,8 @@ protected:
     /// Server verloren.
     void ServerLost(bool notifyListener = true);
 
-public:
-    bool receivedNewServerList;
-    bool receivedNewServerInfo;
-    bool receivedNewRankingList;
-    bool receivedNewPlayerList;
-
 private:
+    std::string programVersion;
     LobbyInterface* listener;
 
     MessageQueue recv_queue;
@@ -175,7 +170,6 @@ private:
         std::string user;
         std::string pass;
         std::string email;
-        std::string programVersion;
     } userdata;
 
     Socket socket;
