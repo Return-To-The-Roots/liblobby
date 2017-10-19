@@ -23,7 +23,6 @@
 #include "libutil/SerializableArray.h"
 
 class LobbyPlayerList : public SerializableArray<LobbyPlayerInfo>
-{
-};
+{};
 
 #endif // LOBBYPLAYERLIST_H_INCLUDED

@@ -28,8 +28,7 @@ LobbyServerInfo::LobbyServerInfo(const unsigned /*playerId*/, Serializer& ser)
     : serverid(ser.PopUnsignedInt()), name(ser.PopString()), host(ser.PopString()), port(ser.PopUnsignedShort()), version(ser.PopString()),
       ping(ser.PopUnsignedInt()), map(ser.PopString()), curplayers(ser.PopUnsignedInt()), maxplayers(ser.PopUnsignedInt()),
       has_password(ser.PopBool())
-{
-}
+{}
 
 /**
  *  leert die Informationen.

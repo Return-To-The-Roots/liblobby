@@ -23,7 +23,6 @@
 #include "libutil/SerializableArray.h"
 
 class LobbyServerList : public SerializableArray<LobbyServerInfo>
-{
-};
+{};
 
 #endif // LOBBYSERVERLIST_H_INCLUDED

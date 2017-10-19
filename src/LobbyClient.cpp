@@ -32,8 +32,7 @@ class LobbyPlayerInfo;
 LobbyClient::LobbyClient()
     : listener(NULL), recv_queue(&LobbyMessage::create_lobby), send_queue(&LobbyMessage::create_lobby), state(CS_STOPPED),
       todoAfterConnect(TD_NOTHING), isHost(false)
-{
-}
+{}
 
 LobbyClient::~LobbyClient()
 {

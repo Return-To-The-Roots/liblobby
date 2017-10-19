@@ -33,8 +33,7 @@ public:
     /// Lobby-Login-Nachricht.
     virtual void OnNMSLobbyLogin(unsigned id, const unsigned revision, const std::string& user, const std::string& pass,
                                  const std::string& version)
-    {
-    }
+    {}
     /// Lobby-Login-Error-Nachricht.
     virtual void OnNMSLobbyLoginError(unsigned id, const std::string& error) {}
     /// Lobby-Logged-In-Nachricht.
@@ -43,8 +42,7 @@ public:
     /// Lobby-Register-Nachricht.
     virtual void OnNMSLobbyRegister(unsigned id, const unsigned revision, const std::string& user, const std::string& pass,
                                     const std::string& email)
-    {
-    }
+    {}
     /// Lobby-Register-Error-Nachricht.
     virtual void OnNMSLobbyRegisterError(unsigned id, const std::string& error) {}
     /// Lobby-Register-Done-Nachricht.
