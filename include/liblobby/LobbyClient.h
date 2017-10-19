@@ -44,7 +44,8 @@ public:
 
     void SetProgramVersion(const std::string& programVersion) { this->programVersion = programVersion; }
     /// setzt das Interface
-    void SetInterface(LobbyInterface* listener) { this->listener = listener; }
+    void SetInterface(LobbyInterface* listener);
+    void RemoveInterface(LobbyInterface* listener);
 
     /// Hauptschleife.
     void Run();
@@ -100,42 +101,42 @@ public:
     bool IsIngame() const { return state == CS_INGAME; }
 
     /// Lobby-Login-Error-Nachricht.
-    void OnNMSLobbyLoginError(unsigned id, const std::string& error) override;
+    bool OnNMSLobbyLoginError(unsigned id, const std::string& error) override;
     /// Lobby-Logged-In-Nachricht.
-    void OnNMSLobbyLoginDone(unsigned id, const std::string& email) override;
+    bool OnNMSLobbyLoginDone(unsigned id, const std::string& email) override;
 
     /// Lobby-Register-Error-Nachricht.
-    void OnNMSLobbyRegisterError(unsigned id, const std::string& error) override;
+    bool OnNMSLobbyRegisterError(unsigned id, const std::string& error) override;
     /// Lobby-Register-Done-Nachricht.
-    void OnNMSLobbyRegisterDone(unsigned id) override;
+    bool OnNMSLobbyRegisterDone(unsigned id) override;
 
     /// Lobby-Player-ID-Nachricht.
-    void OnNMSLobbyID(unsigned id, unsigned playerId) override;
+    bool OnNMSLobbyID(unsigned id, unsigned playerId) override;
     /// Chat-Nachricht.
-    void OnNMSLobbyChat(unsigned id, const std::string& player, const std::string& text) override;
+    bool OnNMSLobbyChat(unsigned id, const std::string& player, const std::string& text) override;
 
     /// Ping-Nachricht.
-    void OnNMSLobbyPing(unsigned id) override;
+    bool OnNMSLobbyPing(unsigned id) override;
 
     /// ServerList-Nachricht.
-    void OnNMSLobbyServerList(unsigned id, const LobbyServerList& list) override;
+    bool OnNMSLobbyServerList(unsigned id, const LobbyServerList& list) override;
     /// PlayerList-Nachricht.
-    void OnNMSLobbyPlayerList(unsigned id, const LobbyPlayerList& onlinePlayers, const LobbyPlayerList& ingamePlayers) override;
+    bool OnNMSLobbyPlayerList(unsigned id, const LobbyPlayerList& onlinePlayers, const LobbyPlayerList& ingamePlayers) override;
     /// RankingList-Nachricht.
-    void OnNMSLobbyRankingList(unsigned id, const LobbyPlayerList& list) override;
+    bool OnNMSLobbyRankingList(unsigned id, const LobbyPlayerList& list) override;
     /// ServerInfo-Nachricht.
-    void OnNMSLobbyServerInfo(unsigned id, const LobbyServerInfo& info) override;
+    bool OnNMSLobbyServerInfo(unsigned id, const LobbyServerInfo& info) override;
 
     /// Lobby-Server-Add-Done-Nachricht.
-    void OnNMSLobbyServerAdd(unsigned id, const LobbyServerInfo& info) override;
+    bool OnNMSLobbyServerAdd(unsigned id, const LobbyServerInfo& info) override;
     /// Lobby-Server-Add-Failed-Nachricht.
-    void OnNMSLobbyServerAddFailed(unsigned id, const std::string& error) override;
+    bool OnNMSLobbyServerAddFailed(unsigned id, const std::string& error) override;
 
     /// Lobby-Ranking-Info Nachricht.
-    void OnNMSLobbyRankingInfo(unsigned id, const LobbyPlayerInfo& player) override;
+    bool OnNMSLobbyRankingInfo(unsigned id, const LobbyPlayerInfo& player) override;
 
     /// Dead-Nachricht.
-    virtual void OnNMSDeadMsg(unsigned id);
+    virtual bool OnNMSDeadMsg(unsigned id);
 
 protected:
     /// verbindet mit dem LobbyServer.
