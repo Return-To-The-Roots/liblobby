@@ -75,7 +75,7 @@ public:
 
     bool run(MessageInterface* callback, unsigned id) override
     {
-        LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
+        LobbyMessageInterface* cb = static_cast<LobbyMessageInterface*>(callback);
         LOG.writeToFile("<<< NMS_LOBBY_LOGIN(%d, %s, %s, %s)\n") % revision % user % "********" % version;
         return cb->OnNMSLobbyLogin(id, revision, user, pass, version);
     }
@@ -109,7 +109,7 @@ public:
 
     bool run(MessageInterface* callback, unsigned id) override
     {
-        LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
+        LobbyMessageInterface* cb = static_cast<LobbyMessageInterface*>(callback);
         LOG.writeToFile("<<< NMS_LOBBY_LOGIN_DONE(%s)\n") % email;
         return cb->OnNMSLobbyLoginDone(id, email);
     }
@@ -143,7 +143,7 @@ public:
 
     bool run(MessageInterface* callback, unsigned id) override
     {
-        LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
+        LobbyMessageInterface* cb = static_cast<LobbyMessageInterface*>(callback);
         LOG.writeToFile("<<< NMS_LOBBY_LOGIN_ERROR(%s)\n") % error;
         return cb->OnNMSLobbyLoginError(id, error);
     }
@@ -198,7 +198,7 @@ public:
 
     bool run(MessageInterface* callback, unsigned id) override
     {
-        LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
+        LobbyMessageInterface* cb = static_cast<LobbyMessageInterface*>(callback);
         LOG.writeToFile("<<< NMS_LOBBY_REGISTER(%d, %s, %s, %s)\n") % revision % user % "********" % email;
         return cb->OnNMSLobbyRegister(id, revision, user, pass, email);
     }
@@ -217,7 +217,7 @@ public:
 
     bool run(MessageInterface* callback, unsigned id) override
     {
-        LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
+        LobbyMessageInterface* cb = static_cast<LobbyMessageInterface*>(callback);
 
         LOG.writeToFile("<<< NMS_LOBBY_REGISTER_DONE\n");
         return cb->OnNMSLobbyRegisterDone(id);
@@ -252,7 +252,7 @@ public:
 
     bool run(MessageInterface* callback, unsigned id) override
     {
-        LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
+        LobbyMessageInterface* cb = static_cast<LobbyMessageInterface*>(callback);
         LOG.writeToFile("<<< NMS_LOBBY_REGISTER_ERROR(%s)\n") % error;
         return cb->OnNMSLobbyRegisterError(id, error);
     }
@@ -304,7 +304,7 @@ public:
 
     bool run(MessageInterface* callback, unsigned id) override
     {
-        LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
+        LobbyMessageInterface* cb = static_cast<LobbyMessageInterface*>(callback);
 
         if(isRequest)
         {
@@ -368,7 +368,7 @@ public:
 
     bool run(MessageInterface* callback, unsigned id) override
     {
-        LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
+        LobbyMessageInterface* cb = static_cast<LobbyMessageInterface*>(callback);
 
         if(isRequest) // Anfrage
         {
@@ -427,7 +427,7 @@ public:
 
     bool run(MessageInterface* callback, unsigned id) override
     {
-        LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
+        LobbyMessageInterface* cb = static_cast<LobbyMessageInterface*>(callback);
 
         if(isRequest) // Anfrage
         {
@@ -501,7 +501,7 @@ public:
 
     bool run(MessageInterface* callback, unsigned id) override
     {
-        LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
+        LobbyMessageInterface* cb = static_cast<LobbyMessageInterface*>(callback);
 
         if(isRequest) // Anfrage
         {
@@ -550,7 +550,7 @@ public:
 
     bool run(MessageInterface* callback, unsigned id) override
     {
-        LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
+        LobbyMessageInterface* cb = static_cast<LobbyMessageInterface*>(callback);
         LOG.writeToFile("<<< NMS_LOBBY_ID(%d)\n") % playerId;
 
         return cb->OnNMSLobbyID(id, playerId);
@@ -567,7 +567,7 @@ private:
 
 public:
     LobbyMessage_Chat() : LobbyMessage(NMS_LOBBY_CHAT) {}
-    LobbyMessage_Chat(const std::string& text) : LobbyMessage(NMS_LOBBY_CHAT), player(""), text(text)
+    LobbyMessage_Chat(const std::string& text) : LobbyMessage(NMS_LOBBY_CHAT), text(text)
     {
         LOG.writeToFile(">>> NMS_LOBBY_CHAT(%s)\n") % text;
     }
@@ -592,7 +592,7 @@ public:
 
     bool run(MessageInterface* callback, unsigned id) override
     {
-        LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
+        LobbyMessageInterface* cb = static_cast<LobbyMessageInterface*>(callback);
         LOG.writeToFile("<<< NMS_LOBBY_CHAT(%s, %s)\n") % player % text;
         return cb->OnNMSLobbyChat(id, player, text);
     }
@@ -610,7 +610,7 @@ public:
     }
     bool run(MessageInterface* callback, unsigned id) override
     {
-        LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
+        LobbyMessageInterface* cb = static_cast<LobbyMessageInterface*>(callback);
 
         // LOG.writeToFile("<<< NMS_LOBBY_PING\n");
         return cb->OnNMSLobbyPing(id);
@@ -629,7 +629,7 @@ public:
     }
     bool run(MessageInterface* callback, unsigned id) override
     {
-        LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
+        LobbyMessageInterface* cb = static_cast<LobbyMessageInterface*>(callback);
 
         // LOG.writeToFile("<<< NMS_LOBBY_PONG\n");
         return cb->OnNMSLobbyPong(id);
@@ -670,7 +670,7 @@ public:
         LOG.writeToFile("    %d %s %s:%d %s %d %s %d %d\n") % info.getId() % info.getName() % info.getHost() % info.getPort()
           % info.getVersion() % info.getPing() % info.getMap() % info.getCurPlayers() % info.getMaxPlayers();
 
-        LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
+        LobbyMessageInterface* cb = static_cast<LobbyMessageInterface*>(callback);
         return cb->OnNMSLobbyServerAdd(id, info);
     }
 };
@@ -703,7 +703,7 @@ public:
 
     bool run(MessageInterface* callback, unsigned id) override
     {
-        LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
+        LobbyMessageInterface* cb = static_cast<LobbyMessageInterface*>(callback);
 
         LOG.writeToFile("<<< NMS_LOBBY_SERVER_ADD_FAILED(%s)\n") % error;
         return cb->OnNMSLobbyServerAddFailed(id, error);
@@ -722,7 +722,7 @@ public:
     }
     bool run(MessageInterface* callback, unsigned id) override
     {
-        LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
+        LobbyMessageInterface* cb = static_cast<LobbyMessageInterface*>(callback);
 
         LOG.writeToFile("<<< NMS_LOBBY_SERVER_DELETE\n");
         return cb->OnNMSLobbyServerDelete(id);
@@ -761,7 +761,7 @@ public:
 
     bool run(MessageInterface* callback, unsigned id) override
     {
-        LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
+        LobbyMessageInterface* cb = static_cast<LobbyMessageInterface*>(callback);
         LOG.writeToFile("<<< NMS_LOBBY_SERVER_UPDATE_PLAYER(%d,%d)\n") % curplayer % maxplayer;
         return cb->OnNMSLobbyServerUpdatePlayer(id, curplayer, maxplayer);
     }
@@ -795,7 +795,7 @@ public:
 
     bool run(MessageInterface* callback, unsigned id) override
     {
-        LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
+        LobbyMessageInterface* cb = static_cast<LobbyMessageInterface*>(callback);
 
         LOG.writeToFile("<<< NMS_LOBBY_SERVER_UPDATE_MAP(%s)\n") % map;
         return cb->OnNMSLobbyServerUpdateMap(id, map);
@@ -811,7 +811,7 @@ public:
     LobbyMessage_Server_Join(bool /*reserved*/) : LobbyMessage(NMS_LOBBY_SERVER_JOIN) { LOG.writeToFile(">>> NMS_LOBBY_SERVER_JOIN\n"); }
     bool run(MessageInterface* callback, unsigned id) override
     {
-        LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
+        LobbyMessageInterface* cb = static_cast<LobbyMessageInterface*>(callback);
 
         LOG.writeToFile("<<< NMS_LOBBY_SERVER_JOIN\n");
         return cb->OnNMSLobbyServerJoin(id);
@@ -862,7 +862,7 @@ public:
 
     bool run(MessageInterface* callback, unsigned id) override
     {
-        LobbyMessageInterface* cb = dynamic_cast<LobbyMessageInterface*>(callback);
+        LobbyMessageInterface* cb = static_cast<LobbyMessageInterface*>(callback);
         LOG.writeToFile("<<< NMS_LOBBY_RANKING_INFO(%s)\n") % player.getName();
         LOG.writeToFile("    %d: %d %s %s %d %d %d\n") % 0 % player.getId() % player.getName() % player.getVersion() % player.getPunkte()
           % player.getGewonnen() % player.getVerloren();
