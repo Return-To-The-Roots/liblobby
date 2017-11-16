@@ -84,7 +84,7 @@ public:
     /// aktualisiert den Kartennamen des zugehörigen Servers in der Lobby.
     void UpdateServerMap(const std::string& map);
     /// aktualisiert die Spielerzahlen des zugehörigen Servers in der Lobby.
-    void UpdateServerPlayerCount(unsigned curplayer, unsigned maxplayer);
+    void UpdateServerNumPlayers(unsigned curplayer, unsigned maxplayer);
 
     /// liefert die Serverliste.
     const LobbyServerList& GetServerList() const { return serverList; }

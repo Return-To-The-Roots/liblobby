@@ -314,7 +314,7 @@ void LobbyClient::UpdateServerMap(const std::string& map)
  *  @param[in] curplayer Aktuelle Anzahl Spieler
  *  @param[in] maxplayer Maximale Anzahl Spieler
  */
-void LobbyClient::UpdateServerPlayerCount(unsigned curplayer, unsigned maxplayer)
+void LobbyClient::UpdateServerNumPlayers(unsigned curplayer, unsigned maxplayer)
 {
     assert(state == CS_INGAME && isHost);
     send_queue.push(new LobbyMessage_Server_Update_Player(curplayer, maxplayer));

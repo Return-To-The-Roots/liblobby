@@ -274,8 +274,8 @@ public:
     }
     LobbyMessage_ServerList(const LobbyServerList& list) : LobbyMessage(NMS_LOBBY_SERVERLIST), isRequest(false), list(list)
     {
-        LOG.writeToFile(">>> NMS_LOBBY_SERVERLIST(%d)\n") % list.getCount();
-        for(unsigned i = 0; i < list.getCount(); ++i)
+        LOG.writeToFile(">>> NMS_LOBBY_SERVERLIST(%d)\n") % list.size();
+        for(unsigned i = 0; i < list.size(); ++i)
         {
             const LobbyServerInfo* server = list.getElement(i);
             LOG.writeToFile("    %d: %d %s %s:%d %s %d %s %d %d\n") % i % server->getId() % server->getName() % server->getHost()
@@ -312,8 +312,8 @@ public:
             return cb->OnNMSLobbyServerList(id);
         } else
         {
-            LOG.writeToFile("<<< NMS_LOBBY_SERVERLIST(%d)\n") % list.getCount();
-            for(unsigned i = 0; i < list.getCount(); ++i)
+            LOG.writeToFile("<<< NMS_LOBBY_SERVERLIST(%d)\n") % list.size();
+            for(unsigned i = 0; i < list.size(); ++i)
             {
                 const LobbyServerInfo* server = list.getElement(i);
                 LOG.writeToFile("    %d: %d %s %s:%d %s %d %s %d %d\n") % i % server->getId() % server->getName() % server->getHost()
@@ -400,9 +400,9 @@ public:
     }
     LobbyMessage_RankingList(const LobbyPlayerList& list) : LobbyMessage(NMS_LOBBY_RANKINGLIST), isRequest(false), list(list)
     {
-        LOG.writeToFile(">>> NMS_LOBBY_RANKINGLIST(%d)\n") % list.getCount();
+        LOG.writeToFile(">>> NMS_LOBBY_RANKINGLIST(%d)\n") % list.size();
 
-        for(unsigned i = 0; i < list.getCount(); ++i)
+        for(unsigned i = 0; i < list.size(); ++i)
         {
             const LobbyPlayerInfo* player = list.getElement(i);
             LOG.writeToFile("    %d: %d %s %s %d %d %d\n") % i % player->getId() % player->getName() % player->getVersion()
@@ -435,8 +435,8 @@ public:
             return cb->OnNMSLobbyRankingList(id);
         } else // Antwort
         {
-            LOG.writeToFile("<<< NMS_LOBBY_RANKINGLIST(%d)\n") % list.getCount();
-            for(unsigned i = 0; i < list.getCount(); ++i)
+            LOG.writeToFile("<<< NMS_LOBBY_RANKINGLIST(%d)\n") % list.size();
+            for(unsigned i = 0; i < list.size(); ++i)
             {
                 const LobbyPlayerInfo* player = list.getElement(i);
                 LOG.writeToFile("    %d: %d %s %s %d %d %d\n") % i % player->getId() % player->getName() % player->getVersion()
@@ -465,9 +465,9 @@ public:
     }
     LobbyMessage_PlayerList(const LobbyPlayerList& list) : LobbyMessage(NMS_LOBBY_PLAYERLIST), isRequest(false), list(list)
     {
-        LOG.writeToFile(">>> NMS_LOBBY_PLAYERLIST(%d)\n") % list.getCount();
+        LOG.writeToFile(">>> NMS_LOBBY_PLAYERLIST(%d)\n") % list.size();
 
-        for(unsigned i = 0; i < list.getCount(); ++i)
+        for(unsigned i = 0; i < list.size(); ++i)
         {
             const LobbyPlayerInfo* player = list.getElement(i);
             LOG.writeToFile("    %d: %d %s %s %d %d %d\n") % i % player->getId() % player->getName() % player->getVersion()
@@ -509,8 +509,8 @@ public:
             return cb->OnNMSLobbyPlayerList(id);
         } else // Antwort
         {
-            LOG.writeToFile("<<< NMS_LOBBY_PLAYERLIST(%d)\n") % list.getCount();
-            for(unsigned i = 0; i < list.getCount(); ++i)
+            LOG.writeToFile("<<< NMS_LOBBY_PLAYERLIST(%d)\n") % list.size();
+            for(unsigned i = 0; i < list.size(); ++i)
             {
                 const LobbyPlayerInfo* player = list.getElement(i);
                 LOG.writeToFile("    %d: %d %s %s %d %d %d\n") % i % player->getId() % player->getName() % player->getVersion()
