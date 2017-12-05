@@ -44,8 +44,8 @@ public:
 
     void SetProgramVersion(const std::string& programVersion) { this->programVersion = programVersion; }
     /// setzt das Interface
-    void SetInterface(LobbyInterface* listener);
-    void RemoveInterface(LobbyInterface* listener);
+    void AddListener(LobbyInterface* listener);
+    void RemoveListener(LobbyInterface* listener);
 
     /// Hauptschleife.
     void Run();
@@ -146,7 +146,7 @@ protected:
 
 private:
     std::string programVersion;
-    LobbyInterface* listener;
+    std::vector<LobbyInterface*> listeners;
 
     MessageQueue recv_queue;
     MessageQueue send_queue;

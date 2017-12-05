@@ -25,13 +25,15 @@
 #include "libutil/Message.h"
 #include "libutil/Messages.h"
 #include "libutil/SocketSet.h"
+#include <boost/foreach.hpp>
+#include <algorithm>
 #include <cstddef>
 
 class LobbyPlayerInfo;
 
 LobbyClient::LobbyClient()
-    : listener(NULL), recv_queue(&LobbyMessage::create_lobby), send_queue(&LobbyMessage::create_lobby), state(CS_STOPPED),
-      todoAfterConnect(TD_NOTHING), isHost(false)
+    : recv_queue(&LobbyMessage::create_lobby), send_queue(&LobbyMessage::create_lobby), state(CS_STOPPED), todoAfterConnect(TD_NOTHING),
+      isHost(false)
 {}
 
 LobbyClient::~LobbyClient()
@@ -39,15 +41,14 @@ LobbyClient::~LobbyClient()
     Stop();
 }
 
-void LobbyClient::SetInterface(LobbyInterface* listener)
+void LobbyClient::AddListener(LobbyInterface* listener)
 {
-    this->listener = listener;
+    listeners.push_back(listener);
 }
 
-void LobbyClient::RemoveInterface(LobbyInterface* listener)
+void LobbyClient::RemoveListener(LobbyInterface* listener)
 {
-    if(this->listener == listener)
-        this->listener = NULL;
+    listeners.erase(std::remove(listeners.begin(), listeners.end(), listener), listeners.end());
 }
 
 /**
@@ -337,7 +338,8 @@ bool LobbyClient::Connect(const std::string& server, const unsigned port, const 
 
     state = CS_CONNECT;
 
-    if(listener)
+    std::vector<LobbyInterface*> tmpListeners(listeners);
+    BOOST_FOREACH(LobbyInterface* listener, tmpListeners)
         listener->LC_Status_Waiting();
 
     return true;
@@ -361,7 +363,8 @@ bool LobbyClient::OnNMSLobbyID(unsigned /*id*/, unsigned playerId)
 {
     if(playerId == 0xFFFFFFFF)
     {
-        if(listener)
+        std::vector<LobbyInterface*> tmpListeners(listeners);
+        BOOST_FOREACH(LobbyInterface* listener, tmpListeners)
             listener->LC_Status_Error(_("This Server is full!"));
         ServerLost(false);
 
@@ -384,7 +387,8 @@ bool LobbyClient::OnNMSLobbyID(unsigned /*id*/, unsigned playerId)
  */
 bool LobbyClient::OnNMSLobbyLoginError(unsigned /*id*/, const std::string& error)
 {
-    if(listener)
+    std::vector<LobbyInterface*> tmpListeners(listeners);
+    BOOST_FOREACH(LobbyInterface* listener, tmpListeners)
         listener->LC_Status_Error(error);
 
     ServerLost(false);
@@ -400,7 +404,8 @@ bool LobbyClient::OnNMSLobbyLoginDone(unsigned /*id*/, const std::string& email)
 {
     state = CS_LOBBY;
     userdata.email = email;
-    if(listener)
+    std::vector<LobbyInterface*> tmpListeners(listeners);
+    BOOST_FOREACH(LobbyInterface* listener, tmpListeners)
         listener->LC_LoggedIn(userdata.email);
     return true;
 }
@@ -412,7 +417,8 @@ bool LobbyClient::OnNMSLobbyLoginDone(unsigned /*id*/, const std::string& email)
  */
 bool LobbyClient::OnNMSLobbyRegisterError(unsigned /*id*/, const std::string& error) //-V524
 {
-    if(listener)
+    std::vector<LobbyInterface*> tmpListeners(listeners);
+    BOOST_FOREACH(LobbyInterface* listener, tmpListeners)
         listener->LC_Status_Error(error);
 
     ServerLost(false);
@@ -424,7 +430,8 @@ bool LobbyClient::OnNMSLobbyRegisterError(unsigned /*id*/, const std::string& er
  */
 bool LobbyClient::OnNMSLobbyRegisterDone(unsigned /*id*/)
 {
-    if(listener)
+    std::vector<LobbyInterface*> tmpListeners(listeners);
+    BOOST_FOREACH(LobbyInterface* listener, tmpListeners)
         listener->LC_Registered();
 
     Stop();
@@ -439,7 +446,8 @@ bool LobbyClient::OnNMSLobbyRegisterDone(unsigned /*id*/)
 bool LobbyClient::OnNMSLobbyServerList(unsigned /*id*/, const LobbyServerList& list)
 {
     serverList = list;
-    if(listener)
+    std::vector<LobbyInterface*> tmpListeners(listeners);
+    BOOST_FOREACH(LobbyInterface* listener, tmpListeners)
         listener->LC_ServerList(serverList);
     return true;
 }
@@ -454,7 +462,8 @@ bool LobbyClient::OnNMSLobbyPlayerList(unsigned /*id*/, const LobbyPlayerList& o
     playerList = onlinePlayers;
     for(LobbyPlayerList::const_iterator it = ingamePlayers.begin(); it != ingamePlayers.end(); ++it)
         playerList.push_back(*it);
-    if(listener)
+    std::vector<LobbyInterface*> tmpListeners(listeners);
+    BOOST_FOREACH(LobbyInterface* listener, tmpListeners)
         listener->LC_PlayerList(playerList);
     return true;
 }
@@ -467,7 +476,8 @@ bool LobbyClient::OnNMSLobbyPlayerList(unsigned /*id*/, const LobbyPlayerList& o
 bool LobbyClient::OnNMSLobbyRankingList(unsigned /*id*/, const LobbyPlayerList& list)
 {
     rankingList = list;
-    if(listener)
+    std::vector<LobbyInterface*> tmpListeners(listeners);
+    BOOST_FOREACH(LobbyInterface* listener, tmpListeners)
         listener->LC_RankingList(rankingList);
     return true;
 }
@@ -480,7 +490,8 @@ bool LobbyClient::OnNMSLobbyRankingList(unsigned /*id*/, const LobbyPlayerList& 
 bool LobbyClient::OnNMSLobbyServerInfo(unsigned /*id*/, const LobbyServerInfo& info)
 {
     serverInfo = info;
-    if(listener)
+    std::vector<LobbyInterface*> tmpListeners(listeners);
+    BOOST_FOREACH(LobbyInterface* listener, tmpListeners)
         listener->LC_ServerInfo(serverInfo);
     return true;
 }
@@ -493,7 +504,8 @@ bool LobbyClient::OnNMSLobbyServerInfo(unsigned /*id*/, const LobbyServerInfo& i
  */
 bool LobbyClient::OnNMSLobbyChat(unsigned /*id*/, const std::string& player, const std::string& text)
 {
-    if(listener)
+    std::vector<LobbyInterface*> tmpListeners(listeners);
+    BOOST_FOREACH(LobbyInterface* listener, tmpListeners)
         listener->LC_Chat(player, text);
     return true;
 }
@@ -505,7 +517,8 @@ bool LobbyClient::OnNMSLobbyChat(unsigned /*id*/, const std::string& player, con
  */
 bool LobbyClient::OnNMSLobbyServerAddFailed(unsigned /*id*/, const std::string& error)
 {
-    if(listener)
+    std::vector<LobbyInterface*> tmpListeners(listeners);
+    BOOST_FOREACH(LobbyInterface* listener, tmpListeners)
         listener->LC_Status_Error(error);
     return true;
 }
@@ -523,7 +536,8 @@ bool LobbyClient::OnNMSLobbyServerAdd(unsigned /*id*/, const LobbyServerInfo& in
     isHost = true;
 
     // Server kann jetzt gestartet werden
-    if(listener)
+    std::vector<LobbyInterface*> tmpListeners(listeners);
+    BOOST_FOREACH(LobbyInterface* listener, tmpListeners)
         listener->LC_Created();
     return true;
 }
@@ -535,7 +549,8 @@ bool LobbyClient::OnNMSLobbyServerAdd(unsigned /*id*/, const LobbyServerInfo& in
  */
 bool LobbyClient::OnNMSLobbyRankingInfo(unsigned /*id*/, const LobbyPlayerInfo& player)
 {
-    if(listener)
+    std::vector<LobbyInterface*> tmpListeners(listeners);
+    BOOST_FOREACH(LobbyInterface* listener, tmpListeners)
         listener->LC_RankingInfo(player);
     return true;
 }
@@ -559,6 +574,10 @@ void LobbyClient::ServerLost(bool notifyParent)
 
     Stop();
 
-    if(listener && notifyParent)
-        listener->LC_Status_ConnectionLost();
+    if(notifyParent)
+    {
+        std::vector<LobbyInterface*> tmpListeners(listeners);
+        BOOST_FOREACH(LobbyInterface* listener, tmpListeners)
+            listener->LC_Status_ConnectionLost();
+    }
 }

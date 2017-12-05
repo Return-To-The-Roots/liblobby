@@ -22,7 +22,8 @@ SET(SOURCES_LOBBY_S ${SOURCES_LOBBY} LobbyServer.cpp ${HEADER_PATH}/LobbyServer.
 INCLUDE_DIRECTORIES(${HEADER_PATH})
 
 IF (RTTR_BUILD_LOBBY_CLIENT)
-
+	find_package(Boost 1.55 REQUIRED)
+	INCLUDE_DIRECTORIES(SYSTEM ${Boost_INCLUDE_DIR})
     ADD_LIBRARY(lobby_c STATIC ${SOURCES_LOBBY_C})
     target_include_directories(lobby_c PUBLIC ${includePath})
     TARGET_LINK_LIBRARIES(lobby_c s25util mygettext)
