@@ -43,7 +43,8 @@ LobbyClient::~LobbyClient()
 
 void LobbyClient::AddListener(LobbyInterface* listener)
 {
-    listeners.push_back(listener);
+    if(std::find(listeners.begin(), listeners.end(), listener) == listeners.end())
+        listeners.push_back(listener);
 }
 
 void LobbyClient::RemoveListener(LobbyInterface* listener)
