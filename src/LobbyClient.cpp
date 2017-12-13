@@ -60,26 +60,16 @@ void LobbyClient::Run()
     if(state == CS_STOPPED)
         return;
 
-    SocketSet set;
-
-    // erstmal auf Daten überprüfen
-    set.Clear();
-
-    // zum set hinzufügen
-    set.Add(socket);
-    if(set.Select(0, 0) > 0)
+    // nachrichten empfangen
+    if(recv_queue.recvAll(socket) < 0)
     {
-        // nachricht empfangen
-        if(!recv_queue.recv(socket))
-        {
-            LOG.write("Receiving Message from server failed\n");
-            ServerLost();
-            return;
-        }
+        LOG.write("Receiving Message from server failed\n");
+        ServerLost();
+        return;
     }
 
     // nun auf Fehler prüfen
-    set.Clear();
+    SocketSet set;
 
     // zum set hinzufügen
     set.Add(socket);
