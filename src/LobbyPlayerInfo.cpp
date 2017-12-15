@@ -52,8 +52,8 @@ void LobbyPlayerInfo::clear()
 void LobbyPlayerInfo::serialize(Serializer& ser) const
 {
     ser.PushUnsignedInt(playerId_);
-    ser.PushString(name_);
-    ser.PushString(version_);
+    ser.PushLongString(name_);
+    ser.PushLongString(version_);
     ser.PushSignedInt(punkte_);
     ser.PushUnsignedInt(gewonnen_);
     ser.PushUnsignedInt(verloren_);
@@ -67,8 +67,8 @@ void LobbyPlayerInfo::serialize(Serializer& ser) const
 void LobbyPlayerInfo::deserialize(Serializer& ser)
 {
     playerId_ = ser.PopUnsignedInt();
-    name_ = ser.PopString();
-    version_ = ser.PopString();
+    name_ = ser.PopLongString();
+    version_ = ser.PopLongString();
     punkte_ = ser.PopSignedInt();
     gewonnen_ = ser.PopUnsignedInt();
     verloren_ = ser.PopUnsignedInt();
