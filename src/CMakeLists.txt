@@ -43,7 +43,7 @@ IF (RTTR_BUILD_LOBBY_SERVER)
     
     TARGET_LINK_LIBRARIES(lobby_s s25util mygettext)
     target_link_libraries(lobby_s SYSTEM ${MYSQL_LIBRARIES})
-	add_executable(lobbyServer lobbyServerApp.cpp ${PROJECT_SOURCE_DIR}/src/RTTR_Version.cpp)
+	add_executable(lobbyServer lobbyServerApp.cpp)
 	target_link_libraries(lobbyServer lobby_s)
 endif()
 

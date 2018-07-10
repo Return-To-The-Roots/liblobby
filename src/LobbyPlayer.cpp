@@ -18,7 +18,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Header
 #include "libLobbyDefines.h" // IWYU pragma: keep
-#include "RTTR_Version.h"
 #include "LobbyPlayer.h"
 
 #include "MySQL.h"
@@ -209,13 +208,6 @@ void LobbyPlayer::occupy(const std::string& user, const std::string& email, cons
     setName(user);
     setEmail(email);
     setVersion(version);
-
-    Send(new LobbyMessage_Chat("Hinweis", RTTR_Version::GetTitle()));
-
-    std::stringstream text;
-    text.str("");
-    text << "Serverversion: " << RTTR_Version::GetVersion() << "-r" << RTTR_Version::GetRevision();
-    Send(new LobbyMessage_Chat("Hinweis", text.str()));
 }
 
 void LobbyPlayer::gotPing(void)
