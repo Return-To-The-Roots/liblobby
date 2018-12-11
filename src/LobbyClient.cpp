@@ -16,11 +16,11 @@
 // along with Return To The Roots. If not, see <http://www.gnu.org/licenses/>.
 
 #include "libLobbyDefines.h" // IWYU pragma: keep
-#include "LobbyClient.h"
-#include "LobbyInterface.h"
-#include "LobbyMessage.h"
-#include "LobbyMessages.h"
+#include "liblobby/LobbyClient.h"
 #include "mygettext/mygettext.h"
+#include "liblobby/LobbyInterface.h"
+#include "liblobby/LobbyMessage.h"
+#include "liblobby/LobbyMessages.h"
 #include "libutil/Log.h"
 #include "libutil/Message.h"
 #include "libutil/Messages.h"

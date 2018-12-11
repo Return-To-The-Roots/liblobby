@@ -43,10 +43,10 @@ public:
     virtual void LC_Status_Error(const std::string& error);
 
     virtual void LC_Chat(const std::string& player, const std::string& text);
-    virtual void LC_ServerList(const LobbyServerList& servers) {}
-    virtual void LC_ServerInfo(const LobbyServerInfo& info) {}
-    virtual void LC_RankingList(const LobbyPlayerList& rankings) {}
-    virtual void LC_PlayerList(const LobbyPlayerList& players) {}
+    virtual void LC_ServerList(const LobbyServerList& /*servers*/) {}
+    virtual void LC_ServerInfo(const LobbyServerInfo& /*info*/) {}
+    virtual void LC_RankingList(const LobbyPlayerList& /*rankings*/) {}
+    virtual void LC_PlayerList(const LobbyPlayerList& /*players*/) {}
 };
 
 #endif //! LOBBYINTERFACE_H_INCLUDED
