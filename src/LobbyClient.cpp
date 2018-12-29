@@ -362,6 +362,10 @@ bool LobbyClient::OnNMSLobbyID(unsigned /*id*/, unsigned playerId)
         return true;
     }
 
+    std::vector<LobbyInterface*> tmpListeners(listeners);
+    BOOST_FOREACH(LobbyInterface* listener, tmpListeners)
+        listener->LC_Connected();
+
     switch(todoAfterConnect)
     {
         case TD_LOGIN: send_queue.push(new LobbyMessage_Login(userdata.user, userdata.pass, programVersion)); break;
