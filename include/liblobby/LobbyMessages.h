@@ -56,14 +56,7 @@ public:
     void Deserialize(Serializer& ser) override
     {
         LobbyMessage::Deserialize(ser);
-        unsigned char rev[4];
-        ser.PopRawData(rev, 4);
-
-        // haben wir eine gültige Revision erhalten?
-        if(rev[0] != 0xFF || rev[3] != 0xFF)
-            revision = 0;
-        else
-            revision = htonl(*((unsigned*)rev));
+        revision = ser.PopUnsignedInt();
 
         if(revision == LOBBYPROTOCOL_VERSION)
         {
@@ -179,14 +172,7 @@ public:
     void Deserialize(Serializer& ser) override
     {
         LobbyMessage::Deserialize(ser);
-        unsigned char rev[4];
-        ser.PopRawData(rev, 4);
-
-        // haben wir eine gültige Revision erhalten?
-        if(rev[0] != 0xFF || rev[3] != 0xFF)
-            revision = 0;
-        else
-            revision = htonl(*((unsigned*)rev));
+        revision = ser.PopUnsignedInt();
 
         if(revision == LOBBYPROTOCOL_VERSION)
         {
