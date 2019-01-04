@@ -23,7 +23,7 @@
 
 Message* LobbyMessage::create_lobby(unsigned short id)
 {
-    Message* msg = NULL;
+    Message* msg = nullptr;
 
     switch(id)
     {

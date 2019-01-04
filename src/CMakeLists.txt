@@ -20,6 +20,9 @@ set(SOURCES_LOBBY_S LobbyServer.cpp ${HEADER_PATH}/LobbyServer.h
 add_library(lobby STATIC EXCLUDE_FROM_ALL ${SOURCES_LOBBY})
 target_include_directories(lobby PRIVATE ${HEADER_PATH} PUBLIC ${includePath})
 target_link_libraries(lobby PUBLIC s25util PRIVATE mygettext)
+target_compile_features(lobby PUBLIC cxx_std_14)
+set_target_properties(lobby PROPERTIES CXX_EXTENSIONS OFF)
+
 include(EnableWarnings)
 enable_warnings(lobby)
 
