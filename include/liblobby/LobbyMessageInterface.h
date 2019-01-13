@@ -41,17 +41,6 @@ public:
     /// Lobby-Logged-In-Nachricht.
     virtual bool OnNMSLobbyLoginDone(unsigned /*id*/, const std::string& /*email*/) { return false; }
 
-    /// Lobby-Register-Nachricht.
-    virtual bool OnNMSLobbyRegister(unsigned /*id*/, const unsigned /*revision*/, const std::string& /*user*/, const std::string& /*pass*/,
-                                    const std::string& /*email*/)
-    {
-        return false;
-    }
-    /// Lobby-Register-Error-Nachricht.
-    virtual bool OnNMSLobbyRegisterError(unsigned /*id*/, const std::string& /*error*/) { return false; }
-    /// Lobby-Register-Done-Nachricht.
-    virtual bool OnNMSLobbyRegisterDone(unsigned /*id*/) { return false; }
-
     /// Lobby-Player-ID-Nachricht.
     virtual bool OnNMSLobbyID(unsigned /*id*/, unsigned /*playerId*/) { return false; }
     /// Chat-Nachricht.

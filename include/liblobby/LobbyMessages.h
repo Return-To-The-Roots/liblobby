@@ -39,15 +39,15 @@ private:
 public:
     LobbyMessage_Login() : LobbyMessage(NMS_LOBBY_LOGIN) {} //-V730
     LobbyMessage_Login(const std::string& user, const std::string& pass, const std::string& version)
-        : LobbyMessage(NMS_LOBBY_LOGIN), user(user), pass(pass), version(version)
+        : LobbyMessage(NMS_LOBBY_LOGIN), revision(LOBBYPROTOCOL_VERSION), user(user), pass(pass), version(version)
     {
-        LOG.writeToFile(">>> NMS_LOBBY_LOGIN(%d, %s, %s, %s)\n") % LOBBYPROTOCOL_VERSION % user % "********" % version;
+        LOG.writeToFile(">>> NMS_LOBBY_LOGIN(%d, %s, %s, %s)\n") % revision % user % "********" % version;
     }
 
     void Serialize(Serializer& ser) const override
     {
         LobbyMessage::Serialize(ser);
-        ser.PushUnsignedInt(LOBBYPROTOCOL_VERSION);
+        ser.PushUnsignedInt(revision);
         ser.PushLongString(user);
         ser.PushLongString(pass);
         ser.PushLongString(version);
@@ -58,7 +58,7 @@ public:
         LobbyMessage::Deserialize(ser);
         revision = ser.PopUnsignedInt();
 
-        if(revision == LOBBYPROTOCOL_VERSION)
+        if(lobbyprotocol::extractVersion(revision) >= 6)
         {
             user = ser.PopLongString();
             pass = ser.PopLongString();
@@ -139,108 +139,6 @@ public:
         LobbyMessageInterface* cb = static_cast<LobbyMessageInterface*>(callback);
         LOG.writeToFile("<<< NMS_LOBBY_LOGIN_ERROR(%s)\n") % error;
         return cb->OnNMSLobbyLoginError(id, error);
-    }
-};
-
-///////////////////////////////////////////////////////////////////////////////
-/// ausgehende Register-Nachricht.
-class LobbyMessage_Register : public LobbyMessage
-{
-private:
-    unsigned revision;
-    std::string user;
-    std::string pass;
-    std::string email;
-
-public:
-    LobbyMessage_Register() : LobbyMessage(NMS_LOBBY_REGISTER) {} //-V730
-    LobbyMessage_Register(const std::string& user, const std::string& pass, const std::string& email)
-        : LobbyMessage(NMS_LOBBY_REGISTER), user(user), pass(pass), email(email)
-    {
-        LOG.writeToFile(">>> NMS_LOBBY_REGISTER(%d, %s, %s, %s)\n") % revision % user % "********" % email;
-    }
-
-    void Serialize(Serializer& ser) const override
-    {
-        LobbyMessage::Serialize(ser);
-        ser.PushUnsignedInt(LOBBYPROTOCOL_VERSION);
-        ser.PushLongString(user);
-        ser.PushLongString(pass);
-        ser.PushLongString(email);
-    }
-
-    void Deserialize(Serializer& ser) override
-    {
-        LobbyMessage::Deserialize(ser);
-        revision = ser.PopUnsignedInt();
-
-        if(revision == LOBBYPROTOCOL_VERSION)
-        {
-            user = ser.PopLongString();
-            pass = ser.PopLongString();
-            email = ser.PopLongString();
-        }
-    }
-
-    bool run(MessageInterface* callback, unsigned id) override
-    {
-        LobbyMessageInterface* cb = static_cast<LobbyMessageInterface*>(callback);
-        LOG.writeToFile("<<< NMS_LOBBY_REGISTER(%d, %s, %s, %s)\n") % revision % user % "********" % email;
-        return cb->OnNMSLobbyRegister(id, revision, user, pass, email);
-    }
-};
-
-///////////////////////////////////////////////////////////////////////////////
-/// eingehende Register-Done-Nachricht.
-class LobbyMessage_Register_Done : public LobbyMessage
-{
-public:
-    LobbyMessage_Register_Done() : LobbyMessage(NMS_LOBBY_REGISTER_DONE) {}
-    LobbyMessage_Register_Done(bool /*reserved*/) : LobbyMessage(NMS_LOBBY_REGISTER_DONE)
-    {
-        LOG.writeToFile(">>> NMS_LOBBY_REGISTER_DONE\n");
-    }
-
-    bool run(MessageInterface* callback, unsigned id) override
-    {
-        LobbyMessageInterface* cb = static_cast<LobbyMessageInterface*>(callback);
-
-        LOG.writeToFile("<<< NMS_LOBBY_REGISTER_DONE\n");
-        return cb->OnNMSLobbyRegisterDone(id);
-    }
-};
-
-///////////////////////////////////////////////////////////////////////////////
-/// eingehende Register-Error-Nachricht
-class LobbyMessage_Register_Error : public LobbyMessage
-{
-private:
-    std::string error;
-
-public:
-    LobbyMessage_Register_Error() : LobbyMessage(NMS_LOBBY_REGISTER_ERROR) {}
-    LobbyMessage_Register_Error(const std::string& error) : LobbyMessage(NMS_LOBBY_LOGIN_ERROR), error(error)
-    {
-        LOG.writeToFile(">>> NMS_LOBBY_REGISTER_ERROR(%s)\n") % error;
-    }
-
-    void Serialize(Serializer& ser) const override
-    {
-        LobbyMessage::Serialize(ser);
-        ser.PushLongString(error);
-    }
-
-    void Deserialize(Serializer& ser) override
-    {
-        LobbyMessage::Deserialize(ser);
-        error = ser.PopLongString();
-    }
-
-    bool run(MessageInterface* callback, unsigned id) override
-    {
-        LobbyMessageInterface* cb = static_cast<LobbyMessageInterface*>(callback);
-        LOG.writeToFile("<<< NMS_LOBBY_REGISTER_ERROR(%s)\n") % error;
-        return cb->OnNMSLobbyRegisterError(id, error);
     }
 };
 

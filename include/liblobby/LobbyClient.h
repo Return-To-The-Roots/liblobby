@@ -54,9 +54,6 @@ public:
 
     /// versucht einen Login in den LobbyServer.
     bool Login(const std::string& server, const unsigned port, const std::string& user, const std::string& pass, const bool use_ipv6);
-    ///  versucht einen Nick auf dem LobbyServer zu registrieren.
-    bool Register(const std::string& server, const unsigned port, const std::string& user, const std::string& pass,
-                  const std::string& email, const bool use_ipv6);
 
     /// schickt einen Request für die Server-Liste.
     void SendServerListRequest();
@@ -104,11 +101,6 @@ public:
     bool OnNMSLobbyLoginError(unsigned id, const std::string& error) override;
     /// Lobby-Logged-In-Nachricht.
     bool OnNMSLobbyLoginDone(unsigned id, const std::string& email) override;
-
-    /// Lobby-Register-Error-Nachricht.
-    bool OnNMSLobbyRegisterError(unsigned id, const std::string& error) override;
-    /// Lobby-Register-Done-Nachricht.
-    bool OnNMSLobbyRegisterDone(unsigned id) override;
 
     /// Lobby-Player-ID-Nachricht.
     bool OnNMSLobbyID(unsigned id, unsigned playerId) override;
@@ -158,13 +150,6 @@ private:
         CS_LOBBY,
         CS_INGAME
     } state;
-
-    enum ClientTodo
-    {
-        TD_NOTHING = 0,
-        TD_LOGIN,
-        TD_REGISTER
-    } todoAfterConnect;
 
     struct UserData
     {

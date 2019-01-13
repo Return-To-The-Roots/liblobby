@@ -25,14 +25,14 @@
 #include "libutil/Message.h"
 #include "libutil/Messages.h"
 #include "libutil/SocketSet.h"
+#include "libutil/md5.hpp"
 #include <algorithm>
 #include <cstddef>
 
 class LobbyPlayerInfo;
 
 LobbyClient::LobbyClient()
-    : recv_queue(&LobbyMessage::create_lobby), send_queue(&LobbyMessage::create_lobby), state(CS_STOPPED), todoAfterConnect(TD_NOTHING),
-      isHost(false)
+    : recv_queue(&LobbyMessage::create_lobby), send_queue(&LobbyMessage::create_lobby), state(CS_STOPPED), isHost(false)
 {}
 
 LobbyClient::~LobbyClient()
@@ -119,7 +119,6 @@ void LobbyClient::Stop()
     send_queue.clear();
 
     state = CS_STOPPED;
-    todoAfterConnect = TD_NOTHING;
     isHost = false;
 }
 
@@ -135,32 +134,8 @@ bool LobbyClient::Login(const std::string& server, const unsigned port, const st
     // aufräumen
     Stop();
 
-    todoAfterConnect = TD_LOGIN;
-
     userdata.user = user;
-    userdata.pass = pass;
-
-    // verbinden
-    return Connect(server, port, use_ipv6);
-}
-
-/**
- *  versucht einen Nick auf dem LobbyServer zu registrieren.
- *
- *  @param[in] user Benutzername
- *  @param[in] pass Passwort
- */
-bool LobbyClient::Register(const std::string& server, const unsigned port, const std::string& user, const std::string& pass,
-                           const std::string& email, const bool use_ipv6)
-{
-    // aufräumen
-    Stop();
-
-    todoAfterConnect = TD_REGISTER;
-
-    userdata.user = user;
-    userdata.pass = pass;
-    userdata.email = email;
+    userdata.pass = s25util::md5(pass.data(), pass.length()).toString();
 
     // verbinden
     return Connect(server, port, use_ipv6);
@@ -365,12 +340,7 @@ bool LobbyClient::OnNMSLobbyID(unsigned /*id*/, unsigned playerId)
     for(LobbyInterface* listener : tmpListeners)
         listener->LC_Connected();
 
-    switch(todoAfterConnect)
-    {
-        case TD_LOGIN: send_queue.push(new LobbyMessage_Login(userdata.user, userdata.pass, programVersion)); break;
-        case TD_REGISTER: send_queue.push(new LobbyMessage_Register(userdata.user, userdata.pass, userdata.email)); break;
-        default: ServerLost(); break;
-    }
+    send_queue.push(new LobbyMessage_Login(userdata.user, userdata.pass, programVersion));
     return true;
 }
 
@@ -401,34 +371,6 @@ bool LobbyClient::OnNMSLobbyLoginDone(unsigned /*id*/, const std::string& email)
     std::vector<LobbyInterface*> tmpListeners(listeners);
     for(LobbyInterface* listener : tmpListeners)
         listener->LC_LoggedIn(userdata.email);
-    return true;
-}
-
-/**
- *  Lobby-Register-Error-Nachricht.
- *
- *  @param[in] error Die empfangene Fehlermeldung
- */
-bool LobbyClient::OnNMSLobbyRegisterError(unsigned /*id*/, const std::string& error) //-V524
-{
-    std::vector<LobbyInterface*> tmpListeners(listeners);
-    for(LobbyInterface* listener : tmpListeners)
-        listener->LC_Status_Error(error);
-
-    ServerLost(false);
-    return true;
-}
-
-/**
- *  Lobby-Register-Done-Nachricht.
- */
-bool LobbyClient::OnNMSLobbyRegisterDone(unsigned /*id*/)
-{
-    std::vector<LobbyInterface*> tmpListeners(listeners);
-    for(LobbyInterface* listener : tmpListeners)
-        listener->LC_Registered();
-
-    Stop();
     return true;
 }
 

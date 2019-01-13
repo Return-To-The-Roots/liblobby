@@ -39,16 +39,6 @@ Message* LobbyMessage::create_lobby(unsigned short id)
         }
         break;
 
-        case NMS_LOBBY_REGISTER: { msg = new LobbyMessage_Register();
-        }
-        break;
-        case NMS_LOBBY_REGISTER_DONE: { msg = new LobbyMessage_Register_Done();
-        }
-        break;
-        case NMS_LOBBY_REGISTER_ERROR: { msg = new LobbyMessage_Register_Error();
-        }
-        break;
-
         case NMS_LOBBY_SERVERLIST: { msg = new LobbyMessage_ServerList();
         }
         break;

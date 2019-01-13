@@ -19,7 +19,19 @@
 
 #pragma once
 
-const unsigned LOBBYPROTOCOL_VERSION = 0xFF0006FF;
+#include <stdint.h>
+
+const unsigned LOBBYPROTOCOL_VERSION = 0xFF0007FF;
+namespace lobbyprotocol
+{
+    inline uint32_t extractVersion(uint32_t version)
+    {
+        if((version & 0xFF0000FF) == 0xFF0000FF)
+            return (version >> 8) & 0xFFFF;
+        else
+            return 0;
+    }
+}
 
 enum
 {
@@ -27,9 +39,9 @@ enum
     NMS_LOBBY_LOGIN_DONE,
     NMS_LOBBY_LOGIN_ERROR,
 
-    NMS_LOBBY_REGISTER = 0x2000,
+    /*NMS_LOBBY_REGISTER = 0x2000,
     NMS_LOBBY_REGISTER_DONE,
-    NMS_LOBBY_REGISTER_ERROR,
+    NMS_LOBBY_REGISTER_ERROR,*/
 
     NMS_LOBBY_SERVERLIST = 0x3000,
     NMS_LOBBY_SERVERINFO,
