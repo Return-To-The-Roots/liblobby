@@ -134,7 +134,7 @@ protected:
     /// verbindet mit dem LobbyServer.
     bool Connect(const std::string& server, const unsigned port, const bool use_ipv6);
     /// Server verloren.
-    void ServerLost(bool notifyListener = true);
+    void ServerLost(bool notifyParent = true);
 
 private:
     std::string programVersion;

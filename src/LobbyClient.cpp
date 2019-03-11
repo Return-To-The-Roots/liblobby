@@ -147,7 +147,7 @@ bool LobbyClient::Login(const std::string& server, const unsigned port, const st
 void LobbyClient::SendServerListRequest()
 {
     assert(state == CS_LOBBY);
-    send_queue.push(new LobbyMessage_ServerList(1));
+    send_queue.push(new LobbyMessage_ServerList(true));
 }
 
 /**
@@ -156,7 +156,7 @@ void LobbyClient::SendServerListRequest()
 void LobbyClient::SendPlayerListRequest()
 {
     assert(state == CS_LOBBY);
-    send_queue.push(new LobbyMessage_PlayerList(1));
+    send_queue.push(new LobbyMessage_PlayerList(true));
 }
 
 /**
@@ -165,7 +165,7 @@ void LobbyClient::SendPlayerListRequest()
 void LobbyClient::SendRankingListRequest()
 {
     assert(state == CS_LOBBY);
-    send_queue.push(new LobbyMessage_RankingList(1));
+    send_queue.push(new LobbyMessage_RankingList(true));
 }
 
 /**
