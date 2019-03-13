@@ -111,12 +111,16 @@ public:
     bool OnNMSLobbyPing(unsigned id) override;
 
     /// ServerList-Nachricht.
+    bool OnNMSLobbyServerList(unsigned) override { return false; }
     bool OnNMSLobbyServerList(unsigned id, const LobbyServerList& list) override;
     /// PlayerList-Nachricht.
+    bool OnNMSLobbyPlayerList(unsigned) override { return false; }
     bool OnNMSLobbyPlayerList(unsigned id, const LobbyPlayerList& onlinePlayers, const LobbyPlayerList& ingamePlayers) override;
     /// RankingList-Nachricht.
+    bool OnNMSLobbyRankingList(unsigned) override { return false; }
     bool OnNMSLobbyRankingList(unsigned id, const LobbyPlayerList& list) override;
     /// ServerInfo-Nachricht.
+    bool OnNMSLobbyServerInfo(unsigned, const unsigned&) override { return false; }
     bool OnNMSLobbyServerInfo(unsigned id, const LobbyServerInfo& info) override;
 
     /// Lobby-Server-Add-Done-Nachricht.
