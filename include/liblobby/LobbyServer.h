@@ -30,8 +30,8 @@
 /// Der LobbyServer
 class LobbyServer : public Singleton<LobbyServer, SingletonPolicies::WithLongevity>, public LobbyMessageInterface
 {
-        typedef std::map<unsigned, LobbyPlayer> LobbyPlayerMap;
-        typedef std::map<unsigned, LobbyPlayer>::iterator LobbyPlayerMapIterator;
+        using LobbyPlayerMap = std::map<unsigned, LobbyPlayer>;
+        using LobbyPlayerMapIterator = std::map<unsigned, LobbyPlayer>::iterator;
 
     public:
         static const unsigned Longevity = 1;
