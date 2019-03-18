@@ -396,8 +396,8 @@ bool LobbyClient::OnNMSLobbyServerList(unsigned /*id*/, const LobbyServerList& l
 bool LobbyClient::OnNMSLobbyPlayerList(unsigned /*id*/, const LobbyPlayerList& onlinePlayers, const LobbyPlayerList& ingamePlayers)
 {
     playerList = onlinePlayers;
-    for(LobbyPlayerList::const_iterator it = ingamePlayers.begin(); it != ingamePlayers.end(); ++it)
-        playerList.push_back(*it);
+    for(const auto& ingamePlayer : ingamePlayers)
+        playerList.push_back(ingamePlayer);
     std::vector<LobbyInterface*> tmpListeners(listeners);
     for(LobbyInterface* listener : tmpListeners)
         listener->LC_PlayerList(playerList);
