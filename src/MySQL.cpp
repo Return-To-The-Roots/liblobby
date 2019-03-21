@@ -72,12 +72,14 @@ bool MySQL::Connect(const std::string& host, const std::string& user, const std:
 
     if(test || mysql_ping(m_pMySQL) != 0)
     {
-        if(mysql_real_connect(m_pMySQL, m_Connection.host.c_str(), m_Connection.user.c_str(), m_Connection.pass.c_str(), m_Connection.db.c_str(), MYSQL_PORT, NULL, 0) == NULL)
+        if(mysql_real_connect(m_pMySQL, m_Connection.host.c_str(), m_Connection.user.c_str(), m_Connection.pass.c_str(),
+                              m_Connection.db.c_str(), MYSQL_PORT, NULL, 0)
+           == NULL)
         {
             LOG.write("Failed to connect to database: Error: %s\n") % mysql_error(m_pMySQL);
             return false;
         }
-        if(mysql_select_db(m_pMySQL, m_Connection.db.c_str() ) < 0 )
+        if(mysql_select_db(m_pMySQL, m_Connection.db.c_str()) < 0)
         {
             LOG.write("Can't select the %s database: %s\n") % m_Connection.db % mysql_error(m_pMySQL);
             return false;
@@ -103,19 +105,22 @@ bool MySQL::DoQuery(const std::string& query)
     return true;
 }
 
-
 ///////////////////////////////////////////////////////////////////////////////
 // Benutzer "einloggen"
 bool MySQL::LoginUser(const std::string& user, const std::string& pass, std::string& email, const std::string& ip)
 {
-    char user2[256], pass2[256];
+    std::array<char, 256> user2, pass2;
     mysql_real_escape_string(m_pMySQL, user2, user.c_str(), (unsigned long)user.length());
     mysql_real_escape_string(m_pMySQL, pass2, pass.c_str(), (unsigned long)pass.length());
 
-    char query[1024];
-    //snprintf(query, 1024, "SELECT * FROM `lobby_users` WHERE `user` = '%s' AND `pass` = DES_ENCRYPT('%s', '%s') AND `email` IS NOT NULL LIMIT 1;", user2, pass2, user2);
-    //snprintf(query, 1024, "SELECT `username`,`useremail` FROM `tb_user` WHERE `username` = '%s' AND `userpassword` = MD5('%s') AND `userbanned` = 0 AND `useremail` IS NOT NULL LIMIT 1;", user2, pass2);
-    snprintf(query, 1024, "SELECT `user`,`mail`,id FROM `users` WHERE `user` = '%s' AND `pass` = MD5('%s') AND `mail` IS NOT NULL AND login_allowed = 1 AND banned = 0 LIMIT 1;", user2, pass2);
+    std::array<char, 1024> query;
+    // snprintf(query, 1024, "SELECT * FROM `lobby_users` WHERE `user` = '%s' AND `pass` = DES_ENCRYPT('%s', '%s') AND `email` IS NOT NULL
+    // LIMIT 1;", user2, pass2, user2); snprintf(query, 1024, "SELECT `username`,`useremail` FROM `tb_user` WHERE `username` = '%s' AND
+    // `userpassword` = MD5('%s') AND `userbanned` = 0 AND `useremail` IS NOT NULL LIMIT 1;", user2, pass2);
+    snprintf(query, 1024,
+             "SELECT `user`,`mail`,id FROM `users` WHERE `user` = '%s' AND `pass` = MD5('%s') AND `mail` IS NOT NULL AND login_allowed = 1 "
+             "AND banned = 0 LIMIT 1;",
+             user2, pass2);
 
     // LOG.write(("%s\n", query);
 
@@ -136,12 +141,13 @@ bool MySQL::LoginUser(const std::string& user, const std::string& pass, std::str
 
     // LOG.write(("%s %s %s %s\n", Row[0], Row[1], Row[2], Row[3]);
 
-    if( (strcmp(Row[0], user2) == 0) && Row[1] )
+    if((strcmp(Row[0], user2) == 0) && Row[1])
     {
         email = Row[1];
 
         // save login
-        snprintf(query, 1024, "INSERT INTO `users_online` (`uid`, `time`, `ip`, `from`) VALUES(%s, UNIX_TIMESTAMP(), '%s', 'rttr');", Row[2], ip.c_str());
+        snprintf(query, 1024, "INSERT INTO `users_online` (`uid`, `time`, `ip`, `from`) VALUES(%s, UNIX_TIMESTAMP(), '%s', 'rttr');",
+                 Row[2], ip.c_str());
         DoQuery(query);
 
         // delete entries older than 30 days
@@ -159,14 +165,14 @@ bool MySQL::LoginUser(const std::string& user, const std::string& pass, std::str
 // Benutzer registrieren
 bool MySQL::RegisterUser(const std::string& user, const std::string& pass, const std::string& email)
 {
-    MYSQL_RES*   pResult;
-    char query[1024];
-    char user2[256], pass2[256], email2[256];
+    MYSQL_RES* pResult;
+    std::array<char, 1024> query;
+    std::array<char, 256> user2, pass2, email2;
     mysql_real_escape_string(m_pMySQL, user2, user.c_str(), (unsigned long)user.length());
     mysql_real_escape_string(m_pMySQL, pass2, pass.c_str(), (unsigned long)pass.length());
     mysql_real_escape_string(m_pMySQL, email2, email.c_str(), (unsigned long)email.length());
 
-    //snprintf(query, 1024, "SELECT * FROM `lobby_users` WHERE `user` = '%s' LIMIT 1;", user2);
+    // snprintf(query, 1024, "SELECT * FROM `lobby_users` WHERE `user` = '%s' LIMIT 1;", user2);
 
     // not implemented
     return false;
@@ -187,7 +193,8 @@ bool MySQL::RegisterUser(const std::string& user, const std::string& pass, const
 
     mysql_free_result(pResult);
 
-    snprintf(query, 1024, "INSERT INTO `lobby_users` VALUES ( '', '%s', DES_ENCRYPT('%s', '%s'), '%s', '0', '0' )", user2, pass2, user2, email2);
+    snprintf(query, 1024, "INSERT INTO `lobby_users` VALUES ( '', '%s', DES_ENCRYPT('%s', '%s'), '%s', '0', '0' )", user2, pass2, user2,
+             email2);
 
     if(!DoQuery(query))
         return false;
@@ -198,10 +205,10 @@ bool MySQL::RegisterUser(const std::string& user, const std::string& pass, const
 // Serverliste abrufen
 bool MySQL::GetServerList(LobbyServerList* List)
 {
-    MYSQL_RES*   pResult;
-    MYSQL_ROW   Row;
+    MYSQL_RES* pResult;
+    MYSQL_ROW Row;
 
-    char query[1024];
+    std::array<char, 1024> query;
     snprintf(query, 1024, "SELECT * FROM `lobby_servers` WHERE `curplayer` > 0 AND `maxplayers` > 0 ORDER BY `name` ASC;");
 
     if(!DoQuery(query))
@@ -243,13 +250,13 @@ bool MySQL::GetServerList(LobbyServerList* List)
 
 bool MySQL::GetServerInfo(unsigned id, LobbyServerInfo* Info)
 {
-    MYSQL_RES*   pResult;
-    MYSQL_ROW   Row;
+    MYSQL_RES* pResult;
+    MYSQL_ROW Row;
 
-    char query[1024];
+    std::array<char, 1024> query;
     snprintf(query, 1024, "SELECT * FROM `lobby_servers` WHERE `id` = %u ORDER BY `name` ASC LIMIT 1;", id);
 
-    //LOG.write(("%s\n", query);
+    // LOG.write(("%s\n", query);
 
     if(!DoQuery(query))
         return false;
@@ -285,12 +292,15 @@ bool MySQL::GetServerInfo(unsigned id, LobbyServerInfo* Info)
 
 bool MySQL::GetRankingList(LobbyPlayerList* List)
 {
-    MYSQL_RES*   pResult;
-    MYSQL_ROW   Row;
+    MYSQL_RES* pResult;
+    MYSQL_ROW Row;
 
-    char query[1024];
-    //snprintf(query, 1024, "SELECT username, win, lose FROM `tb_user` WHERE `useremail` IS NOT NULL AND (`win` > 0 OR `lose` > 0) ORDER BY `win` DESC, `lose` ASC LIMIT 10;");
-    snprintf(query, 1024, "SELECT user, win, lose FROM `users` WHERE `mail` IS NOT NULL AND (`win` > 0 OR `lose` > 0) ORDER BY `win` DESC, `lose` ASC LIMIT 10;");
+    std::array<char, 1024> query;
+    // snprintf(query, 1024, "SELECT username, win, lose FROM `tb_user` WHERE `useremail` IS NOT NULL AND (`win` > 0 OR `lose` > 0) ORDER BY
+    // `win` DESC, `lose` ASC LIMIT 10;");
+    snprintf(query, 1024,
+             "SELECT user, win, lose FROM `users` WHERE `mail` IS NOT NULL AND (`win` > 0 OR `lose` > 0) ORDER BY `win` DESC, `lose` ASC "
+             "LIMIT 10;");
 
     if(!DoQuery(query))
         return false;
@@ -337,14 +347,14 @@ bool MySQL::GetRankingList(LobbyPlayerList* List)
  */
 bool MySQL::GetRankingInfo(LobbyPlayerInfo& player)
 {
-    MYSQL_RES*   pResult;
-    MYSQL_ROW   Row;
-    char query[1024];
+    MYSQL_RES* pResult;
+    MYSQL_ROW Row;
+    std::array<char, 1024> query;
 
-    char name[256];
+    std::array<char, 256> name;
     mysql_real_escape_string(m_pMySQL, name, player.getName().c_str(), (unsigned long)player.getName().length());
 
-    //snprintf(query, 1024, "SELECT username, win, lose FROM `tb_user` WHERE `username` = '%s' LIMIT 1;", name);
+    // snprintf(query, 1024, "SELECT username, win, lose FROM `tb_user` WHERE `username` = '%s' LIMIT 1;", name);
     snprintf(query, 1024, "SELECT user, win, lose FROM `users` WHERE `user` = '%s' LIMIT 1;", name);
 
     if(!DoQuery(query))
@@ -364,7 +374,7 @@ bool MySQL::GetRankingInfo(LobbyPlayerInfo& player)
     if(punkte < 0)
         punkte = 0;
 
-    //player.setId(0);
+    // player.setId(0);
     player.setName(Row[0]);
     player.setGewonnen(atoi(Row[1]));
     player.setVerloren(atoi(Row[2]));
@@ -377,15 +387,15 @@ bool MySQL::GetRankingInfo(LobbyPlayerInfo& player)
 
 bool MySQL::AddServer(LobbyServerInfo* Info)
 {
-    MYSQL_RES*   pResult;
-    //MYSQL_ROW Row;
+    MYSQL_RES* pResult;
+    // MYSQL_ROW Row;
 
-    char query[1024];
+    std::array<char, 1024> query;
 
-    char name[256];
-    char host[256];
-    char version[256];
-    char map[256];
+    std::array<char, 256> name;
+    std::array<char, 256> host;
+    std::array<char, 256> version;
+    std::array<char, 256> map;
     mysql_real_escape_string(m_pMySQL, name, Info->getName().c_str(), (unsigned long)Info->getName().length());
     mysql_real_escape_string(m_pMySQL, host, Info->getHost().c_str(), (unsigned long)Info->getHost().length());
     mysql_real_escape_string(m_pMySQL, version, Info->getVersion().c_str(), (unsigned long)Info->getVersion().length());
@@ -423,7 +433,10 @@ bool MySQL::AddServer(LobbyServerInfo* Info)
 
     mysql_free_result(pResult);*/
 
-    snprintf(query, 1024, "INSERT INTO `lobby_servers` (`name`, `hostname`, `port`, `version`, `map`, `maxplayers`, `curplayer`, `has_password`) VALUES ('%s', '%s', '%d', '%s', '%s', 0, 0, %d);", name, host, Info->getPort(), version, map, (Info->hasPassword() ? 1 : 0));
+    snprintf(query, 1024,
+             "INSERT INTO `lobby_servers` (`name`, `hostname`, `port`, `version`, `map`, `maxplayers`, `curplayer`, `has_password`) VALUES "
+             "('%s', '%s', '%d', '%s', '%s', 0, 0, %d);",
+             name, host, Info->getPort(), version, map, (Info->hasPassword() ? 1 : 0));
 
     if(!DoQuery(query))
         return false;
@@ -440,7 +453,7 @@ bool MySQL::DeleteServer(unsigned id)
     if(!GetServerInfo(id, &Info))
         return false;
 
-    char query[1024];
+    std::array<char, 1024> query;
     snprintf(query, 1024, "DELETE FROM `lobby_servers` WHERE `id` = %u LIMIT 1;", id);
 
     if(!DoQuery(query))
@@ -456,10 +469,10 @@ bool MySQL::UpdateServer(unsigned id, const std::string& map)
     if(!GetServerInfo(id, &Info))
         return false;
 
-    char map2[256];
+    std::array<char, 256> map2;
     mysql_real_escape_string(m_pMySQL, map2, map.c_str(), (unsigned long)map.length());
 
-    char query[1024];
+    std::array<char, 1024> query;
     snprintf(query, 1024, "UPDATE `lobby_servers` SET `map` = '%s' WHERE `id` = '%u';", map2, id);
 
     if(!DoQuery(query))
@@ -475,13 +488,15 @@ bool MySQL::UpdateServerPC(unsigned id, unsigned curplayer, unsigned maxplayer)
     if(!GetServerInfo(id, &Info))
         return false;
 
-    char query[1024];
-    snprintf(query, 1024, "UPDATE `lobby_servers` SET `curplayer` = '%u', `maxplayers` = '%u' WHERE `id` = '%u';", curplayer, maxplayer, id);
+    std::array<char, 1024> query;
+    snprintf(query, 1024, "UPDATE `lobby_servers` SET `curplayer` = '%u', `maxplayers` = '%u' WHERE `id` = '%u';", curplayer, maxplayer,
+             id);
 
     if(!DoQuery(query))
         return false;
 
-    LOG.write("Server %s aktualisiert: Aktuelle Spielerzahl: %u/%u->%u/%u\n") % Info.getName() % Info.getCurPlayers() % Info.getMaxPlayers() % curplayer % maxplayer;
+    LOG.write("Server %s aktualisiert: Aktuelle Spielerzahl: %u/%u->%u/%u\n") % Info.getName() % Info.getCurPlayers() % Info.getMaxPlayers()
+      % curplayer % maxplayer;
     return true;
 }
 
@@ -494,27 +509,26 @@ bool MySQL::UpdateServerPing(unsigned id, unsigned ping)
     if(Info.getPing() == ping)
         return true;
 
-    char query[1024];
+    std::array<char, 1024> query;
     snprintf(query, 1024, "UPDATE `lobby_servers` SET `ping` = '%u' WHERE `id` = '%u';", ping, id);
 
     if(!DoQuery(query))
         return false;
 
-    //LOG.write(("Server %s aktualisiert: Neuer Ping: %d->%d\n", Info.getName(), Info.getPing(), ping);
+    // LOG.write(("Server %s aktualisiert: Neuer Ping: %d->%d\n", Info.getName(), Info.getPing(), ping);
     return true;
 }
 
 bool MySQL::SetBan(const std::string& user, bool banned)
 {
-    char user2[256];
-    mysql_real_escape_string(m_pMySQL, user2, user.c_str(), (unsigned long) user.length());
+    std::array<char, 256> user2;
+    mysql_real_escape_string(m_pMySQL, user2, user.c_str(), (unsigned long)user.length());
 
-    char query[1024];
+    std::array<char, 1024> query;
     snprintf(query, 1024, "UPDATE `users` SET `banned` = '%d' WHERE `user` = '%s';", banned ? 1 : 0, user2);
 
     if(!DoQuery(query))
         return false;
 
-    return(true);
+    return (true);
 }
-
