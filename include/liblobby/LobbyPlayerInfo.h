@@ -26,7 +26,7 @@ class LobbyPlayerInfo
 {
 public:
     LobbyPlayerInfo();
-    LobbyPlayerInfo(const unsigned playerId, Serializer& ser);
+    LobbyPlayerInfo(unsigned playerId, Serializer& ser);
     /// leert die Informationen.
     void clear();
     /// serialisiert die Daten.

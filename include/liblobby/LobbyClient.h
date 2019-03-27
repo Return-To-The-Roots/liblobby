@@ -53,7 +53,7 @@ public:
     void Stop();
 
     /// versucht einen Login in den LobbyServer.
-    bool Login(const std::string& server, const unsigned port, const std::string& user, const std::string& pass, const bool use_ipv6);
+    bool Login(const std::string& server, unsigned port, const std::string& user, const std::string& pass, bool use_ipv6);
 
     /// schickt einen Request für die Server-Liste.
     void SendServerListRequest();
@@ -136,7 +136,7 @@ public:
 
 protected:
     /// verbindet mit dem LobbyServer.
-    bool Connect(const std::string& server, const unsigned port, const bool use_ipv6);
+    bool Connect(const std::string& server, unsigned port, bool use_ipv6);
     /// Server verloren.
     void ServerLost(bool notifyParent = true);
 

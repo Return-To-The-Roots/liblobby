@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include <stdint.h>
+#include <cstdint>
 
 const unsigned LOBBYPROTOCOL_VERSION = 0xFF0007FF;
 namespace lobbyprotocol

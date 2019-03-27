@@ -29,7 +29,7 @@ class LobbyPlayerList;
 class LobbyInterface
 {
 public:
-    virtual ~LobbyInterface() {}
+    virtual ~LobbyInterface() = default;
 
     virtual void LC_LoggedIn(const std::string& email);
     virtual void LC_Registered();
