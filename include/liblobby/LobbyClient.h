@@ -91,7 +91,7 @@ public:
     const LobbyPlayerList& GetRankingList() const { return rankingList; }
     /// liefert Informationen über einen Server
     const LobbyServerInfo& GetServerInfo() const { return serverInfo; };
-    const std::string GetUser() const { return userdata.user; };
+    const std::string& GetUser() const { return userdata.user; };
 
     /// sind wir eingeloggt?
     bool IsLoggedIn() const { return (state == CS_LOBBY || state == CS_INGAME); }

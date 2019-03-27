@@ -19,6 +19,8 @@
 
 #pragma once
 
+#include <utility>
+
 #include "LobbyMessage.h"
 #include "LobbyMessageInterface.h"
 #include "LobbyPlayerList.h"
@@ -38,8 +40,8 @@ private:
 
 public:
     LobbyMessage_Login() : LobbyMessage(NMS_LOBBY_LOGIN) {} //-V730
-    LobbyMessage_Login(const std::string& user, const std::string& pass, const std::string& version)
-        : LobbyMessage(NMS_LOBBY_LOGIN), revision(LOBBYPROTOCOL_VERSION), user(user), pass(pass), version(version)
+    LobbyMessage_Login(const std::string& user, std::string pass, const std::string& version)
+        : LobbyMessage(NMS_LOBBY_LOGIN), revision(LOBBYPROTOCOL_VERSION), user(user), pass(std::move(pass)), version(version)
     {
         LOG.writeToFile(">>> NMS_LOBBY_LOGIN(%d, %s, %s, %s)\n") % revision % user % "********" % version;
     }
