@@ -1,4 +1,4 @@
-// Copyright (c) 2005 - 2017 Settlers Freaks (sf-team at siedler25.org)
+// Copyright (c) 2005 - 2019 Settlers Freaks (sf-team at siedler25.org)
 //
 // This file is part of Return To The Roots.
 //
@@ -14,20 +14,22 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Return To The Roots. If not, see <http://www.gnu.org/licenses/>.
-#ifndef LOBBYCLIENT_H_INCLUDED
-#define LOBBYCLIENT_H_INCLUDED
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
 
 #pragma once
+#ifndef liblobby_include_liblobby_LobbyClient_h
+#define liblobby_include_liblobby_LobbyClient_h
 
-///////////////////////////////////////////////////////////////////////////////
-// Eigene Header
 #include "LobbyMessageInterface.h"
 #include "LobbyPlayerList.h"
 #include "LobbyServerInfo.h"
 #include "LobbyServerList.h"
-#include "libutil/MessageQueue.h"
-#include "libutil/Singleton.h"
-#include "libutil/Socket.h"
+
+#include <libutil/MessageQueue.h>
+#include <libutil/Singleton.h>
+#include <libutil/Socket.h>
+
 #include <string>
 
 class LobbyInterface;
@@ -175,4 +177,4 @@ private:
 // Makros / Defines
 #define LOBBYCLIENT LobbyClient::inst()
 
-#endif // LOBBYCLIENT_H_INCLUDED
+#endif // !liblobby_include_liblobby_LobbyClient_h

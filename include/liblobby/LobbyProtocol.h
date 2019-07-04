@@ -1,4 +1,4 @@
-// Copyright (c) 2005 - 2015 Settlers Freaks (sf-team at siedler25.org)
+// Copyright (c) 2005 - 2019 Settlers Freaks (sf-team at siedler25.org)
 //
 // This file is part of Return To The Roots.
 //
@@ -14,24 +14,31 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Return To The Roots. If not, see <http://www.gnu.org/licenses/>.
-#ifndef LOBBYPROTOCOL_H_INCLUDED
-#define LOBBYPROTOCOL_H_INCLUDED
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
 
 #pragma once
+#ifndef liblobby_include_liblobby_LobbyProtocol_h
+#define liblobby_include_liblobby_LobbyProtocol_h
 
 #include <cstdint>
 
 const unsigned LOBBYPROTOCOL_VERSION = 0xFF0007FF;
-namespace lobbyprotocol
+
+namespace lobbyprotocol {
+
+inline
+uint32_t extractVersion(uint32_t version)
 {
-    inline uint32_t extractVersion(uint32_t version)
+    if((version & 0xFF0000FF) == 0xFF0000FF)
     {
-        if((version & 0xFF0000FF) == 0xFF0000FF)
-            return (version >> 8) & 0xFFFF;
-        else
-            return 0;
+        return (version >> 8) & 0xFFFF;
     }
+
+    return 0;
 }
+
+} // namespace lobbyprotocol
 
 enum
 {
@@ -39,9 +46,10 @@ enum
     NMS_LOBBY_LOGIN_DONE,
     NMS_LOBBY_LOGIN_ERROR,
 
-    /*NMS_LOBBY_REGISTER = 0x2000,
-    NMS_LOBBY_REGISTER_DONE,
-    NMS_LOBBY_REGISTER_ERROR,*/
+    // deprecated
+    // NMS_LOBBY_REGISTER = 0x2000,
+    // NMS_LOBBY_REGISTER_DONE,
+    // NMS_LOBBY_REGISTER_ERROR,
 
     NMS_LOBBY_SERVERLIST = 0x3000,
     NMS_LOBBY_SERVERINFO,
@@ -65,4 +73,4 @@ enum
     NMS_LOBBY_RANKING_INFO = 0x7000
 };
 
-#endif // LOBBYPROTOCOL_H_INCLUDED
+#endif // liblobby_include_liblobby_LobbyProtocol_h

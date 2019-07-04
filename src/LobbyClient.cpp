@@ -1,4 +1,4 @@
-// Copyright (c) 2005 - 2017 Settlers Freaks (sf-team at siedler25.org)
+// Copyright (c) 2005 - 2019 Settlers Freaks (sf-team at siedler25.org)
 //
 // This file is part of Return To The Roots.
 //
@@ -14,17 +14,21 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Return To The Roots. If not, see <http://www.gnu.org/licenses/>.
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "liblobby/LobbyClient.h"
-#include "mygettext/mygettext.h"
 #include "liblobby/LobbyInterface.h"
 #include "liblobby/LobbyMessage.h"
 #include "liblobby/LobbyMessages.h"
-#include "libutil/Log.h"
-#include "libutil/Message.h"
-#include "libutil/Messages.h"
-#include "libutil/SocketSet.h"
-#include "libutil/md5.hpp"
+
+#include <libutil/Log.h>
+#include <libutil/Message.h>
+#include <libutil/Messages.h>
+#include <libutil/SocketSet.h>
+#include <libutil/md5.hpp>
+#include <mygettext/mygettext.h>
+
 #include <algorithm>
 
 class LobbyPlayerInfo;

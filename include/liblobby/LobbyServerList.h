@@ -1,4 +1,4 @@
-// Copyright (c) 2005 - 2017 Settlers Freaks (sf-team at siedler25.org)
+// Copyright (c) 2005 - 2019 Settlers Freaks (sf-team at siedler25.org)
 //
 // This file is part of Return To The Roots.
 //
@@ -14,15 +14,18 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Return To The Roots. If not, see <http://www.gnu.org/licenses/>.
-#ifndef LOBBYSERVERLIST_H_INCLUDED
-#define LOBBYSERVERLIST_H_INCLUDED
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
 
 #pragma once
+#ifndef liblobby_include_liblobby_LobbyServerList_h
+#define liblobby_include_liblobby_LobbyServerList_h
 
 #include "LobbyServerInfo.h"
-#include "libutil/SerializableArray.h"
+
+#include <libutil/SerializableArray.h>
 
 class LobbyServerList : public SerializableArray<LobbyServerInfo>
 {};
 
-#endif // LOBBYSERVERLIST_H_INCLUDED
+#endif // liblobby_include_liblobby_LobbyServerList_h

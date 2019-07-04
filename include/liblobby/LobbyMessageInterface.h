@@ -1,4 +1,4 @@
-// Copyright (c) 2005 - 2017 Settlers Freaks (sf-team at siedler25.org)
+// Copyright (c) 2005 - 2019 Settlers Freaks (sf-team at siedler25.org)
 //
 // This file is part of Return To The Roots.
 //
@@ -14,12 +14,15 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Return To The Roots. If not, see <http://www.gnu.org/licenses/>.
-#ifndef LOBBYMESSAGEINTERFACE_H_INCLUDED
-#define LOBBYMESSAGEINTERFACE_H_INCLUDED
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
 
 #pragma once
+#ifndef liblobby_include_liblobby_LobbyMessageInterface_h
+#define liblobby_include_liblobby_LobbyMessageInterface_h
 
-#include "libutil/MessageInterface.h"
+#include <libutil/MessageInterface.h>
+
 #include <string>
 
 class LobbyServerList;
@@ -36,6 +39,7 @@ public:
     {
         return false;
     }
+    
     /// Lobby-Login-Error-Nachricht.
     virtual bool OnNMSLobbyLoginError(unsigned /*id*/, const std::string& /*error*/) { return false; }
     /// Lobby-Logged-In-Nachricht.
@@ -60,6 +64,7 @@ public:
     {
         return false;
     }
+    
     /// RankingList-Nachricht.
     virtual bool OnNMSLobbyRankingList(unsigned /*id*/) { return false; }
     virtual bool OnNMSLobbyRankingList(unsigned /*id*/, const LobbyPlayerList& /*list*/) { return false; }
@@ -83,4 +88,4 @@ public:
     virtual bool OnNMSLobbyRankingInfo(unsigned /*id*/, const LobbyPlayerInfo& /*player*/) { return false; }
 };
 
-#endif //! LOBBYMESSAGEINTERFACE_H_INCLUDED
+#endif // !liblobby_include_liblobby_LobbyMessageInterface_h

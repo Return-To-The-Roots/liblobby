@@ -1,4 +1,4 @@
-// Copyright (c) 2005 - 2017 Settlers Freaks (sf-team at siedler25.org)
+// Copyright (c) 2005 - 2019 Settlers Freaks (sf-team at siedler25.org)
 //
 // This file is part of Return To The Roots.
 //
@@ -14,21 +14,29 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Return To The Roots. If not, see <http://www.gnu.org/licenses/>.
-#ifndef LOBBYMESSAGE_H_INCLUDED
-#define LOBBYMESSAGE_H_INCLUDED
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
 
 #pragma once
+#ifndef liblobby_include_liblobby_LobbyMessage_h
+#define liblobby_include_liblobby_LobbyMessage_h
 
-#include "libutil/Message.h"
+#include <libutil/Message.h>
 
 class LobbyMessage : public Message
 {
 public:
-    LobbyMessage(unsigned short id) : Message(id) {}
+    LobbyMessage(unsigned short id)
+        : Message(id)
+    {}
 
-    static Message* create_lobby(unsigned short id);
+    static
+    Message* create_lobby(unsigned short id);
 
-    Message* create(unsigned short id) const override { return create_lobby(id); }
+    Message* create(unsigned short id) const override
+    {
+        return create_lobby(id);
+    }
 };
 
-#endif // LOBBYMESSAGE_H_INCLUDED
+#endif // !liblobby_include_liblobby_LobbyMessage_h
