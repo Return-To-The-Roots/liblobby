@@ -26,7 +26,7 @@ public:
     {
         return false;
     }
-    
+
     /// Lobby-Login-Error-Nachricht.
     virtual bool OnNMSLobbyLoginError(unsigned /*id*/, const std::string& /*error*/) { return false; }
     /// Lobby-Logged-In-Nachricht.
@@ -51,7 +51,7 @@ public:
     {
         return false;
     }
-    
+
     /// RankingList-Nachricht.
     virtual bool OnNMSLobbyRankingList(unsigned /*id*/) { return false; }
     virtual bool OnNMSLobbyRankingList(unsigned /*id*/, const LobbyPlayerList& /*list*/) { return false; }

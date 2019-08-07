@@ -13,17 +13,11 @@
 class LobbyMessage : public Message
 {
 public:
-    LobbyMessage(unsigned short id)
-        : Message(id)
-    {}
+    LobbyMessage(unsigned short id) : Message(id) {}
 
-    static
-    Message* create_lobby(unsigned short id);
+    static Message* create_lobby(unsigned short id);
 
-    Message* create(unsigned short id) const override
-    {
-        return create_lobby(id);
-    }
+    Message* create(unsigned short id) const override { return create_lobby(id); }
 };
 
 #endif // !liblobby_include_liblobby_LobbyMessage_h
