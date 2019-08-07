@@ -29,7 +29,7 @@ public:
     static const unsigned Longevity = 10;
 
     LobbyClient();
-    ~LobbyClient() override;
+    ~LobbyClient();
 
     void SetProgramVersion(const std::string& programVersion) { this->programVersion = programVersion; }
     /// setzt das Interface
