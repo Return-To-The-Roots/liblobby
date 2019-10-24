@@ -10,7 +10,7 @@
 
 #include "LobbyPlayerInfo.h"
 
-#include <libutil/SerializableArray.h>
+#include <s25util/SerializableArray.h>
 
 class LobbyPlayerList : public SerializableArray<LobbyPlayerInfo>
 {};

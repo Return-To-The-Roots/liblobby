@@ -8,7 +8,7 @@
 #ifndef liblobby_include_liblobby_LobbyMessageInterface_h
 #define liblobby_include_liblobby_LobbyMessageInterface_h
 
-#include <libutil/MessageInterface.h>
+#include <s25util/MessageInterface.h>
 
 #include <string>
 

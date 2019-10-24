@@ -15,7 +15,7 @@ set(SOURCES_LOBBY_C src/LobbyClient.cpp   include/liblobby/LobbyClient.h)
 
 add_library(lobby STATIC EXCLUDE_FROM_ALL ${SOURCES_LOBBY})
 target_include_directories(lobby PUBLIC include)
-target_link_libraries(lobby PUBLIC s25util PRIVATE mygettext)
+target_link_libraries(lobby PUBLIC s25util::common s25util::log s25util::network PRIVATE mygettext)
 target_compile_features(lobby PUBLIC cxx_std_14)
 set_target_properties(lobby PROPERTIES CXX_EXTENSIONS OFF)
 

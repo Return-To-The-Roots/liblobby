@@ -13,9 +13,9 @@
 #include "LobbyServerInfo.h"
 #include "LobbyServerList.h"
 
-#include <libutil/MessageQueue.h>
-#include <libutil/Singleton.h>
-#include <libutil/Socket.h>
+#include <s25util/MessageQueue.h>
+#include <s25util/Singleton.h>
+#include <s25util/Socket.h>
 
 #include <string>
 

@@ -6,7 +6,7 @@
 
 #include "liblobby/LobbyPlayerInfo.h"
 
-#include <libutil/Serializer.h>
+#include <s25util/Serializer.h>
 
 LobbyPlayerInfo::LobbyPlayerInfo()
 {

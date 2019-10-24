@@ -14,7 +14,7 @@
 #include "LobbyProtocol.h"
 #include "LobbyServerList.h"
 
-#include <libutil/Log.h>
+#include <s25util/Log.h>
 
 #include <utility>
 

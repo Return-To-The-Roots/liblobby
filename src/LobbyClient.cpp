@@ -9,11 +9,11 @@
 #include "liblobby/LobbyMessage.h"
 #include "liblobby/LobbyMessages.h"
 
-#include <libutil/Log.h>
-#include <libutil/Message.h>
-#include <libutil/Messages.h>
-#include <libutil/SocketSet.h>
-#include <libutil/md5.hpp>
+#include <s25util/Log.h>
+#include <s25util/Message.h>
+#include <s25util/Messages.h>
+#include <s25util/SocketSet.h>
+#include <s25util/md5.hpp>
 #include <mygettext/mygettext.h>
 
 #include <algorithm>

@@ -6,7 +6,7 @@
 
 #include "liblobby/LobbyServerInfo.h"
 
-#include <libutil/Serializer.h>
+#include <s25util/Serializer.h>
 
 LobbyServerInfo::LobbyServerInfo()
 {

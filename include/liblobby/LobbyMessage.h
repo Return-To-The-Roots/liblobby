@@ -8,7 +8,7 @@
 #ifndef liblobby_include_liblobby_LobbyMessage_h
 #define liblobby_include_liblobby_LobbyMessage_h
 
-#include <libutil/Message.h>
+#include <s25util/Message.h>
 
 class LobbyMessage : public Message
 {
