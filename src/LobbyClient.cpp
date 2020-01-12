@@ -124,7 +124,7 @@ bool LobbyClient::Login(const std::string& server, const unsigned port, const st
     Stop();
 
     userdata.user = user;
-    userdata.pass = s25util::md5(pass.data(), pass.length()).toString();
+    userdata.pass = (pass.size() == 32) ? pass : s25util::md5(pass).toString();
 
     // verbinden
     return Connect(server, port, use_ipv6);
