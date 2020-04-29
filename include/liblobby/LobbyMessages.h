@@ -8,12 +8,12 @@
 #ifndef liblobby_include_liblobby_LobbyMessages_h
 #define liblobby_include_liblobby_LobbyMessages_h
 
+#include "EMailUtils.h"
 #include "LobbyMessage.h"
 #include "LobbyMessageInterface.h"
 #include "LobbyPlayerList.h"
 #include "LobbyProtocol.h"
 #include "LobbyServerList.h"
-
 #include <s25util/Log.h>
 
 #include <utility>
@@ -75,9 +75,9 @@ private:
 
 public:
     LobbyMessage_Login_Done() : LobbyMessage(NMS_LOBBY_LOGIN_DONE) {}
-    LobbyMessage_Login_Done(const std::string& email) : LobbyMessage(NMS_LOBBY_LOGIN_DONE), email(email)
+    LobbyMessage_Login_Done(std::string email) : LobbyMessage(NMS_LOBBY_LOGIN_DONE), email(std::move(email))
     {
-        LOG.writeToFile(">>> NMS_LOBBY_LOGIN_DONE(%s)\n") % email;
+        LOG.writeToFile(">>> NMS_LOBBY_LOGIN_DONE(%s)\n") % s25lobby::getAnonymizedEmail(this->email);
     }
 
     void Serialize(Serializer& ser) const override
@@ -95,7 +95,7 @@ public:
     bool run(MessageInterface* callback, unsigned id) override
     {
         auto* cb = static_cast<LobbyMessageInterface*>(callback);
-        LOG.writeToFile("<<< NMS_LOBBY_LOGIN_DONE(%s)\n") % email;
+        LOG.writeToFile("<<< NMS_LOBBY_LOGIN_DONE(%s)\n") % s25lobby::getAnonymizedEmail(email);
         return cb->OnNMSLobbyLoginDone(id, email);
     }
 };
