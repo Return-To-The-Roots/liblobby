@@ -7,6 +7,7 @@ set(SOURCES_LOBBY src/LobbyMessage.cpp    include/liblobby/LobbyMessage.h
                   src/LobbyInterface.cpp  include/liblobby/LobbyInterface.h
                   src/LobbyPlayerInfo.cpp include/liblobby/LobbyPlayerInfo.h
                                           include/liblobby/LobbyPlayerList.h
+                                          include/liblobby/LobbyProtocol.h
                   src/LobbyServerInfo.cpp include/liblobby/LobbyServerInfo.h
                                           include/liblobby/LobbyServerList.h
 )

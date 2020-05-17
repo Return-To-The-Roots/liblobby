@@ -14,8 +14,7 @@ const unsigned LOBBYPROTOCOL_VERSION = 0xFF0007FF;
 
 namespace lobbyprotocol {
 
-inline
-uint32_t extractVersion(uint32_t version)
+inline uint32_t extractVersion(uint32_t version)
 {
     if((version & 0xFF0000FF) == 0xFF0000FF)
     {
