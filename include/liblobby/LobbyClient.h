@@ -5,8 +5,6 @@
 //
 
 #pragma once
-#ifndef liblobby_include_liblobby_LobbyClient_h
-#define liblobby_include_liblobby_LobbyClient_h
 
 #include "LobbyMessageInterface.h"
 #include "LobbyPlayerList.h"
@@ -163,5 +161,3 @@ private:
 ///////////////////////////////////////////////////////////////////////////////
 // Makros / Defines
 #define LOBBYCLIENT LobbyClient::inst()
-
-#endif // !liblobby_include_liblobby_LobbyClient_h

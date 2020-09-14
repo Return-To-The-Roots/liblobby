@@ -5,8 +5,6 @@
 //
 
 #pragma once
-#ifndef liblobby_include_liblobby_LobbyMessageInterface_h
-#define liblobby_include_liblobby_LobbyMessageInterface_h
 
 #include <s25util/MessageInterface.h>
 
@@ -74,5 +72,3 @@ public:
     /// Lobby-Ranking-Info-Nachricht.
     virtual bool OnNMSLobbyRankingInfo(unsigned /*id*/, const LobbyPlayerInfo& /*player*/) { return false; }
 };
-
-#endif // !liblobby_include_liblobby_LobbyMessageInterface_h

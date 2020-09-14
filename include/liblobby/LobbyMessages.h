@@ -5,8 +5,6 @@
 //
 
 #pragma once
-#ifndef liblobby_include_liblobby_LobbyMessages_h
-#define liblobby_include_liblobby_LobbyMessages_h
 
 #include "EMailUtils.h"
 #include "LobbyMessage.h"
@@ -746,5 +744,3 @@ public:
         return cb->OnNMSLobbyRankingInfo(id, player);
     }
 };
-
-#endif // !liblobby_include_liblobby_LobbyMessages_h

@@ -5,8 +5,6 @@
 //
 
 #pragma once
-#ifndef liblobby_include_liblobby_LobbyProtocol_h
-#define liblobby_include_liblobby_LobbyProtocol_h
 
 #include <cstdint>
 
@@ -58,5 +56,3 @@ enum
 
     NMS_LOBBY_RANKING_INFO = 0x7000
 };
-
-#endif // liblobby_include_liblobby_LobbyProtocol_h

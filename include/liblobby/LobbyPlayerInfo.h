@@ -5,8 +5,6 @@
 //
 
 #pragma once
-#ifndef liblobby_include_liblobby_LobbyPlayerInfo_h
-#define liblobby_include_liblobby_LobbyPlayerInfo_h
 
 #include <string>
 
@@ -51,5 +49,3 @@ protected:
     unsigned gewonnen_;
     unsigned verloren_;
 };
-
-#endif // !liblobby_include_liblobby_LobbyPlayerInfo_h

@@ -5,8 +5,6 @@
 //
 
 #pragma once
-#ifndef liblobby_include_liblobby_LobbyInterface_h
-#define liblobby_include_liblobby_LobbyInterface_h
 
 #include <string>
 
@@ -37,5 +35,3 @@ public:
     virtual void LC_RankingList(const LobbyPlayerList& /*rankings*/) {}
     virtual void LC_PlayerList(const LobbyPlayerList& /*players*/) {}
 };
-
-#endif // !liblobby_include_liblobby_LobbyInterface_h

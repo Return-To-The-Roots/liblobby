@@ -5,8 +5,6 @@
 //
 
 #pragma once
-#ifndef liblobby_include_liblobby_LobbyServerInfo_h
-#define liblobby_include_liblobby_LobbyServerInfo_h
 
 #include <string>
 
@@ -56,5 +54,3 @@ private:
     unsigned maxplayers;
     bool has_password;
 };
-
-#endif // !liblobby_include_liblobby_LobbyServerInfo_h

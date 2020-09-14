@@ -5,8 +5,6 @@
 //
 
 #pragma once
-#ifndef liblobby_include_liblobby_LobbyMessage_h
-#define liblobby_include_liblobby_LobbyMessage_h
 
 #include <s25util/Message.h>
 
@@ -19,5 +17,3 @@ public:
 
     Message* create(unsigned short id) const override { return create_lobby(id); }
 };
-
-#endif // !liblobby_include_liblobby_LobbyMessage_h

@@ -5,8 +5,6 @@
 //
 
 #pragma once
-#ifndef liblobby_include_liblobby_LobbyServerList_h
-#define liblobby_include_liblobby_LobbyServerList_h
 
 #include "LobbyServerInfo.h"
 
@@ -14,5 +12,3 @@
 
 class LobbyServerList : public SerializableArray<LobbyServerInfo>
 {};
-
-#endif // liblobby_include_liblobby_LobbyServerList_h
