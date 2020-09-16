@@ -117,8 +117,8 @@ void LobbyClient::Stop()
  *  @param[in] user Benutzername
  *  @param[in] pass Passwort
  */
-bool LobbyClient::Login(const std::string& server, const unsigned port, const std::string& user, const std::string& pass,
-                        const bool use_ipv6)
+bool LobbyClient::Login(const std::string& server, const unsigned port, const std::string& user,
+                        const std::string& pass, const bool use_ipv6)
 {
     // aufräumen
     Stop();
@@ -382,7 +382,8 @@ bool LobbyClient::OnNMSLobbyServerList(unsigned /*id*/, const LobbyServerList& l
  *
  *  @param[in] error Die empfangene Spielerliste
  */
-bool LobbyClient::OnNMSLobbyPlayerList(unsigned /*id*/, const LobbyPlayerList& onlinePlayers, const LobbyPlayerList& ingamePlayers)
+bool LobbyClient::OnNMSLobbyPlayerList(unsigned /*id*/, const LobbyPlayerList& onlinePlayers,
+                                       const LobbyPlayerList& ingamePlayers)
 {
     playerList = onlinePlayers;
     for(const auto& ingamePlayer : ingamePlayers)

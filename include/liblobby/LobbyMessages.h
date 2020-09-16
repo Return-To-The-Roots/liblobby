@@ -29,7 +29,8 @@ private:
 public:
     LobbyMessage_Login() : LobbyMessage(NMS_LOBBY_LOGIN) {} //-V730
     LobbyMessage_Login(const std::string& user, std::string pass, const std::string& version)
-        : LobbyMessage(NMS_LOBBY_LOGIN), revision(LOBBYPROTOCOL_VERSION), user(user), pass(std::move(pass)), version(version)
+        : LobbyMessage(NMS_LOBBY_LOGIN), revision(LOBBYPROTOCOL_VERSION), user(user), pass(std::move(pass)),
+          version(version)
     {
         LOG.writeToFile(">>> NMS_LOBBY_LOGIN(%d, %s, %s, %s)\n") % revision % user % "********" % version;
     }
@@ -146,15 +147,16 @@ public:
     {
         LOG.writeToFile(">>> NMS_LOBBY_SERVERLIST\n");
     }
-    LobbyMessage_ServerList(const LobbyServerList& list) : LobbyMessage(NMS_LOBBY_SERVERLIST), isRequest(false), list(list)
+    LobbyMessage_ServerList(const LobbyServerList& list)
+        : LobbyMessage(NMS_LOBBY_SERVERLIST), isRequest(false), list(list)
     {
         LOG.writeToFile(">>> NMS_LOBBY_SERVERLIST(%d)\n") % list.size();
         for(unsigned i = 0; i < list.size(); ++i)
         {
             const LobbyServerInfo* server = list.getElement(i);
-            LOG.writeToFile("    %d: %d %s %s:%d %s %d %s %d %d\n") % i % server->getId() % server->getName() % server->getHost()
-              % server->getPort() % server->getVersion() % server->getPing() % server->getMap() % server->getCurPlayers()
-              % server->getMaxPlayers();
+            LOG.writeToFile("    %d: %d %s %s:%d %s %d %s %d %d\n") % i % server->getId() % server->getName()
+              % server->getHost() % server->getPort() % server->getVersion() % server->getPing() % server->getMap()
+              % server->getCurPlayers() % server->getMaxPlayers();
         }
     }
 
@@ -190,9 +192,9 @@ public:
             for(unsigned i = 0; i < list.size(); ++i)
             {
                 const LobbyServerInfo* server = list.getElement(i);
-                LOG.writeToFile("    %d: %d %s %s:%d %s %d %s %d %d\n") % i % server->getId() % server->getName() % server->getHost()
-                  % server->getPort() % server->getVersion() % server->getPing() % server->getMap() % server->getCurPlayers()
-                  % server->getMaxPlayers();
+                LOG.writeToFile("    %d: %d %s %s:%d %s %d %s %d %d\n") % i % server->getId() % server->getName()
+                  % server->getHost() % server->getPort() % server->getVersion() % server->getPing() % server->getMap()
+                  % server->getCurPlayers() % server->getMaxPlayers();
             }
             return cb->OnNMSLobbyServerList(id, list);
         }
@@ -214,11 +216,13 @@ public:
     {
         LOG.writeToFile(">>> NMS_LOBBY_SERVERINFO(%d)\n") % server;
     }
-    LobbyMessage_ServerInfo(const LobbyServerInfo& info) : LobbyMessage(NMS_LOBBY_SERVERINFO), isRequest(false), info(info)
+    LobbyMessage_ServerInfo(const LobbyServerInfo& info)
+        : LobbyMessage(NMS_LOBBY_SERVERINFO), isRequest(false), info(info)
     {
         LOG.writeToFile(">>> NMS_LOBBY_SERVERINFO\n");
-        LOG.writeToFile("    %d %s %s:%d %s %d %s %d %d\n") % info.getId() % info.getName() % info.getHost() % info.getPort()
-          % info.getVersion() % info.getPing() % info.getMap() % info.getCurPlayers() % info.getMaxPlayers();
+        LOG.writeToFile("    %d %s %s:%d %s %d %s %d %d\n") % info.getId() % info.getName() % info.getHost()
+          % info.getPort() % info.getVersion() % info.getPing() % info.getMap() % info.getCurPlayers()
+          % info.getMaxPlayers();
     }
 
     void Serialize(Serializer& ser) const override
@@ -251,8 +255,9 @@ public:
         } else // Antwort
         {
             LOG.writeToFile("<<< NMS_LOBBY_SERVERINFO\n");
-            LOG.writeToFile("    %d %s %s:%d %s %d %s %d %d\n") % info.getId() % info.getName() % info.getHost() % info.getPort()
-              % info.getVersion() % info.getPing() % info.getMap() % info.getCurPlayers() % info.getMaxPlayers();
+            LOG.writeToFile("    %d %s %s:%d %s %d %s %d %d\n") % info.getId() % info.getName() % info.getHost()
+              % info.getPort() % info.getVersion() % info.getPing() % info.getMap() % info.getCurPlayers()
+              % info.getMaxPlayers();
             return cb->OnNMSLobbyServerInfo(id, info);
         }
     }
@@ -272,15 +277,16 @@ public:
     {
         LOG.writeToFile(">>> NMS_LOBBY_RANKINGLIST\n");
     }
-    LobbyMessage_RankingList(const LobbyPlayerList& list) : LobbyMessage(NMS_LOBBY_RANKINGLIST), isRequest(false), list(list)
+    LobbyMessage_RankingList(const LobbyPlayerList& list)
+        : LobbyMessage(NMS_LOBBY_RANKINGLIST), isRequest(false), list(list)
     {
         LOG.writeToFile(">>> NMS_LOBBY_RANKINGLIST(%d)\n") % list.size();
 
         for(unsigned i = 0; i < list.size(); ++i)
         {
             const LobbyPlayerInfo* player = list.getElement(i);
-            LOG.writeToFile("    %d: %d %s %s %d %d %d\n") % i % player->getId() % player->getName() % player->getVersion()
-              % player->getPunkte() % player->getGewonnen() % player->getVerloren();
+            LOG.writeToFile("    %d: %d %s %s %d %d %d\n") % i % player->getId() % player->getName()
+              % player->getVersion() % player->getPunkte() % player->getGewonnen() % player->getVerloren();
         }
     }
 
@@ -313,8 +319,8 @@ public:
             for(unsigned i = 0; i < list.size(); ++i)
             {
                 const LobbyPlayerInfo* player = list.getElement(i);
-                LOG.writeToFile("    %d: %d %s %s %d %d %d\n") % i % player->getId() % player->getName() % player->getVersion()
-                  % player->getPunkte() % player->getGewonnen() % player->getVerloren();
+                LOG.writeToFile("    %d: %d %s %s %d %d %d\n") % i % player->getId() % player->getName()
+                  % player->getVersion() % player->getPunkte() % player->getGewonnen() % player->getVerloren();
             }
 
             return cb->OnNMSLobbyRankingList(id, list);
@@ -337,15 +343,16 @@ public:
     {
         LOG.writeToFile(">>> NMS_LOBBY_PLAYERLIST\n");
     }
-    LobbyMessage_PlayerList(const LobbyPlayerList& list) : LobbyMessage(NMS_LOBBY_PLAYERLIST), isRequest(false), list(list)
+    LobbyMessage_PlayerList(const LobbyPlayerList& list)
+        : LobbyMessage(NMS_LOBBY_PLAYERLIST), isRequest(false), list(list)
     {
         LOG.writeToFile(">>> NMS_LOBBY_PLAYERLIST(%d)\n") % list.size();
 
         for(unsigned i = 0; i < list.size(); ++i)
         {
             const LobbyPlayerInfo* player = list.getElement(i);
-            LOG.writeToFile("    %d: %d %s %s %d %d %d\n") % i % player->getId() % player->getName() % player->getVersion()
-              % player->getPunkte() % player->getGewonnen() % player->getVerloren();
+            LOG.writeToFile("    %d: %d %s %s %d %d %d\n") % i % player->getId() % player->getName()
+              % player->getVersion() % player->getPunkte() % player->getGewonnen() % player->getVerloren();
         }
     }
 
@@ -387,8 +394,8 @@ public:
             for(unsigned i = 0; i < list.size(); ++i)
             {
                 const LobbyPlayerInfo* player = list.getElement(i);
-                LOG.writeToFile("    %d: %d %s %s %d %d %d\n") % i % player->getId() % player->getName() % player->getVersion()
-                  % player->getPunkte() % player->getGewonnen() % player->getVerloren();
+                LOG.writeToFile("    %d: %d %s %s %d %d %d\n") % i % player->getId() % player->getName()
+                  % player->getVersion() % player->getPunkte() % player->getGewonnen() % player->getVerloren();
             }
 
             return cb->OnNMSLobbyPlayerList(id, list, ingamePlayers);
@@ -445,7 +452,8 @@ public:
     {
         LOG.writeToFile(">>> NMS_LOBBY_CHAT(%s)\n") % text;
     }
-    LobbyMessage_Chat(const std::string& player, const std::string& text) : LobbyMessage(NMS_LOBBY_CHAT), player(player), text(text)
+    LobbyMessage_Chat(const std::string& player, const std::string& text)
+        : LobbyMessage(NMS_LOBBY_CHAT), player(player), text(text)
     {
         LOG.writeToFile(">>> NMS_LOBBY_CHAT(%s, %s)\n") % player % text;
     }
@@ -522,8 +530,9 @@ public:
     LobbyMessage_Server_Add(const LobbyServerInfo& info) : LobbyMessage(NMS_LOBBY_SERVER_ADD), info(info)
     {
         LOG.writeToFile(">>> NMS_LOBBY_SERVER_ADD\n");
-        LOG.writeToFile("    %d %s %s:%d %s %d %s %d %d\n") % info.getId() % info.getName() % info.getHost() % info.getPort()
-          % info.getVersion() % info.getPing() % info.getMap() % info.getCurPlayers() % info.getMaxPlayers();
+        LOG.writeToFile("    %d %s %s:%d %s %d %s %d %d\n") % info.getId() % info.getName() % info.getHost()
+          % info.getPort() % info.getVersion() % info.getPing() % info.getMap() % info.getCurPlayers()
+          % info.getMaxPlayers();
     }
 
     void Serialize(Serializer& ser) const override
@@ -541,8 +550,9 @@ public:
     bool run(MessageInterface* callback, unsigned id) override
     {
         LOG.writeToFile("<<< NMS_LOBBY_SERVER_ADD\n");
-        LOG.writeToFile("    %d %s %s:%d %s %d %s %d %d\n") % info.getId() % info.getName() % info.getHost() % info.getPort()
-          % info.getVersion() % info.getPing() % info.getMap() % info.getCurPlayers() % info.getMaxPlayers();
+        LOG.writeToFile("    %d %s %s:%d %s %d %s %d %d\n") % info.getId() % info.getName() % info.getHost()
+          % info.getPort() % info.getVersion() % info.getPing() % info.getMap() % info.getCurPlayers()
+          % info.getMaxPlayers();
 
         auto* cb = static_cast<LobbyMessageInterface*>(callback);
         return cb->OnNMSLobbyServerAdd(id, info);
@@ -682,7 +692,10 @@ class LobbyMessage_Server_Join : public LobbyMessage
 {
 public:
     LobbyMessage_Server_Join() : LobbyMessage(NMS_LOBBY_SERVER_JOIN) {}
-    LobbyMessage_Server_Join(bool /*reserved*/) : LobbyMessage(NMS_LOBBY_SERVER_JOIN) { LOG.writeToFile(">>> NMS_LOBBY_SERVER_JOIN\n"); }
+    LobbyMessage_Server_Join(bool /*reserved*/) : LobbyMessage(NMS_LOBBY_SERVER_JOIN)
+    {
+        LOG.writeToFile(">>> NMS_LOBBY_SERVER_JOIN\n");
+    }
     bool run(MessageInterface* callback, unsigned id) override
     {
         auto* cb = static_cast<LobbyMessageInterface*>(callback);
@@ -703,15 +716,17 @@ public:
 
 public:
     LobbyMessage_Lobby_Ranking_Info() : LobbyMessage(NMS_LOBBY_RANKING_INFO) {} //-V730
-    LobbyMessage_Lobby_Ranking_Info(const std::string& name) : LobbyMessage(NMS_LOBBY_RANKING_INFO), isRequest(true), name(name)
+    LobbyMessage_Lobby_Ranking_Info(const std::string& name)
+        : LobbyMessage(NMS_LOBBY_RANKING_INFO), isRequest(true), name(name)
     {
         LOG.writeToFile(">>> NMS_LOBBY_RANKING_INFO(%s)\n") % name;
     }
-    LobbyMessage_Lobby_Ranking_Info(const LobbyPlayerInfo& player) : LobbyMessage(NMS_LOBBY_RANKING_INFO), isRequest(false), player(player)
+    LobbyMessage_Lobby_Ranking_Info(const LobbyPlayerInfo& player)
+        : LobbyMessage(NMS_LOBBY_RANKING_INFO), isRequest(false), player(player)
     {
         LOG.writeToFile(">>> NMS_LOBBY_RANKING_INFO(%s)\n") % player.getName();
-        LOG.writeToFile("    %d: %d %s %s %d %d %d\n") % 0 % player.getId() % player.getName() % player.getVersion() % player.getPunkte()
-          % player.getGewonnen() % player.getVerloren();
+        LOG.writeToFile("    %d: %d %s %s %d %d %d\n") % 0 % player.getId() % player.getName() % player.getVersion()
+          % player.getPunkte() % player.getGewonnen() % player.getVerloren();
     }
 
     void Serialize(Serializer& ser) const override
@@ -738,8 +753,8 @@ public:
     {
         auto* cb = static_cast<LobbyMessageInterface*>(callback);
         LOG.writeToFile("<<< NMS_LOBBY_RANKING_INFO(%s)\n") % player.getName();
-        LOG.writeToFile("    %d: %d %s %s %d %d %d\n") % 0 % player.getId() % player.getName() % player.getVersion() % player.getPunkte()
-          % player.getGewonnen() % player.getVerloren();
+        LOG.writeToFile("    %d: %d %s %s %d %d %d\n") % 0 % player.getId() % player.getName() % player.getVersion()
+          % player.getPunkte() % player.getGewonnen() % player.getVerloren();
 
         return cb->OnNMSLobbyRankingInfo(id, player);
     }

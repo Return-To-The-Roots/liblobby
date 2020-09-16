@@ -14,9 +14,9 @@ LobbyServerInfo::LobbyServerInfo()
 }
 
 LobbyServerInfo::LobbyServerInfo(const unsigned /*playerId*/, Serializer& ser)
-    : serverid(ser.PopUnsignedInt()), name(ser.PopLongString()), host(ser.PopLongString()), port(ser.PopUnsignedShort()),
-      version(ser.PopLongString()), ping(ser.PopUnsignedInt()), map(ser.PopLongString()), curplayers(ser.PopUnsignedInt()),
-      maxplayers(ser.PopUnsignedInt()), has_password(ser.PopBool())
+    : serverid(ser.PopUnsignedInt()), name(ser.PopLongString()), host(ser.PopLongString()),
+      port(ser.PopUnsignedShort()), version(ser.PopLongString()), ping(ser.PopUnsignedInt()), map(ser.PopLongString()),
+      curplayers(ser.PopUnsignedInt()), maxplayers(ser.PopUnsignedInt()), has_password(ser.PopBool())
 {}
 
 /**

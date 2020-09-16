@@ -40,7 +40,8 @@ public:
     void Stop();
 
     /// versucht einen Login in den LobbyServer.
-    bool Login(const std::string& server, unsigned port, const std::string& user, const std::string& pass, bool use_ipv6);
+    bool Login(const std::string& server, unsigned port, const std::string& user, const std::string& pass,
+               bool use_ipv6);
 
     /// schickt einen Request für die Server-Liste.
     void SendServerListRequest();
@@ -102,7 +103,8 @@ public:
     bool OnNMSLobbyServerList(unsigned id, const LobbyServerList& list) override;
     /// PlayerList-Nachricht.
     bool OnNMSLobbyPlayerList(unsigned) override { return false; }
-    bool OnNMSLobbyPlayerList(unsigned id, const LobbyPlayerList& onlinePlayers, const LobbyPlayerList& ingamePlayers) override;
+    bool OnNMSLobbyPlayerList(unsigned id, const LobbyPlayerList& onlinePlayers,
+                              const LobbyPlayerList& ingamePlayers) override;
     /// RankingList-Nachricht.
     bool OnNMSLobbyRankingList(unsigned) override { return false; }
     bool OnNMSLobbyRankingList(unsigned id, const LobbyPlayerList& list) override;

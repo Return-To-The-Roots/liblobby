@@ -19,8 +19,8 @@ class LobbyMessageInterface : public MessageInterface
 {
 public:
     /// Lobby-Login-Nachricht.
-    virtual bool OnNMSLobbyLogin(unsigned /*id*/, const unsigned /*revision*/, const std::string& /*user*/, const std::string& /*pass*/,
-                                 const std::string& /*version*/)
+    virtual bool OnNMSLobbyLogin(unsigned /*id*/, const unsigned /*revision*/, const std::string& /*user*/,
+                                 const std::string& /*pass*/, const std::string& /*version*/)
     {
         return false;
     }
@@ -33,7 +33,10 @@ public:
     /// Lobby-Player-ID-Nachricht.
     virtual bool OnNMSLobbyID(unsigned /*id*/, unsigned /*playerId*/) { return false; }
     /// Chat-Nachricht.
-    virtual bool OnNMSLobbyChat(unsigned /*id*/, const std::string& /*player*/, const std::string& /*text*/) { return false; }
+    virtual bool OnNMSLobbyChat(unsigned /*id*/, const std::string& /*player*/, const std::string& /*text*/)
+    {
+        return false;
+    }
 
     /// Ping-Nachricht.
     virtual bool OnNMSLobbyPing(unsigned /*id*/) { return false; }
@@ -45,7 +48,8 @@ public:
     virtual bool OnNMSLobbyServerList(unsigned /*id*/, const LobbyServerList& /*list*/) { return false; }
     /// PlayerList-Nachricht.
     virtual bool OnNMSLobbyPlayerList(unsigned /*id*/) { return false; }
-    virtual bool OnNMSLobbyPlayerList(unsigned /*id*/, const LobbyPlayerList& /*onlinePlayers*/, const LobbyPlayerList& /*ingamePlayers*/)
+    virtual bool OnNMSLobbyPlayerList(unsigned /*id*/, const LobbyPlayerList& /*onlinePlayers*/,
+                                      const LobbyPlayerList& /*ingamePlayers*/)
     {
         return false;
     }
@@ -62,7 +66,11 @@ public:
     /// Lobby-Server-Add-Failed-Nachricht.
     virtual bool OnNMSLobbyServerAddFailed(unsigned /*id*/, const std::string& /*error*/) { return false; }
     /// Lobby-Server-Update-Player-Nachricht.
-    virtual bool OnNMSLobbyServerUpdatePlayer(unsigned /*id*/, const unsigned /*curplayer*/, const unsigned /*maxplayer*/) { return false; }
+    virtual bool OnNMSLobbyServerUpdatePlayer(unsigned /*id*/, const unsigned /*curplayer*/,
+                                              const unsigned /*maxplayer*/)
+    {
+        return false;
+    }
     /// Lobby-Server-Update-Map-Nachricht.
     virtual bool OnNMSLobbyServerUpdateMap(unsigned /*id*/, const std::string& /*map*/) { return false; }
     /// Lobby-Server-Delete-Nachricht.
