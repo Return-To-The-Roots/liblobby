@@ -714,7 +714,6 @@ public:
     std::string name;
     LobbyPlayerInfo player;
 
-public:
     LobbyMessage_Lobby_Ranking_Info() : LobbyMessage(NMS_LOBBY_RANKING_INFO) {} //-V730
     LobbyMessage_Lobby_Ranking_Info(const std::string& name)
         : LobbyMessage(NMS_LOBBY_RANKING_INFO), isRequest(true), name(name)
