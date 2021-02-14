@@ -149,15 +149,6 @@ void LobbyClient::SendPlayerListRequest()
 }
 
 /**
- *  schickt einen Request für die Top10-Liste.
- */
-void LobbyClient::SendRankingListRequest()
-{
-    assert(state == CS_LOBBY);
-    send_queue.push(new LobbyMessage_RankingList(true));
-}
-
-/**
  *  schickt einen Request für ein Serverinfo.
  *
  *  @param[in] id Server-ID
@@ -196,15 +187,6 @@ void LobbyClient::SendLeaveServer()
         send_queue.push(new LobbyMessage_Server_Delete());
         state = CS_LOBBY;
     }
-}
-
-/**
- *  schickt einen Request um die Punkte eines bestimmten Spielers auszulesen.
- */
-void LobbyClient::SendRankingInfoRequest(const std::string& name)
-{
-    assert(IsLoggedIn());
-    send_queue.push(new LobbyMessage_Lobby_Ranking_Info(name));
 }
 
 /**
@@ -395,20 +377,6 @@ bool LobbyClient::OnNMSLobbyPlayerList(unsigned /*id*/, const LobbyPlayerList& o
 }
 
 /**
- *  RankingList-Nachricht.
- *
- *  @param[in] error Die empfangene Spielerliste (Top 10)
- */
-bool LobbyClient::OnNMSLobbyRankingList(unsigned /*id*/, const LobbyPlayerList& list)
-{
-    rankingList = list;
-    std::vector<LobbyInterface*> tmpListeners(listeners);
-    for(LobbyInterface* listener : tmpListeners)
-        listener->LC_RankingList(rankingList);
-    return true;
-}
-
-/**
  *  ServerList-Nachricht.
  *
  *  @param[in] error Das empfangene ServerInfo
@@ -465,19 +433,6 @@ bool LobbyClient::OnNMSLobbyServerAdd(unsigned /*id*/, const LobbyServerInfo& in
     std::vector<LobbyInterface*> tmpListeners(listeners);
     for(LobbyInterface* listener : tmpListeners)
         listener->LC_Created();
-    return true;
-}
-
-/**
- *  Lobby-Ranking-Info Nachricht.
- *
- *  @param[in] email Die empfangene PlayerInfo des angefragten Spielers.
- */
-bool LobbyClient::OnNMSLobbyRankingInfo(unsigned /*id*/, const LobbyPlayerInfo& player)
-{
-    std::vector<LobbyInterface*> tmpListeners(listeners);
-    for(LobbyInterface* listener : tmpListeners)
-        listener->LC_RankingInfo(player);
     return true;
 }
 

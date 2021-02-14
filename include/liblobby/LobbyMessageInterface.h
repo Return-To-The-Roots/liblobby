@@ -54,9 +54,6 @@ public:
         return false;
     }
 
-    /// RankingList-Nachricht.
-    virtual bool OnNMSLobbyRankingList(unsigned /*id*/) { return false; }
-    virtual bool OnNMSLobbyRankingList(unsigned /*id*/, const LobbyPlayerList& /*list*/) { return false; }
     /// ServerInfo-Nachricht.
     virtual bool OnNMSLobbyServerInfo(unsigned /*id*/, const unsigned& /*server*/) { return false; }
     virtual bool OnNMSLobbyServerInfo(unsigned /*id*/, const LobbyServerInfo& /*info*/) { return false; }
@@ -77,6 +74,4 @@ public:
     virtual bool OnNMSLobbyServerDelete(unsigned /*id*/) { return false; }
     /// Lobby-Server-Join-Nachricht.
     virtual bool OnNMSLobbyServerJoin(unsigned /*id*/) { return false; }
-    /// Lobby-Ranking-Info-Nachricht.
-    virtual bool OnNMSLobbyRankingInfo(unsigned /*id*/, const LobbyPlayerInfo& /*player*/) { return false; }
 };

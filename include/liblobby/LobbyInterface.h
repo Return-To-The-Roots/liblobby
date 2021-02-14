@@ -19,10 +19,8 @@ public:
     virtual ~LobbyInterface() = default;
 
     virtual void LC_LoggedIn(const std::string& email);
-    virtual void LC_Registered();
     virtual void LC_Connected();
     virtual void LC_Created();
-    virtual void LC_RankingInfo(const LobbyPlayerInfo& player);
 
     virtual void LC_Status_ConnectionLost();
     virtual void LC_Status_IncompleteMessage();
@@ -32,6 +30,5 @@ public:
     virtual void LC_Chat(const std::string& player, const std::string& text);
     virtual void LC_ServerList(const LobbyServerList& /*servers*/) {}
     virtual void LC_ServerInfo(const LobbyServerInfo& /*info*/) {}
-    virtual void LC_RankingList(const LobbyPlayerList& /*rankings*/) {}
     virtual void LC_PlayerList(const LobbyPlayerList& /*players*/) {}
 };

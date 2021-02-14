@@ -22,7 +22,6 @@ Message* LobbyMessage::create_lobby(unsigned short id)
 
         case NMS_LOBBY_SERVERLIST: msg = new LobbyMessage_ServerList(); break;
         case NMS_LOBBY_SERVERINFO: msg = new LobbyMessage_ServerInfo(); break;
-        case NMS_LOBBY_RANKINGLIST: msg = new LobbyMessage_RankingList(); break;
         case NMS_LOBBY_PLAYERLIST: msg = new LobbyMessage_PlayerList(); break;
 
         case NMS_LOBBY_ID: msg = new LobbyMessage_Id(); break;
@@ -37,8 +36,6 @@ Message* LobbyMessage::create_lobby(unsigned short id)
         case NMS_LOBBY_SERVER_UPDATE_PLAYER: msg = new LobbyMessage_Server_Update_Player(); break;
         case NMS_LOBBY_SERVER_UPDATE_MAP: msg = new LobbyMessage_Server_Update_Map(); break;
         case NMS_LOBBY_SERVER_JOIN: msg = new LobbyMessage_Server_Join(); break;
-
-        case NMS_LOBBY_RANKING_INFO: msg = new LobbyMessage_Lobby_Ranking_Info(); break;
     }
 
     return msg;

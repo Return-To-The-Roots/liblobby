@@ -47,12 +47,8 @@ public:
     void SendServerListRequest();
     /// schickt einen Request für die Player-Liste.
     void SendPlayerListRequest();
-    /// schickt einen Request für die Top10-Liste.
-    void SendRankingListRequest();
     /// schickt einen Request für ein Serverinfo.
     void SendServerInfoRequest(unsigned id);
-    /// schickt einen Request um die Punkte eines bestimmten Spielers auszulesen.
-    void SendRankingInfoRequest(const std::string& name);
 
     /// schickt einen Request für den Serverjoin.
     void SendServerJoinRequest();
@@ -75,8 +71,6 @@ public:
     const LobbyServerList& GetServerList() const { return serverList; }
     /// liefert die Spielerliste.
     const LobbyPlayerList& GetPlayerList() const { return playerList; };
-    /// liefert die Rankingliste.
-    const LobbyPlayerList& GetRankingList() const { return rankingList; }
     /// liefert Informationen über einen Server
     const LobbyServerInfo& GetServerInfo() const { return serverInfo; };
     const std::string& GetUser() const { return userdata.user; };
@@ -105,9 +99,6 @@ public:
     bool OnNMSLobbyPlayerList(unsigned) override { return false; }
     bool OnNMSLobbyPlayerList(unsigned id, const LobbyPlayerList& onlinePlayers,
                               const LobbyPlayerList& ingamePlayers) override;
-    /// RankingList-Nachricht.
-    bool OnNMSLobbyRankingList(unsigned) override { return false; }
-    bool OnNMSLobbyRankingList(unsigned id, const LobbyPlayerList& list) override;
     /// ServerInfo-Nachricht.
     bool OnNMSLobbyServerInfo(unsigned, const unsigned&) override { return false; }
     bool OnNMSLobbyServerInfo(unsigned id, const LobbyServerInfo& info) override;
@@ -116,9 +107,6 @@ public:
     bool OnNMSLobbyServerAdd(unsigned id, const LobbyServerInfo& info) override;
     /// Lobby-Server-Add-Failed-Nachricht.
     bool OnNMSLobbyServerAddFailed(unsigned id, const std::string& error) override;
-
-    /// Lobby-Ranking-Info Nachricht.
-    bool OnNMSLobbyRankingInfo(unsigned id, const LobbyPlayerInfo& player) override;
 
     /// Dead-Nachricht.
     virtual bool OnNMSDeadMsg(unsigned id);
@@ -155,7 +143,6 @@ private:
 
     LobbyServerList serverList;
     LobbyPlayerList playerList;
-    LobbyPlayerList rankingList;
     LobbyServerInfo serverInfo;
     bool isHost;
 };
