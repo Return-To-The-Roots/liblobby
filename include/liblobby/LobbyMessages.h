@@ -286,8 +286,7 @@ public:
         for(unsigned i = 0; i < list.size(); ++i)
         {
             const LobbyPlayerInfo* player = list.getElement(i);
-            LOG.writeToFile("    %d: %d %s %s %d %d %d\n") % i % player->getId() % player->getName()
-              % player->getVersion() % player->getPunkte() % player->getGewonnen() % player->getVerloren();
+            LOG.writeToFile("    %d: %d %s %s\n") % i % player->getId() % player->getName() % player->getVersion();
         }
     }
 
@@ -329,8 +328,7 @@ public:
             for(unsigned i = 0; i < list.size(); ++i)
             {
                 const LobbyPlayerInfo* player = list.getElement(i);
-                LOG.writeToFile("    %d: %d %s %s %d %d %d\n") % i % player->getId() % player->getName()
-                  % player->getVersion() % player->getPunkte() % player->getGewonnen() % player->getVerloren();
+                LOG.writeToFile("    %d: %d %s %s\n") % i % player->getId() % player->getName() % player->getVersion();
             }
 
             return cb->OnNMSLobbyPlayerList(id, list, ingamePlayers);

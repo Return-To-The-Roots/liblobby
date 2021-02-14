@@ -24,12 +24,9 @@ LobbyPlayerInfo::LobbyPlayerInfo(const unsigned /*playerId*/, Serializer& ser)
  */
 void LobbyPlayerInfo::clear()
 {
-    playerId_ = 0;
+    playerId_ = static_cast<unsigned>(-1);
     name_.clear();
     version_.clear();
-    punkte_ = 0;
-    gewonnen_ = 0;
-    verloren_ = 0;
     isIngame = false;
 }
 
@@ -43,9 +40,9 @@ void LobbyPlayerInfo::serialize(Serializer& ser) const
     ser.PushUnsignedInt(playerId_);
     ser.PushLongString(name_);
     ser.PushLongString(version_);
-    ser.PushSignedInt(punkte_);
-    ser.PushUnsignedInt(gewonnen_);
-    ser.PushUnsignedInt(verloren_);
+    ser.PushSignedInt(0);   // points
+    ser.PushUnsignedInt(0); // games won
+    ser.PushUnsignedInt(0); // games lost
 }
 
 /**
@@ -58,7 +55,7 @@ void LobbyPlayerInfo::deserialize(Serializer& ser)
     playerId_ = ser.PopUnsignedInt();
     name_ = ser.PopLongString();
     version_ = ser.PopLongString();
-    punkte_ = ser.PopSignedInt();
-    gewonnen_ = ser.PopUnsignedInt();
-    verloren_ = ser.PopUnsignedInt();
+    ser.PopSignedInt();   // points
+    ser.PopUnsignedInt(); // games won
+    ser.PopUnsignedInt(); // games lost
 }
