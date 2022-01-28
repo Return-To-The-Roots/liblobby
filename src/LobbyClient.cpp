@@ -83,10 +83,7 @@ void LobbyClient::Run()
 
     // recv-queue abarbeiten
     while(!recv_queue.empty())
-    {
-        recv_queue.front()->run(this, 0xFFFFFFFF);
-        recv_queue.pop();
-    }
+        recv_queue.pop()->run(this, 0xFFFFFFFF);
 }
 
 /**
