@@ -22,9 +22,9 @@ public:
     void deserialize(Serializer& ser);
 
     unsigned getId() const { return playerId_; }
-    std::string getName() const { return name_; }
-    std::string getEmail() const { return email_; }
-    std::string getVersion() const { return version_; }
+    const std::string& getName() const { return name_; }
+    const std::string& getEmail() const { return email_; }
+    const std::string& getVersion() const { return version_; }
 
     void setId(const unsigned playerId) { this->playerId_ = playerId; }
     void setName(const std::string& name) { this->name_ = name; }

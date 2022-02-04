@@ -21,12 +21,12 @@ public:
     void serialize(Serializer& ser) const;
 
     unsigned getId() const { return serverid; }
-    std::string getName() const { return name; }
-    std::string getHost() const { return host; }
+    const std::string& getName() const { return name; }
+    const std::string& getHost() const { return host; }
     unsigned short getPort() const { return port; }
-    std::string getVersion() const { return version; }
+    const std::string& getVersion() const { return version; }
     unsigned getPing() const { return ping; }
-    std::string getMap() const { return map; }
+    const std::string& getMap() const { return map; }
     unsigned getCurPlayers() const { return curplayers; }
     unsigned getMaxPlayers() const { return maxplayers; }
     bool hasPassword() const { return has_password; }
