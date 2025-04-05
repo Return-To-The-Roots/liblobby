@@ -1,8 +1,8 @@
-# Copyright (C) 2005 - 2021 Settlers Freaks <sf-team at siedler25.org>
+# Copyright (C) 2005 - 2025 Settlers Freaks <sf-team at siedler25.org>
 #
 # SPDX-License-Identifier: GPL-2.0-or-later
 
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.16..3.20)
 project(liblobby)
 
 set(SOURCES_LOBBY src/LobbyMessage.cpp    include/liblobby/LobbyMessage.h
