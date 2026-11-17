@@ -29,57 +29,57 @@ public:
     LobbyClient();
     ~LobbyClient();
 
-    void SetProgramVersion(const std::string& programVersion) { this->programVersion = programVersion; }
+    void setProgramVersion(const std::string& programVersion) { this->programVersion = programVersion; }
     /// setzt das Interface
-    void AddListener(LobbyInterface* listener);
-    void RemoveListener(LobbyInterface* listener);
+    void addListener(LobbyInterface* listener);
+    void removeListener(LobbyInterface* listener);
 
     /// Hauptschleife.
-    void Run();
+    void run();
     /// trennt die Verbindung mit dem LobbyServer.
-    void Stop();
+    void stop();
 
-    /// versucht einen Login in den LobbyServer.
-    bool Login(const std::string& server, unsigned port, const std::string& user, const std::string& pass,
+    /// versucht einen login in den LobbyServer.
+    bool login(const std::string& server, unsigned port, const std::string& user, const std::string& pass,
                bool use_ipv6);
 
     /// schickt einen Request für die Server-Liste.
-    void SendServerListRequest();
+    void sendServerListRequest();
     /// schickt einen Request für die Player-Liste.
-    void SendPlayerListRequest();
+    void sendPlayerListRequest();
     /// schickt einen Request für ein Serverinfo.
-    void SendServerInfoRequest(unsigned id);
+    void sendServerInfoRequest(unsigned id);
 
     /// schickt einen Request für den Serverjoin.
-    void SendServerJoinRequest();
+    void sendServerJoinRequest();
     /// Notify that we left a server
-    void SendLeaveServer();
+    void sendLeaveServer();
 
     /// verschickt eine Chatnachricht.
-    void SendChat(const std::string& text);
+    void sendChat(const std::string& text);
 
     /// fügt einen Server zur Lobby hinzu.
-    void AddServer(const std::string& name, const std::string& map, bool has_password, unsigned short port);
+    void addServer(const std::string& name, const std::string& map, bool has_password, unsigned short port);
     /// entfernt den einem zugehörigen Server von der Lobby.
-    void DeleteServer();
+    void deleteServer();
     /// aktualisiert den Kartennamen des zugehörigen Servers in der Lobby.
     void UpdateServerMap(const std::string& map);
     /// aktualisiert die Spielerzahlen des zugehörigen Servers in der Lobby.
-    void UpdateServerNumPlayers(unsigned curplayer, unsigned maxplayer);
+    void updateServerNumPlayers(unsigned curplayer, unsigned maxplayer);
 
     /// liefert die Serverliste.
-    const LobbyServerList& GetServerList() const { return serverList; }
+    const LobbyServerList& getServerList() const { return serverList; }
     /// liefert die Spielerliste.
-    const LobbyPlayerList& GetPlayerList() const { return playerList; };
+    const LobbyPlayerList& getPlayerList() const { return playerList; };
     /// liefert Informationen über einen Server
-    const LobbyServerInfo& GetServerInfo() const { return serverInfo; };
-    const std::string& GetUser() const { return userdata.user; };
+    const LobbyServerInfo& getServerInfo() const { return serverInfo; };
+    const std::string& getUser() const { return userdata.user; };
 
     /// sind wir eingeloggt?
-    bool IsLoggedIn() const { return (state == CS_LOBBY || state == CS_INGAME); }
-    bool IsIngame() const { return state == CS_INGAME; }
+    bool isLoggedIn() const { return (state == CS_LOBBY || state == CS_INGAME); }
+    bool isIngame() const { return state == CS_INGAME; }
 
-    /// Lobby-Login-Error-Nachricht.
+    /// Lobby-login-Error-Nachricht.
     bool OnNMSLobbyLoginError(unsigned id, const std::string& error) override;
     /// Lobby-Logged-In-Nachricht.
     bool OnNMSLobbyLoginDone(unsigned id, const std::string& email) override;
@@ -113,7 +113,7 @@ public:
 
 protected:
     /// verbindet mit dem LobbyServer.
-    bool Connect(const std::string& server, unsigned port, bool use_ipv6);
+    bool connect(const std::string& server, unsigned port, bool use_ipv6);
     /// Server verloren.
     void ServerLost(bool notifyParent = true);
 

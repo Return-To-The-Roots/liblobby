@@ -26,16 +26,16 @@ LobbyClient::LobbyClient()
 
 LobbyClient::~LobbyClient()
 {
-    Stop();
+    stop();
 }
 
-void LobbyClient::AddListener(LobbyInterface* listener)
+void LobbyClient::addListener(LobbyInterface* listener)
 {
     if(std::find(listeners.begin(), listeners.end(), listener) == listeners.end())
         listeners.push_back(listener);
 }
 
-void LobbyClient::RemoveListener(LobbyInterface* listener)
+void LobbyClient::removeListener(LobbyInterface* listener)
 {
     listeners.erase(std::remove(listeners.begin(), listeners.end(), listener), listeners.end());
 }
@@ -43,7 +43,7 @@ void LobbyClient::RemoveListener(LobbyInterface* listener)
 /**
  *  Hauptschleife.
  */
-void LobbyClient::Run()
+void LobbyClient::run()
 {
     if(state == CS_STOPPED)
         return;
@@ -89,7 +89,7 @@ void LobbyClient::Run()
 /**
  *  trennt die Verbindung mit dem LobbyServer.
  */
-void LobbyClient::Stop()
+void LobbyClient::stop()
 {
     if(state != CS_CONNECT)
     {
@@ -109,28 +109,28 @@ void LobbyClient::Stop()
 }
 
 /**
- *  versucht einen Login in den LobbyServer.
+ *  versucht einen login in den LobbyServer.
  *
  *  @param[in] user Benutzername
  *  @param[in] pass Passwort
  */
-bool LobbyClient::Login(const std::string& server, const unsigned port, const std::string& user,
+bool LobbyClient::login(const std::string& server, const unsigned port, const std::string& user,
                         const std::string& pass, const bool use_ipv6)
 {
     // aufräumen
-    Stop();
+    stop();
 
     userdata.user = user;
     userdata.pass = (pass.size() == 32) ? pass : s25util::md5(pass).toString();
 
     // verbinden
-    return Connect(server, port, use_ipv6);
+    return connect(server, port, use_ipv6);
 }
 
 /**
  *  schickt einen Request für die Server-Liste.
  */
-void LobbyClient::SendServerListRequest()
+void LobbyClient::sendServerListRequest()
 {
     assert(state == CS_LOBBY);
     send_queue.push(new LobbyMessage_ServerList(true));
@@ -139,7 +139,7 @@ void LobbyClient::SendServerListRequest()
 /**
  *  schickt einen Request für die Player-Liste.
  */
-void LobbyClient::SendPlayerListRequest()
+void LobbyClient::sendPlayerListRequest()
 {
     assert(state == CS_LOBBY);
     send_queue.push(new LobbyMessage_PlayerList(true));
@@ -150,7 +150,7 @@ void LobbyClient::SendPlayerListRequest()
  *
  *  @param[in] id Server-ID
  */
-void LobbyClient::SendServerInfoRequest(unsigned id)
+void LobbyClient::sendServerInfoRequest(unsigned id)
 {
     assert(state == CS_LOBBY);
     if(id == 0)
@@ -162,7 +162,7 @@ void LobbyClient::SendServerInfoRequest(unsigned id)
 /**
  *  schickt einen Request für den Serverjoin.
  */
-void LobbyClient::SendServerJoinRequest()
+void LobbyClient::sendServerJoinRequest()
 {
     if(state == CS_INGAME)
     {
@@ -175,7 +175,7 @@ void LobbyClient::SendServerJoinRequest()
     state = CS_INGAME;
 }
 
-void LobbyClient::SendLeaveServer()
+void LobbyClient::sendLeaveServer()
 {
     // Don't send if we are not ingame or we will be kicked
     if(state == CS_INGAME)
@@ -191,7 +191,7 @@ void LobbyClient::SendLeaveServer()
  *
  *  @param[in] text Der Text
  */
-void LobbyClient::SendChat(const std::string& text)
+void LobbyClient::sendChat(const std::string& text)
 {
     assert(state == CS_LOBBY || state == CS_INGAME);
     send_queue.push(new LobbyMessage_Chat(text));
@@ -202,7 +202,7 @@ void LobbyClient::SendChat(const std::string& text)
  *
  *  @param[in] name Name des Servers.
  */
-void LobbyClient::AddServer(const std::string& name, const std::string& map, bool has_password, unsigned short port)
+void LobbyClient::addServer(const std::string& name, const std::string& map, bool has_password, unsigned short port)
 {
     assert(state == CS_LOBBY);
     LobbyServerInfo server;
@@ -220,7 +220,7 @@ void LobbyClient::AddServer(const std::string& name, const std::string& map, boo
 /**
  *  entfernt den einem zugehörigen Server von der Lobby.
  */
-void LobbyClient::DeleteServer()
+void LobbyClient::deleteServer()
 {
     if(state == CS_INGAME && isHost)
     {
@@ -248,7 +248,7 @@ void LobbyClient::UpdateServerMap(const std::string& map)
  *  @param[in] curplayer Aktuelle Anzahl Spieler
  *  @param[in] maxplayer Maximale Anzahl Spieler
  */
-void LobbyClient::UpdateServerNumPlayers(unsigned curplayer, unsigned maxplayer)
+void LobbyClient::updateServerNumPlayers(unsigned curplayer, unsigned maxplayer)
 {
     assert(state == CS_INGAME && isHost);
     send_queue.push(new LobbyMessage_Server_Update_Player(curplayer, maxplayer));
@@ -259,7 +259,7 @@ void LobbyClient::UpdateServerNumPlayers(unsigned curplayer, unsigned maxplayer)
  *
  *  @return @p true bei Erfolg, @p false bei Fehler
  */
-bool LobbyClient::Connect(const std::string& server, const unsigned port, const bool use_ipv6)
+bool LobbyClient::connect(const std::string& server, const unsigned port, const bool use_ipv6)
 {
     assert(state == CS_STOPPED);
     // Verbinden
@@ -313,7 +313,7 @@ bool LobbyClient::OnNMSLobbyID(unsigned /*id*/, unsigned playerId)
 }
 
 /**
- *  Lobby-Login-Error-Nachricht.
+ *  Lobby-login-Error-Nachricht.
  *
  *  @param[in] error Die empfangene Fehlermeldung
  */
@@ -450,7 +450,7 @@ void LobbyClient::ServerLost(bool notifyParent)
     if(state != CS_STOPPED)
         LOG.write(_("Lobby client forced to stop\n"));
 
-    Stop();
+    stop();
 
     if(notifyParent)
     {
