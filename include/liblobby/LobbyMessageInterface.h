@@ -19,7 +19,7 @@ class LobbyMessageInterface : public MessageInterface
 {
 public:
     /// Lobby-Login-Nachricht.
-    virtual bool OnNMSLobbyLogin(unsigned /*id*/, const unsigned /*revision*/, const std::string& /*user*/,
+    virtual bool onNMSLobbyLogin(unsigned /*id*/, const unsigned /*revision*/, const std::string& /*user*/,
                                  const std::string& /*pass*/, const std::string& /*version*/)
     {
         return false;

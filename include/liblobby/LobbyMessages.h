@@ -35,18 +35,18 @@ public:
         LOG.writeToFile(">>> NMS_LOBBY_LOGIN(%d, %s, %s, %s)\n") % revision % user % "********" % version;
     }
 
-    void Serialize(Serializer& ser) const override
+    void serialize(Serializer& ser) const override
     {
-        LobbyMessage::Serialize(ser);
+        LobbyMessage::serialize(ser);
         ser.PushUnsignedInt(revision);
         ser.PushLongString(user);
         ser.PushLongString(pass);
         ser.PushLongString(version);
     }
 
-    void Deserialize(Serializer& ser) override
+    void deserialize(Serializer& ser) override
     {
-        LobbyMessage::Deserialize(ser);
+        LobbyMessage::deserialize(ser);
         revision = ser.PopUnsignedInt();
 
         if(lobbyprotocol::extractVersion(revision) >= 6)
@@ -61,7 +61,7 @@ public:
     {
         auto* cb = static_cast<LobbyMessageInterface*>(callback);
         LOG.writeToFile("<<< NMS_LOBBY_LOGIN(%d, %s, %s, %s)\n") % revision % user % "********" % version;
-        return cb->OnNMSLobbyLogin(id, revision, user, pass, version);
+        return cb->onNMSLobbyLogin(id, revision, user, pass, version);
     }
 };
 
@@ -79,15 +79,15 @@ public:
         LOG.writeToFile(">>> NMS_LOBBY_LOGIN_DONE(%s)\n") % s25lobby::getAnonymizedEmail(this->email);
     }
 
-    void Serialize(Serializer& ser) const override
+    void serialize(Serializer& ser) const override
     {
-        LobbyMessage::Serialize(ser);
+        LobbyMessage::serialize(ser);
         ser.PushLongString(email);
     }
 
-    void Deserialize(Serializer& ser) override
+    void deserialize(Serializer& ser) override
     {
-        LobbyMessage::Deserialize(ser);
+        LobbyMessage::deserialize(ser);
         email = ser.PopLongString();
     }
 
@@ -113,15 +113,15 @@ public:
         LOG.writeToFile(">>> NMS_LOBBY_LOGIN_ERROR(%s)\n") % error;
     }
 
-    void Serialize(Serializer& ser) const override
+    void serialize(Serializer& ser) const override
     {
-        LobbyMessage::Serialize(ser);
+        LobbyMessage::serialize(ser);
         ser.PushLongString(error);
     }
 
-    void Deserialize(Serializer& ser) override
+    void deserialize(Serializer& ser) override
     {
-        LobbyMessage::Deserialize(ser);
+        LobbyMessage::deserialize(ser);
         error = ser.PopLongString();
     }
 
@@ -160,16 +160,16 @@ public:
         }
     }
 
-    void Serialize(Serializer& ser) const override
+    void serialize(Serializer& ser) const override
     {
-        LobbyMessage::Serialize(ser);
+        LobbyMessage::serialize(ser);
         if(!isRequest)
             list.serialize(ser);
     }
 
-    void Deserialize(Serializer& ser) override
+    void deserialize(Serializer& ser) override
     {
-        LobbyMessage::Deserialize(ser);
+        LobbyMessage::deserialize(ser);
         if(ser.GetBytesLeft() > 0)
         {
             isRequest = false;
@@ -225,18 +225,18 @@ public:
           % info.getMaxPlayers();
     }
 
-    void Serialize(Serializer& ser) const override
+    void serialize(Serializer& ser) const override
     {
-        LobbyMessage::Serialize(ser);
+        LobbyMessage::serialize(ser);
         if(isRequest)
             ser.PushUnsignedInt(server);
         else
             info.serialize(ser);
     }
 
-    void Deserialize(Serializer& ser) override
+    void deserialize(Serializer& ser) override
     {
-        LobbyMessage::Deserialize(ser);
+        LobbyMessage::deserialize(ser);
         isRequest = ser.GetBytesLeft() == sizeof(unsigned);
         if(isRequest)
             server = ser.PopUnsignedInt();
@@ -290,16 +290,16 @@ public:
         }
     }
 
-    void Serialize(Serializer& ser) const override
+    void serialize(Serializer& ser) const override
     {
-        LobbyMessage::Serialize(ser);
+        LobbyMessage::serialize(ser);
         if(!isRequest)
             list.serialize(ser);
     }
 
-    void Deserialize(Serializer& ser) override
+    void deserialize(Serializer& ser) override
     {
-        LobbyMessage::Deserialize(ser);
+        LobbyMessage::deserialize(ser);
         isRequest = ser.GetBytesLeft() == 0;
         if(!isRequest)
         {
@@ -350,15 +350,15 @@ public:
         LOG.writeToFile(">>> NMS_LOBBY_ID(%d)\n") % playerId;
     }
 
-    void Serialize(Serializer& ser) const override
+    void serialize(Serializer& ser) const override
     {
-        LobbyMessage::Serialize(ser);
+        LobbyMessage::serialize(ser);
         ser.PushUnsignedInt(playerId);
     }
 
-    void Deserialize(Serializer& ser) override
+    void deserialize(Serializer& ser) override
     {
-        LobbyMessage::Deserialize(ser);
+        LobbyMessage::deserialize(ser);
         playerId = ser.PopUnsignedInt();
     }
 
@@ -391,16 +391,16 @@ public:
         LOG.writeToFile(">>> NMS_LOBBY_CHAT(%s, %s)\n") % player % text;
     }
 
-    void Serialize(Serializer& ser) const override
+    void serialize(Serializer& ser) const override
     {
-        LobbyMessage::Serialize(ser);
+        LobbyMessage::serialize(ser);
         ser.PushLongString(player);
         ser.PushLongString(text);
     }
 
-    void Deserialize(Serializer& ser) override
+    void deserialize(Serializer& ser) override
     {
-        LobbyMessage::Deserialize(ser);
+        LobbyMessage::deserialize(ser);
         player = ser.PopLongString();
         text = ser.PopLongString();
     }
@@ -468,15 +468,15 @@ public:
           % info.getMaxPlayers();
     }
 
-    void Serialize(Serializer& ser) const override
+    void serialize(Serializer& ser) const override
     {
-        LobbyMessage::Serialize(ser);
+        LobbyMessage::serialize(ser);
         info.serialize(ser);
     }
 
-    void Deserialize(Serializer& ser) override
+    void deserialize(Serializer& ser) override
     {
-        LobbyMessage::Deserialize(ser);
+        LobbyMessage::deserialize(ser);
         info = LobbyServerInfo(0, ser);
     }
 
@@ -506,15 +506,15 @@ public:
         LOG.writeToFile(">>> NMS_LOBBY_SERVER_ADD_FAILED(%s)\n") % error;
     }
 
-    void Serialize(Serializer& ser) const override
+    void serialize(Serializer& ser) const override
     {
-        LobbyMessage::Serialize(ser);
+        LobbyMessage::serialize(ser);
         ser.PushLongString(error);
     }
 
-    void Deserialize(Serializer& ser) override
+    void deserialize(Serializer& ser) override
     {
-        LobbyMessage::Deserialize(ser);
+        LobbyMessage::deserialize(ser);
         error = ser.PopLongString();
     }
 
@@ -562,16 +562,16 @@ public:
         LOG.writeToFile(">>> NMS_LOBBY_SERVER_UPDATE_PLAYER(%d,%d)\n") % curplayer % maxplayer;
     }
 
-    void Serialize(Serializer& ser) const override
+    void serialize(Serializer& ser) const override
     {
-        LobbyMessage::Serialize(ser);
+        LobbyMessage::serialize(ser);
         ser.PushUnsignedInt(curplayer);
         ser.PushUnsignedInt(maxplayer);
     }
 
-    void Deserialize(Serializer& ser) override
+    void deserialize(Serializer& ser) override
     {
-        LobbyMessage::Deserialize(ser);
+        LobbyMessage::deserialize(ser);
         curplayer = ser.PopUnsignedInt();
         maxplayer = ser.PopUnsignedInt();
     }
@@ -598,15 +598,15 @@ public:
         LOG.writeToFile(">>> NMS_LOBBY_SERVER_UPDATE_MAP(%s)\n") % map;
     }
 
-    void Serialize(Serializer& ser) const override
+    void serialize(Serializer& ser) const override
     {
-        LobbyMessage::Serialize(ser);
+        LobbyMessage::serialize(ser);
         ser.PushLongString(map);
     }
 
-    void Deserialize(Serializer& ser) override
+    void deserialize(Serializer& ser) override
     {
-        LobbyMessage::Deserialize(ser);
+        LobbyMessage::deserialize(ser);
         map = ser.PopLongString();
     }
 
