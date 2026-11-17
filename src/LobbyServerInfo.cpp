@@ -14,9 +14,9 @@ LobbyServerInfo::LobbyServerInfo()
 }
 
 LobbyServerInfo::LobbyServerInfo(const unsigned /*playerId*/, Serializer& ser)
-    : serverid(ser.PopUnsignedInt()), name(ser.PopLongString()), host(ser.PopLongString()),
-      port(ser.PopUnsignedShort()), version(ser.PopLongString()), ping(ser.PopUnsignedInt()), map(ser.PopLongString()),
-      curplayers(ser.PopUnsignedInt()), maxplayers(ser.PopUnsignedInt()), has_password(ser.PopBool())
+    : serverid(ser.popUnsignedInt()), name(ser.popLongString()), host(ser.popLongString()),
+      port(ser.popUnsignedShort()), version(ser.popLongString()), ping(ser.popUnsignedInt()), map(ser.popLongString()),
+      curplayers(ser.popUnsignedInt()), maxplayers(ser.popUnsignedInt()), has_password(ser.popBool())
 {}
 
 /**
@@ -45,14 +45,14 @@ void LobbyServerInfo::clear()
  */
 void LobbyServerInfo::serialize(Serializer& ser) const
 {
-    ser.PushUnsignedInt(serverid);
-    ser.PushLongString(name);
-    ser.PushLongString(host);
-    ser.PushUnsignedShort(port);
-    ser.PushLongString(version);
-    ser.PushUnsignedInt(ping);
-    ser.PushLongString(map);
-    ser.PushUnsignedInt(curplayers);
-    ser.PushUnsignedInt(maxplayers);
-    ser.PushBool(has_password);
+    ser.pushUnsignedInt(serverid);
+    ser.pushLongString(name);
+    ser.pushLongString(host);
+    ser.pushUnsignedShort(port);
+    ser.pushLongString(version);
+    ser.pushUnsignedInt(ping);
+    ser.pushLongString(map);
+    ser.pushUnsignedInt(curplayers);
+    ser.pushUnsignedInt(maxplayers);
+    ser.pushBool(has_password);
 }

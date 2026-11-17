@@ -38,22 +38,22 @@ public:
     void serialize(Serializer& ser) const override
     {
         LobbyMessage::serialize(ser);
-        ser.PushUnsignedInt(revision);
-        ser.PushLongString(user);
-        ser.PushLongString(pass);
-        ser.PushLongString(version);
+        ser.pushUnsignedInt(revision);
+        ser.pushLongString(user);
+        ser.pushLongString(pass);
+        ser.pushLongString(version);
     }
 
     void deserialize(Serializer& ser) override
     {
         LobbyMessage::deserialize(ser);
-        revision = ser.PopUnsignedInt();
+        revision = ser.popUnsignedInt();
 
         if(lobbyprotocol::extractVersion(revision) >= 6)
         {
-            user = ser.PopLongString();
-            pass = ser.PopLongString();
-            version = ser.PopLongString();
+            user = ser.popLongString();
+            pass = ser.popLongString();
+            version = ser.popLongString();
         }
     }
 
@@ -82,13 +82,13 @@ public:
     void serialize(Serializer& ser) const override
     {
         LobbyMessage::serialize(ser);
-        ser.PushLongString(email);
+        ser.pushLongString(email);
     }
 
     void deserialize(Serializer& ser) override
     {
         LobbyMessage::deserialize(ser);
-        email = ser.PopLongString();
+        email = ser.popLongString();
     }
 
     bool run(MessageInterface* callback, unsigned id) override
@@ -116,13 +116,13 @@ public:
     void serialize(Serializer& ser) const override
     {
         LobbyMessage::serialize(ser);
-        ser.PushLongString(error);
+        ser.pushLongString(error);
     }
 
     void deserialize(Serializer& ser) override
     {
         LobbyMessage::deserialize(ser);
-        error = ser.PopLongString();
+        error = ser.popLongString();
     }
 
     bool run(MessageInterface* callback, unsigned id) override
@@ -170,7 +170,7 @@ public:
     void deserialize(Serializer& ser) override
     {
         LobbyMessage::deserialize(ser);
-        if(ser.GetBytesLeft() > 0)
+        if(ser.getBytesLeft() > 0)
         {
             isRequest = false;
             list.deserialize(ser);
@@ -229,7 +229,7 @@ public:
     {
         LobbyMessage::serialize(ser);
         if(isRequest)
-            ser.PushUnsignedInt(server);
+            ser.pushUnsignedInt(server);
         else
             info.serialize(ser);
     }
@@ -237,9 +237,9 @@ public:
     void deserialize(Serializer& ser) override
     {
         LobbyMessage::deserialize(ser);
-        isRequest = ser.GetBytesLeft() == sizeof(unsigned);
+        isRequest = ser.getBytesLeft() == sizeof(unsigned);
         if(isRequest)
-            server = ser.PopUnsignedInt();
+            server = ser.popUnsignedInt();
         else
             info = LobbyServerInfo(0, ser);
     }
@@ -300,11 +300,11 @@ public:
     void deserialize(Serializer& ser) override
     {
         LobbyMessage::deserialize(ser);
-        isRequest = ser.GetBytesLeft() == 0;
+        isRequest = ser.getBytesLeft() == 0;
         if(!isRequest)
         {
             list.deserialize(ser);
-            if(ser.GetBytesLeft() > 0)
+            if(ser.getBytesLeft() > 0)
             {
                 ingamePlayers.deserialize(ser);
                 for(auto& ingamePlayer : ingamePlayers)
@@ -353,13 +353,13 @@ public:
     void serialize(Serializer& ser) const override
     {
         LobbyMessage::serialize(ser);
-        ser.PushUnsignedInt(playerId);
+        ser.pushUnsignedInt(playerId);
     }
 
     void deserialize(Serializer& ser) override
     {
         LobbyMessage::deserialize(ser);
-        playerId = ser.PopUnsignedInt();
+        playerId = ser.popUnsignedInt();
     }
 
     bool run(MessageInterface* callback, unsigned id) override
@@ -394,15 +394,15 @@ public:
     void serialize(Serializer& ser) const override
     {
         LobbyMessage::serialize(ser);
-        ser.PushLongString(player);
-        ser.PushLongString(text);
+        ser.pushLongString(player);
+        ser.pushLongString(text);
     }
 
     void deserialize(Serializer& ser) override
     {
         LobbyMessage::deserialize(ser);
-        player = ser.PopLongString();
-        text = ser.PopLongString();
+        player = ser.popLongString();
+        text = ser.popLongString();
     }
 
     bool run(MessageInterface* callback, unsigned id) override
@@ -509,13 +509,13 @@ public:
     void serialize(Serializer& ser) const override
     {
         LobbyMessage::serialize(ser);
-        ser.PushLongString(error);
+        ser.pushLongString(error);
     }
 
     void deserialize(Serializer& ser) override
     {
         LobbyMessage::deserialize(ser);
-        error = ser.PopLongString();
+        error = ser.popLongString();
     }
 
     bool run(MessageInterface* callback, unsigned id) override
@@ -565,15 +565,15 @@ public:
     void serialize(Serializer& ser) const override
     {
         LobbyMessage::serialize(ser);
-        ser.PushUnsignedInt(curplayer);
-        ser.PushUnsignedInt(maxplayer);
+        ser.pushUnsignedInt(curplayer);
+        ser.pushUnsignedInt(maxplayer);
     }
 
     void deserialize(Serializer& ser) override
     {
         LobbyMessage::deserialize(ser);
-        curplayer = ser.PopUnsignedInt();
-        maxplayer = ser.PopUnsignedInt();
+        curplayer = ser.popUnsignedInt();
+        maxplayer = ser.popUnsignedInt();
     }
 
     bool run(MessageInterface* callback, unsigned id) override
@@ -601,13 +601,13 @@ public:
     void serialize(Serializer& ser) const override
     {
         LobbyMessage::serialize(ser);
-        ser.PushLongString(map);
+        ser.pushLongString(map);
     }
 
     void deserialize(Serializer& ser) override
     {
         LobbyMessage::deserialize(ser);
-        map = ser.PopLongString();
+        map = ser.popLongString();
     }
 
     bool run(MessageInterface* callback, unsigned id) override
