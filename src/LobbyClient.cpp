@@ -60,12 +60,12 @@ void LobbyClient::Run()
     SocketSet set;
 
     // zum set hinzufügen
-    set.Add(socket);
+    set.add(socket);
 
     // auf fehler prüfen
-    if(set.Select(0, 2) > 0)
+    if(set.select(0, 2) > 0)
     {
-        if(set.InSet(socket))
+        if(set.inSet(socket))
         {
             // Server ist weg
             LOG.write("Error on socket to server\n");
@@ -98,7 +98,7 @@ void LobbyClient::Stop()
     }
 
     // Verbindung trennen
-    socket.Close();
+    socket.close();
 
     // Queues leeren
     recv_queue.clear();
@@ -263,7 +263,7 @@ bool LobbyClient::Connect(const std::string& server, const unsigned port, const 
 {
     assert(state == CS_STOPPED);
     // Verbinden
-    if(!socket.Connect(server, port, use_ipv6))
+    if(!socket.connect(server, port, use_ipv6))
     {
         ServerLost();
         return false;
